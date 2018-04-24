@@ -17,34 +17,36 @@ class OwnerHomepage extends React.Component {
       userId: '',
       searchedVideos: []
     }
-    this.getVideos = this.getVideos.bind(this);
+    // this.getVideos = this.getVideos.bind(this);
     this.getUserId = this.getUserId.bind(this);
     this.showVideoList = this.showVideoList.bind(this);
     this.sendToSelectedVideo = this.sendToSelectedVideo.bind(this);
     this.getYouTubeVideos = this.getYouTubeVideos.bind(this);
+    this.saveVideo = this.saveVideo.bind(this);
   }
 
   componentDidMount() {
     this.getUserId(this.props.location.username);
   }
   
-  getVideos(query) {
-    axios.get('/owner/search', {params: {query: query, userId: this.state.userId}})
-         .then((data) => {
-           this.setState({videos: [...this.state.videos, data.data[0]]})
-          })
-  }
+  // getVideos(query) {
+  //   axios.get('/owner/savedVideos', {params: {query: query, userId: this.state.userId}})
+  //        .then((data) => {
+  //          console.log(data.data[0])
+  //          this.setState({videos: [...this.state.videos, data.data[0]]})
+  //         })
+  // }
 
   getUserId(user) {
     axios.get('/user/id', {params: {user: user}})
          .then((data) => {
-           this.setState({userId: data.data[0].id}, ()=> this.showVideoList(data.data[0].id));
+           this.setState({userId: data.data[0].id}, ()=> this.showVideoList());
          })
   }
 
-  showVideoList(userId) {
-    axios.get('/owner/videoList', {params: {userId: userId}})
-          .then((data) => {this.setState({videos: data.data})})
+  showVideoList() {
+    axios.get('/owner/videoList', {params: {userId: this.state.userId}})
+          .then(({data}) => {this.setState({videos: data})})
   }
 
   sendToSelectedVideo(video) {
@@ -65,6 +67,17 @@ class OwnerHomepage extends React.Component {
     })
   }
 
+  saveVideo(video) {
+    axios.post('/owner/save', {video: video, userId: this.state.userId})
+    .then(() => {
+      console.log('Video saved.');
+      this.showVideoList();
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+  }
+
   render () {
     return (
       <Paper style={style} zDepth={1}>
@@ -77,7 +90,7 @@ class OwnerHomepage extends React.Component {
             videos={this.state.videos} 
             redirect={this.sendToSelectedVideo}
           />
-          <SearchList videos={this.state.searchedVideos}/>
+          <SearchList videos={this.state.searchedVideos} save={this.saveVideo}/>
         </div>  
       </div>   
       </Paper>
