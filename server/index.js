@@ -78,6 +78,14 @@ app.get('/student/homepage', (req, res) =>
 
 //---------------------------------------------------------OWNER USER REQUESTS
 
+app.get('/owner/searchYoutube', (req, res) => {
+  searchYouTube({key: api, q: req.query.query, maxResults: 10}, 
+    (videos) => {
+      res.status(200).send(videos);
+    }
+  )
+})
+
 app.get('/owner/search', (req, res) => {
   searchYouTube({key: api, q: req.query.query, maxResults: 1}, 
     (video) => {
