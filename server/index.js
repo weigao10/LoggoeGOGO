@@ -106,21 +106,35 @@ app.get('/owner/searchYoutube', (req, res) => {
   )
 })
 
-app.get('/owner/search', (req, res) => {
-  searchYouTube({key: api, q: req.query.query, maxResults: 1}, 
-    (video) => {
-      let url = `https://www.googleapis.com/youtube/v3/videos?id=${video[0].id.videoId}&part=contentDetails&key=${api}`;
-      //get duration
-      axios.get(url).then((data) => {
-        let duration = moment.duration(data.data.items[0].contentDetails.duration, moment.ISO_8601).asSeconds();
-        setVideo(video[0], req.query.userId, duration, () => {
-          getCurrentVideo(video[0].id.videoId, (video) => 
-            res.status(200).send(video)
-          )
-        })
-      });
-    });
-});
+// app.get('/owner/savedVideos', (req, res) => {
+//   searchYouTube({key: api, q: req.query.query, maxResults: 1}, 
+//     (video) => {
+//       let url = `https://www.googleapis.com/youtube/v3/videos?id=${video[0].id.videoId}&part=contentDetails&key=${api}`;
+//       //get duration
+//       axios.get(url).then((data) => {
+//         let duration = moment.duration(data.data.items[0].contentDetails.duration, moment.ISO_8601).asSeconds();
+//         setVideo(video[0], req.query.userId, duration, () => {
+//           getCurrentVideo(video[0].id.videoId, (video) => 
+//             res.status(200).send(video)
+//           )
+//         })
+//       });
+//     });
+// });
+
+app.post('/owner/save', (req, res) => {
+  let video = req.body.video;
+  let userId = req.body.userId;
+  console.log(video)
+  let url = `https://www.googleapis.com/youtube/v3/videos?id=${video.id.videoId}&part=contentDetails&key=${api}`;
+  axios.get(url)
+  .then((data) => {
+    let duration = moment.duration(data.data.items[0].contentDetails.duration, moment.ISO_8601).asSeconds();
+    setVideo(video, userId, duration, () => {
+      res.status(201).send('Saved to db');
+    })
+  })
+})
 
 //get all videos for owner.
 app.get('/owner/videoList', (req, res) => {
