@@ -50,7 +50,7 @@ class VideoPlayer extends React.Component {
       height: '390',
       width: '500',
       playerVars: {
-        autoplay: 1,
+        autoplay: 0,
         start: this.props.startingTimestamp,
       }
     };
