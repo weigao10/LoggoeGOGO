@@ -5,6 +5,7 @@ import axios from 'axios';
 import VideoList from './owner-homepage-view/VideoList.jsx';
 import Search from './owner-homepage-view/Search.jsx';
 import OwnerVideo from './OwnerVideoView.jsx';
+import Paper from 'material-ui/Paper';
 
 class OwnerHomepage extends React.Component {
   constructor(props) {
@@ -27,29 +28,20 @@ class OwnerHomepage extends React.Component {
   getVideos(query) {
     axios.get('/owner/search', {params: {query: query, userId: this.state.userId}})
          .then((data) => {
-           this.setState({
-            videos: [...this.state.videos, data.data[0]]
-           })
-         })
+           this.setState({videos: [...this.state.videos, data.data[0]]})
+          })
   }
 
   getUserId(user) {
     axios.get('/user/id', {params: {user: user}})
          .then((data) => {
-           this.setState({userId: data.data[0].id}, ()=> {
-             this.showVideoList(data.data[0].id);
-           });
-           
+           this.setState({userId: data.data[0].id}, ()=> this.showVideoList(data.data[0].id));
          })
   }
 
   showVideoList(userId) {
     axios.get('/owner/videoList', {params: {userId: userId}})
-          .then((data) => {
-            this.setState({
-              videos: data.data
-            })
-          })
+          .then((data) => {this.setState({videos: data.data})})
   }
 
   sendToSelectedVideo(video) {
@@ -62,8 +54,9 @@ class OwnerHomepage extends React.Component {
 
   render () {
     return (
+      <Paper style={style} zDepth={1}>
       <div id="owner-homepage-app">
-        <header className="navbar"><h1>Owner Videos</h1></header>
+        <header className="navbar"><h1>Hello {this.props.location.username}</h1></header>
         <div className="main">
           <Search getVideos={this.getVideos}/>
           <VideoList 
@@ -73,8 +66,19 @@ class OwnerHomepage extends React.Component {
           />
         </div>  
       </div>   
+      </Paper>
     )
   }
+}
+
+const style = {
+  height: '100%',
+  width: 'auto',
+  margin: '30px',
+  textAlign: 'center',
+  display: 'block',
+  padding: '30px',
+  background: '#D8E4EA'
 }
 
 export default withRouter(OwnerHomepage);
