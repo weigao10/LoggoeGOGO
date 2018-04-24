@@ -14,6 +14,19 @@ import OwnerVideo from './components/OwnerVideoView.jsx';
 class App extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      username: null, // indicates the user is not logged in 
+      isOwner: null
+    };
+    this.getLoginStatus = this.getLoginStatus.bind(this);
+  }
+
+  componentDidMount() {
+    this.getLoginStatus();
+  }
+
+  getLoginStatus() {
+    
   }
 
   render () {

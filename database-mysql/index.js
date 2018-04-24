@@ -2,6 +2,7 @@ const mysql = require('mysql');
 const connection = mysql.createConnection({
   host     : 'localhost',
   user     : 'root',
+  password : '',
   database : 'oneTeam'
 });
 
@@ -15,7 +16,7 @@ const getUser = (user, callback) => {
       console.error(err) :
       callback(err, results);
   });
-  } 
+}
   
   const getUserId = (user, callback) => {
     let query = `SELECT id FROM users WHERE name = "${user}"`;

@@ -2,6 +2,7 @@ const bodyParser = require('body-parser');
 const express = require('express');
 const moment = require('moment');
 const axios = require('axios');
+const session = require('express-session');
 const {
   getOwnerTimestamp,
   getCurrentVideo,
@@ -22,6 +23,14 @@ const api = require('../config.js').API;
 
 const app = express();
 
+//---------------------------------------------------------SESSIONS
+app.use(session({
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: true }
+}))
+
 //---------------------------------------------------------MIDDLEWARE
 
 app.use(express.static(__dirname + '/../react-client/dist'));
@@ -32,9 +41,15 @@ app.use(bodyParser.json());
 
 app.post('/login', (req, res) => {
   getUser(req.body.username, (err, response) => {
-    (err) ? 
-      res.status(403).send(err) :
-      res.status(201).send(response);
+    if (err) {
+      res.status(403).send(err);
+    } else {
+      req.session.regenerate((err) => {
+        req.session.user = response[0].name;
+        req.session.isOwner = response[0].owner;
+        res.status(201).send(response);
+      })
+    }
   });
 });
 
@@ -66,6 +81,11 @@ app.get('/user/id', (req, res) => {
   getUserId(req.query.user, (userId) => 
     res.send(userId)
   )
+})
+
+//---------------------------------------------------------USER LOGIN STATUS
+
+app.get('/user/loginstatus', (req, res) => {
 })
 
 //---------------------------------------------------------STUDENT USER REQUESTS
