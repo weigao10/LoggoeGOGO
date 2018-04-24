@@ -123,9 +123,6 @@ app.get('/owner/videoList', (req, res) => {
   })
 })
 
-//save video to db
-app.post('/save', (req, res) => {})
-
 //---------------------------------------------------------ANALYTICS
 
 app.get('/buckets', (req,res) => {
