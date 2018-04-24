@@ -1,6 +1,8 @@
 import {withRouter} from 'react-router-dom';
 import React from 'react';
 import axios from 'axios';
+import { DragDropContext } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
 
 import SearchList from './owner-homepage-view/SearchList.jsx';
 import VideoList from './owner-homepage-view/VideoList.jsx';
@@ -97,13 +99,15 @@ class OwnerHomepage extends React.Component {
         <header className="navbar"><h1>Hello {this.props.location.username}</h1></header>
         <div className="main">
           <Search getVideos={this.getYouTubeVideos}/>
+          <SearchList videos={this.state.searchedVideos} save={this.saveVideo} redirect={this.sendToSelectedVideo}/>
+
+          Saved Videos:
           <VideoList 
             userId={this.state.userId}
             videos={this.state.videos} 
             redirect={this.sendToSelectedVideo}
             deleteVideo={this.deleteVideo}
           />
-          <SearchList videos={this.state.searchedVideos} save={this.saveVideo} redirect={this.sendToSelectedVideo}/>
         </div>  
       </div>   
       </Paper>
@@ -121,4 +125,4 @@ const style = {
   background: '#D8E4EA'
 }
 
-export default withRouter(OwnerHomepage);
+export default withRouter((DragDropContext(HTML5Backend), OwnerHomepage))

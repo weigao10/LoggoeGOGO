@@ -1,10 +1,11 @@
 import React from 'react';
 import Paper from 'material-ui/Paper';
-
+import { DragSource } from 'react-dnd';
+import { ItemTypes } from '../../constants.js';
 
 const SearchListEntry = ({video, save, redirect}) => (
   <Paper style={style}>
-    <div onClick={()=>{redirect(video)}} style={{display: 'inline-block'}}>
+    <div style={{display: 'inline-block'}}>
       <div style={{width: '30%', float: 'left'}}>
         <img className="media-object" 
           src={video.snippet.thumbnails.default.url} 
