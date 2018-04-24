@@ -2,7 +2,7 @@ import React from 'react';
 import Paper from 'material-ui/Paper';
 
 
-const SearchListEntry = ({video, save}) => (
+const SearchListEntry = ({video, save, redirect}) => (
   <Paper style={style}>
     <div onClick={()=>{redirect(video)}} style={{display: 'inline-block'}}>
       <div style={{width: '30%', float: 'left'}}>

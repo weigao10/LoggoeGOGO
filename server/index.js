@@ -14,7 +14,8 @@ const {
   setVideo, 
   setUser,
   getBuckets,
-  deleteTimestamp, 
+  deleteTimestamp,
+  deleteVideo 
 } = require('../database-mysql');
 
 const searchYouTube = require ('youtube-search-api-with-axios');
@@ -113,6 +114,14 @@ app.post('/owner/save', (req, res) => {
     setVideo(video, userId, duration, () => {
       res.status(201).send('Saved to db');
     })
+  })
+})
+
+app.post('/owner/delete', (req, res) => {
+  let userId = req.body.userId;
+  let videoId = req.body.video.videoId;
+  deleteVideo(userId, videoId, () => {
+    res.status(201).send('Removed from db');
   })
 })
 
