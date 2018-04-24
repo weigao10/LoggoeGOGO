@@ -2,6 +2,7 @@ import {withRouter} from 'react-router-dom';
 import React from 'react';
 import axios from 'axios';
 
+import SearchList from './owner-homepage-view/SearchList.jsx';
 import VideoList from './owner-homepage-view/VideoList.jsx';
 import Search from './owner-homepage-view/Search.jsx';
 import OwnerVideo from './OwnerVideoView.jsx';
@@ -13,12 +14,14 @@ class OwnerHomepage extends React.Component {
     this.state = {
       videos: [],
       video: '',
-      userId: ''
+      userId: '',
+      searchedVideos: []
     }
     this.getVideos = this.getVideos.bind(this);
     this.getUserId = this.getUserId.bind(this);
     this.showVideoList = this.showVideoList.bind(this);
     this.sendToSelectedVideo = this.sendToSelectedVideo.bind(this);
+    this.getYouTubeVideos = this.getYouTubeVideos.bind(this);
   }
 
   componentDidMount() {
@@ -52,18 +55,29 @@ class OwnerHomepage extends React.Component {
       })
   }
 
+  getYouTubeVideos(query) {
+    axios.get('/owner/searchYouTube', {params: {query: query}})
+    .then(({data}) => {
+      console.log('client side', data)
+      this.setState({
+        searchedVideos: data
+      })
+    })
+  }
+
   render () {
     return (
       <Paper style={style} zDepth={1}>
       <div id="owner-homepage-app">
         <header className="navbar"><h1>Hello {this.props.location.username}</h1></header>
         <div className="main">
-          <Search getVideos={this.getVideos}/>
+          <Search getVideos={this.getYouTubeVideos}/>
           <VideoList 
             userId={this.state.userId}
             videos={this.state.videos} 
             redirect={this.sendToSelectedVideo}
           />
+          <SearchList videos={this.state.searchedVideos}/>
         </div>  
       </div>   
       </Paper>
