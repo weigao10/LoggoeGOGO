@@ -1,3 +1,5 @@
+-- NEW DB:
+
 DROP DATABASE IF EXISTS oneTeam;
 
 CREATE DATABASE oneTeam;
@@ -49,7 +51,7 @@ CREATE TABLE timeStamps (
   -- NEW COLUMNS:
   addressedByTeacher BOOLEAN NOT NULL DEFAULT 0,
   commentType varchar(255),
-  video INT NOT NULL,
+  video INT,
 
   -- FOREIGN KEY REFERENCES TO OTHER TABLES:
   FOREIGN KEY (userId) REFERENCES users(id),
@@ -70,26 +72,16 @@ CREATE TABLE teacherComments (
   FOREIGN KEY (video) REFERENCES videos(id)
 );
 
--- NEW TABLE:
-CREATE TABLE studentComments (
-  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  video INT NOT NULL,
-  timeStamp INT NOT NULL,
-  userId INT NOT NULL,
-  comment varchar(255),
-  addressedByTeacher BOOLEAN NOT NULL DEFAULT 0,
-  commentType varchar(255),
+INSERT INTO users (name, firstName, lastName, hashedPassword, salt, owner) VALUES ('tom', 'Tom', 'Wagner', '123', '456', true);
+INSERT INTO users (name, firstName, lastName, hashedPassword, salt, owner) VALUES ('amy', 'Amy', 'San Felipe', '123', '456', true);
+INSERT INTO users (name, firstName, lastName, hashedPassword, salt, owner) VALUES ('ian', 'Ian', 'Pradhan', '123', '456', false);
+INSERT INTO users (name, firstName, lastName, hashedPassword, salt, owner) VALUES ('wei', 'Wei', 'Gao', '123', '456', false);
 
-  FOREIGN KEY (userId) REFERENCES users(id),
-  FOREIGN KEY (video) REFERENCES videos(id)
-);
+-- insert a video for students to see:
+INSERT INTO videos (videoId, title, userId, description, image, duration) VALUES ('ZK3O402wf1c', 'Lec 1 | MIT 18.06 Linear Algebra, Spring 2005', 1, 'Lecture 1: The Geometry of Linear Equations. View …e information at http://ocw.mit.edu/terms More...', 'https://i.ytimg.com/vi/ZK3O402wf1c/default.jpg', 2389);
 
-INSERT IGNORE INTO users (name, firstName, lastName, hashedPassword, salt, owner) VALUES ('tom', 'Tom', 'Wagner', '123', '456', true);
-INSERT IGNORE INTO users (name, firstName, lastName, hashedPassword, salt, owner) VALUES ('amy', 'Amy', 'San Felipe', '123', '456', true);
-INSERT IGNORE INTO users (name, firstName, lastName, hashedPassword, salt, owner) VALUES ('ian', 'Ian', 'Pradhan', '123', '456', false);
-INSERT IGNORE INTO users (name, firstName, lastName, hashedPassword, salt, owner) VALUES ('wei', 'Wei', 'Gao', '123', '456', false);
+-- insert a comment on the above video:
+INSERT INTO timeStamps (videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video) VALUES ('ZK30402wf1c', 4, 132, 'hello so confused!!', false, null, 1);
 
-INSERT IGNORE INTO videos (videoId, title, userId, description, image, duration) VALUES ('ZK3O402wf1c', 'Lec 1 | MIT 18.06 Linear Algebra, Spring 2005', 1, 'Lecture 1: The Geometry of Linear Equations. View …e information at http://ocw.mit.edu/terms More...', 'https://i.ytimg.com/vi/ZK3O402wf1c/default.jpg', 2389);
-
-INSERT INTO studentComments (video, userId, timeStamp, comment) VALUES (1, 4, 132, 'hello so confused!!');
+-- insert a teacher comment on the video
 INSERT INTO teacherComments (video, userId, begRange, endRange, comment) VALUES (1, 2, 110, 132, "I'm sorry you're confused!");
