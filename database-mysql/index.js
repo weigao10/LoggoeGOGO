@@ -139,9 +139,10 @@ const getOwnerTimestamp = (videoId, callback) => {
 
 //-------------------------------------------- POST REQUESTS
 const setTimestamp = ({userId, videoId, timestamp, comment}, callback) => {
-  const query = `INSERT INTO timeStamps (userId, videoId, timeStamp, comment) VALUES (${userId}, '${videoId}', ${timestamp}, '${comment}');`;
+  const query = `INSERT INTO timeStamps (userId, videoId, timeStamp, comment) VALUES (?, ?, ?, ?);`;
+  const values = [userId, videoId, timestamp, comment];
 
-  connection.query(query, (err, results, fields) => {
+  connection.query(query, values, (err, results, fields) => {
     (err) ?
       console.error(err) :
       callback(results);
