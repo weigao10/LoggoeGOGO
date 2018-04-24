@@ -2,7 +2,7 @@ import React from 'react';
 import Paper from 'material-ui/Paper';
 
 
-const SearchListEntry = ({video}) => (
+const SearchListEntry = ({video, save}) => (
   <Paper style={style}>
     <div onClick={()=>{redirect(video)}} style={{display: 'inline-block'}}>
       <div style={{width: '30%', float: 'left'}}>
@@ -14,6 +14,8 @@ const SearchListEntry = ({video}) => (
         <div style={{fontWeight: 'bold'}}> {video.snippet.title} </div>
         <br/>
         <div style={{color: 'grey'}}> {video.snippet.description} </div>
+        <br/>
+        <button onClick={() => {save(video)}}>Save to Videos</button>
       </div>
     </div>
   </Paper>
