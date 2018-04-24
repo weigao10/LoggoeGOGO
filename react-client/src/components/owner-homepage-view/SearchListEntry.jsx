@@ -3,7 +3,7 @@ import Paper from 'material-ui/Paper';
 
 
 const SearchListEntry = ({video}) => (
-  <Paper>
+  <Paper style={style}>
     <div onClick={()=>{redirect(video)}} style={{display: 'inline-block'}}>
       <div style={{width: '30%', float: 'left'}}>
         <img className="media-object" 
@@ -18,5 +18,14 @@ const SearchListEntry = ({video}) => (
     </div>
   </Paper>
 )
+
+const style = {
+  height: 'auto',
+  width: 'auto',
+  margin: '30px',
+  textAlign: 'center',
+  display: 'block',
+  padding: '30px 5px'
+}
 
 export default SearchListEntry;
