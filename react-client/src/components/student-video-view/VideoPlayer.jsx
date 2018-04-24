@@ -20,6 +20,7 @@ class VideoPlayer extends React.Component {
     this.onPlayVideo = this.onPlayVideo.bind(this);
     this.onPauseVideo = this.onPauseVideo.bind(this);
     this.saveTimeStamp = this.saveTimeStamp.bind(this);
+    this.clearInput = this.clearInput.bind(this);
   }
 
   handleChange(comment) {
@@ -45,52 +46,46 @@ class VideoPlayer extends React.Component {
     this.props.saveTimeStamp(timestamp, this.state.comment);
   }
 
+  clearInput(){
+    this.setState({
+      comment: ''
+    })
+  }
+
   render() {
     const opts = {
       height: '390',
       width: '500',
       playerVars: {
-        autoplay: 1,
+        autoplay: 0,
         start: this.props.startingTimestamp,
       }
     };
 
-    return (
-      <div style={{display: 'block', margin: '20px'}}>
+    return <div style={{ display: "block", margin: "20px" }}>
         <div>
-          <YouTube
-            videoId={this.state.videoId}
-            opts={opts}
-            onReady={this.onReady}
-          />
+          <YouTube videoId={this.state.videoId} opts={opts} onReady={this.onReady} />
         </div>
-        <br/>
+        <br />
         <div>
           <div>
-            <RaisedButton 
-              onClick={this.onPlayVideo} 
-              label="Play" 
-              style={{margin: '5px'}}/>
-            <RaisedButton 
-              onClick={this.onPauseVideo} 
-              label="Pause" 
-              style={{margin: '5px'}}/>
+            <RaisedButton onClick={this.onPlayVideo} label="Play" style={{ margin: "5px" }} />
+            <RaisedButton onClick={this.onPauseVideo} label="Pause" style={{ margin: "5px" }} />
           </div>
           <label>
-            <h4 style={{display: 'inline'}}>Comment: </h4>
-            <AutoComplete 
-              dataSource={[]} 
-              refs={'autocomplete'}
-              onUpdateInput={this.handleChange}
-              onNewRequest={this.saveTimeStamp}/>
-            <RaisedButton 
-              onClick={this.saveTimeStamp} 
-              label="Confused" 
-              style={{margin: '5px'}} />
+            <h4 style={{ display: "inline" }}>Comment: </h4>
+            <AutoComplete dataSource={[]} 
+                          refs={"autocomplete"} 
+                          searchText={this.state.comment}
+                          onUpdateInput={this.handleChange} 
+                          onNewRequest={this.saveTimeStamp} />
+            <RaisedButton onClick={() => {
+                this.saveTimeStamp();
+                this.clearInput();
+              }} label="Confused" style={{ margin: "5px" }} />
           </label>
         </div>
-      </div>
-    );
+      </div>;
   }
 
 }
