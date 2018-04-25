@@ -1,33 +1,64 @@
 import React from 'react';
 import io from 'socket.io-client';
 window.io = io
+let socket;
 
 class ChatRoom extends React.Component {
   constructor(props) {
     super(props);
-    this.socket = this.socket.bind(this);
+    this.state = {
+      message: '',
+      messages: []
+    }
+    this.postMessage = this.postMessage.bind(this);
+    this.changeHandler = this.changeHandler.bind(this);
+  }
+
+  componentDidMount(){
+    socket = window.io.connect('http://localhost:3000');
+  }
+
+  postMessage(){
+    socket.emit('send message', this.state.message);
+    this.setState({
+      messages: [...this.state.messages, this.state.message]
+    }, () => {
+      document.getElementById('message').value = ''
+    })
+  }
+
+  changeHandler(e){
+    this.setState({
+      message: e.target.value
+    })
   }
 
   render() {
-    // console.log('in chatroom render')
-    this.socket()
     return (
       <div style={chatroomStyle}>
         <div style={bodyStyle}>
-          <ul id="messages" style={messagesStyle} />
-          <form style={formStyle} action="">
-            <input style={formInputStyle} id="m" autoComplete="off" />
-            <button style={formButtonStyle}>Send</button>
-          </form>
+          <div id="messages" style={messagesStyle} />
+          {
+            this.state.messages.map((message) => {
+              return (<div style={messagesStyle}>{this.props.username}: {message}</div>)
+            }
+          )}
+          <div style={formStyle}>
+            <input value={this.state.message}
+                    onChange={this.changeHandler}
+                    style={formInputStyle} 
+                    id="message" 
+                    autoComplete="off" 
+            />
+            <button style={formButtonStyle}
+                    onClick={this.postMessage}
+            >Send</button>
+          </div>
         </div>
       </div>
     );
   }
 
-  socket() {
-    // console.log('hello', window.io)
-    var socket = window.io.connect('http://localhost:3000');
-  }
 }
 
 const chatroomStyle ={
@@ -37,7 +68,8 @@ const chatroomStyle ={
 }
 
 const bodyStyle = {
-  'font': '13px Helvetica, Arial'
+  'font': '13px Helvetica, Arial',
+  'border': '1px black solid'
 }
 
 const formStyle = {
@@ -45,7 +77,8 @@ const formStyle = {
   'padding': '3px',
   // 'position': 'fixed',
   'bottom':'0',
-  'width': '100%'
+  'width': '100%',
+  'height': '100%'
 }
 
 const formInputStyle = {
@@ -65,7 +98,12 @@ const formButtonStyle = {
 const messagesStyle = {
   'listStyleType': 'none',
   'margin': '0',
-  'padding': '0'
+  'padding-left': '10px',
+  'textAlign': 'left'
+}
+
+const messageStyle ={
+  "padding": "5px 10px"
 }
 
 /*

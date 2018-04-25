@@ -98,7 +98,9 @@ class StudentVideo extends React.Component {
           </div>
           <div>
             <Paper style={paperStyle2}>
-              <ChatRoom/>
+              <ChatRoom username={this.props.location.username}
+                        videoId={this.props.location.videoId}
+              />
             </Paper>
           </div>
           <div>
