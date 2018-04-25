@@ -187,7 +187,7 @@ io.on('connection', (socket) => {
   }) 
 
   socket.on('send message', (data) => {
-    io.sockets.emit('new message', {msg: data})
+    io.sockets.emit('new message', {msg: JSON.stringify(data)})
   })
 
 });
