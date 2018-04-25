@@ -3,30 +3,21 @@ import Paper from 'material-ui/Paper';
 import SearchListEntry from './SearchListEntry.jsx';
 
 const SearchList = ({videos, redirect, save}) => (
-  <div style={container}>
-    <Paper style={style}>
-      <div>
-        {videos.map((video, i) => <SearchListEntry key={i} video={video} redirect={redirect} save={save}/>)}
-      </div>
-    </Paper>
-  </div>
+  <Paper style={style}>
+    <div>
+      {videos.map((video, i) => <SearchListEntry key={i} video={video} redirect={redirect} save={save}/>)}
+    </div>
+  </Paper>
 )
 
 const style = {
-  height: '100%',
+  height: 'auto',
   width: 'auto',
   margin: '30px',
   textAlign: 'center',
   display: 'block',
-  padding: '30px 5px',
-  "overflow-y": 'auto'
+  padding: '30px 5px'
 }
 
-const container = {
-  height: '70vh',
-  float: 'left',
-  width: '40%',
-  "margin-right": '100px'
-}
 
 export default SearchList;

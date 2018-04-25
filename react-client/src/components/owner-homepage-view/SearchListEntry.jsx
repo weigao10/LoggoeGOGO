@@ -3,7 +3,7 @@ import Paper from 'material-ui/Paper';
 import { DragSource } from 'react-dnd';
 import { ItemTypes } from '../../constants.js';
 
-const searchSource = {
+const videoSource = {
   beginDrag(props) {
     console.log('begin dragging', props)
     const item = {item: props.video}
@@ -55,4 +55,4 @@ const style = {
   padding: '30px 5px'
 }
 
-export default DragSource(ItemTypes.VIDEO, searchSource, collect) (SearchListEntry);
+export default DragSource(ItemTypes.VIDEO, videoSource, collect) (SearchListEntry);
