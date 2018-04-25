@@ -6,20 +6,23 @@ import { ItemTypes } from '../../constants.js';
 const videoSource = {
   beginDrag(props) {
     console.log('begin dragging', props)
-    return {};
+    const item = {item: props.video}
+    console.log(item)
+    return item;
   }
 };
 
 function collect(connect, monitor) {
   return {
-    connectDragSource: connect.dragSource()
+    connectDragSource: connect.dragSource(),
+    isDragging: monitor.isDragging()
   }
 }
 
 class SearchListEntry extends React.Component {
 
   render() {
-    const { connectDragSource, isDragging, video, save, redirect } = this.props
+    const { isDragging, connectDragSource, video, save, redirect } = this.props
     return connectDragSource(
       <div>
       <Paper style={style}>

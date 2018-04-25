@@ -7,21 +7,22 @@ import { DropTarget } from 'react-dnd';
 const videoSource = {
   drop(props, monitor) {
     let item = monitor.getItem();
+    props.save(item.item);
   }
 }
 
 function collect(connect, monitor) {
   return {
     connectDropTarget: connect.dropTarget(),
-    isOver: monitor.isOver()
   }
 }
+
 
 class VideoList extends React.Component {
 
   render() {
-    const { videos, redirect, deleteVideo, connectDropTarget } = this.props;
-    return(
+    const { videos, redirect, deleteVideo, connectDropTarget} = this.props;
+    return connectDropTarget(
       <div>
         <Paper style={style}>
           <div>
