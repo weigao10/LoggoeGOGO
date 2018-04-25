@@ -61,6 +61,7 @@ CREATE TABLE timeStamps (
 CREATE TABLE teacherComments (
   id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   comment varchar(255),
+  videoId varchar(255),
   video INT NOT NULL,
   userId INT NOT NULL,
   begRange INT, -- Beginning timestamp of the video addressed by comment
