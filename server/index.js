@@ -194,8 +194,15 @@ io.on('connection', (socket) => {
     io.sockets.emit('new message', {msg: JSON.stringify(data)})
   })
 });
+<<<<<<< HEAD
 
 //adds chat messages to the chats db
 app.post('/chats', (req, res) => {
   //calls postChats in db index.js
+=======
+
+//adds chat messages to the chats db
+app.post('/chats', (req, res) => {
+
+>>>>>>> starts client server db connection
 })
