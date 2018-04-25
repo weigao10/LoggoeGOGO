@@ -28,7 +28,7 @@ const getUser = (user, callback) => {
     });
   } 
 
-  const getTeachers = (user, callback) => {
+  const getTeachers = (callback) => {
     let query = `SELECT * FROM users WHERE owner = 1`;
     
     connection.query(query, (err, results) => {
