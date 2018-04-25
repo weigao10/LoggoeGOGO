@@ -19,5 +19,10 @@ const style = {
   padding: '30px 5px'
 }
 
+const container = {
+  height: '70vh',
+  float: 'left',
+  width: '40%'
+}
 
 export default SearchList;
