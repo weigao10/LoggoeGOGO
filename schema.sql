@@ -71,6 +71,19 @@ CREATE TABLE teacherComments (
   FOREIGN KEY (video) REFERENCES videos(id)
 );
 
+CREATE TABLE chats (
+  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  video INT NOT NULL,
+  videoId varchar(255) NOT NULL,
+  name varchar(255),
+  userId INT NOT NULL,
+  text varchar(255),
+  timeStamp INT(11) NOT NULL,
+
+  FOREIGN KEY (userId) REFERENCES users(id),
+  FOREIGN KEY (video) REFERENCES videos(id)
+);
+
 INSERT INTO users (name, firstName, lastName, hashedPassword, salt, owner) VALUES ('tom', 'Tom', 'Wagner', '123', '456', true);
 INSERT INTO users (name, firstName, lastName, hashedPassword, salt, owner) VALUES ('amy', 'Amy', 'San Felipe', '123', '456', true);
 INSERT INTO users (name, firstName, lastName, hashedPassword, salt, owner) VALUES ('ian', 'Ian', 'Pradhan', '123', '456', false);
@@ -84,3 +97,4 @@ INSERT INTO timeStamps (videoId, userId, timeStamp, comment, addressedByTeacher,
 
 -- insert a teacher comment on the video
 INSERT INTO teacherComments (video, userId, begRange, endRange, comment) VALUES (1, 2, 110, 132, "I'm sorry you're confused!");
+

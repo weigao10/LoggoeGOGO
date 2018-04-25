@@ -117,7 +117,7 @@ const setVideo = (video, userId, duration, callback) => {
 //---------------------------------------------------------TIMESTAMP QUERIES
 //-------------------------------------------- GET REQUESTS
 const getTimestamp = (videoId, userId, callback) => {
-  const query = `SELECT timestamp, comment FROM timeStamps WHERE videoId = '${videoId}' AND userId = '${userId}' ORDER BY timestamp asc;`
+  const query = `SELECT timestamp, comment FROM timeStamps WHERE videoId = '${videoId}' ORDER BY timestamp asc;`
 
   connection.query(query, (err, results, fields) => {
     (err) ?
