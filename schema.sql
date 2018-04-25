@@ -79,12 +79,12 @@ CREATE TABLE teacherComments (
 
 CREATE TABLE chats (
   id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  video INT NOT NULL,
+  video INT,
   videoId varchar(255) NOT NULL,
-  name varchar(255),
-  userId INT NOT NULL,
+  username varchar(255),
+  userId INT,
   text varchar(255),
-  timeStamp INT(11) NOT NULL,
+  timeStamp DATETIME NOT NULL,
 
   FOREIGN KEY (userId) REFERENCES users(id) ON DELETE CASCADE,
   FOREIGN KEY (video) REFERENCES videos(id) ON DELETE CASCADE
