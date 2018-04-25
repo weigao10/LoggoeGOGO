@@ -1,6 +1,7 @@
 import React from 'react';
 import Paper from 'material-ui/Paper';
 
+
 const VideoListEntry = ({video, redirect, deleteVideo}) => (
   <Paper style={style} key={video.id}>
     <div key={video.id} style={{display: 'inline-block'}}>
@@ -19,6 +20,7 @@ const VideoListEntry = ({video, redirect, deleteVideo}) => (
     </div>
   </Paper>
 )
+
 
 const style = {
   height: 'auto',
