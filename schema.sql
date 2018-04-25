@@ -3,13 +3,7 @@
 DROP DATABASE IF EXISTS oneTeam;
 CREATE DATABASE oneTeam;
 USE oneTeam;
-CREATE TABLE timeStamps (
-  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  videoId varchar(255) NOT NULL,
-  userId INT NOT NULL,
-  timeStamp INT(11) NOT NULL,
-  comment varchar(255)
-);
+
 CREATE TABLE users (
   -- 'name' is equivalent to username
   -- not renamed to username in order to avoid breaking legacy code
@@ -25,6 +19,7 @@ CREATE TABLE users (
   hashedPassword varchar(255),
   salt varchar(255)
 );
+
 CREATE TABLE videos (
   -- LEGACY CODE:
   id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -85,7 +80,7 @@ INSERT INTO users (name, firstName, lastName, hashedPassword, salt, owner) VALUE
 INSERT INTO videos (videoId, title, userId, description, image, duration) VALUES ('ZK3O402wf1c', 'Lec 1 | MIT 18.06 Linear Algebra, Spring 2005', 1, 'Lecture 1: The Geometry of Linear Equations. View …e information at http://ocw.mit.edu/terms More...', 'https://i.ytimg.com/vi/ZK3O402wf1c/default.jpg', 2389);
 
 -- insert a comment on the above video:
-INSERT INTO timeStamps (videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video) VALUES ('ZK30402wf1c', 4, 132, 'hello so confused!!', false, null, 1);
+INSERT INTO timeStamps (videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video) VALUES ('ZK3O402wf1c', 4, 132, 'hello so confused!!', false, null, 1);
 
 -- insert a teacher comment on the video
 INSERT INTO teacherComments (video, userId, begRange, endRange, comment) VALUES (1, 2, 110, 132, "I'm sorry you're confused!");
