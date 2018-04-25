@@ -61,11 +61,25 @@ CREATE TABLE timeStamps (
 CREATE TABLE teacherComments (
   id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   comment varchar(255),
+  videoId varchar(255),
   video INT NOT NULL,
   userId INT NOT NULL,
   begRange INT, -- Beginning timestamp of the video addressed by comment
   endRange INT, -- Ending timestamp of the video addressed by comment
   commentType varchar(255),
+
+  FOREIGN KEY (userId) REFERENCES users(id),
+  FOREIGN KEY (video) REFERENCES videos(id)
+);
+
+CREATE TABLE chats (
+  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  video INT NOT NULL,
+  videoId varchar(255) NOT NULL,
+  name varchar(255),
+  userId INT NOT NULL,
+  text varchar(255),
+  timeStamp INT(11) NOT NULL,
 
   FOREIGN KEY (userId) REFERENCES users(id),
   FOREIGN KEY (video) REFERENCES videos(id)
@@ -84,3 +98,4 @@ INSERT INTO timeStamps (videoId, userId, timeStamp, comment, addressedByTeacher,
 
 -- insert a teacher comment on the video
 INSERT INTO teacherComments (video, userId, begRange, endRange, comment) VALUES (1, 2, 110, 132, "I'm sorry you're confused!");
+

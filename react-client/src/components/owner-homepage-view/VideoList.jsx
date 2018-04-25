@@ -1,14 +1,39 @@
 import React from 'react';
 import VideoListEntry from './VideoListEntry.jsx';
 import Paper from 'material-ui/Paper';
+import { ItemTypes } from '../../constants.js';
+import { DropTarget } from 'react-dnd';
 
-const VideoList = ({videos, redirect}) => (
-    <Paper style={style}>
+const videoSource = {
+  drop(props, monitor) {
+    let item = monitor.getItem();
+    props.save(item.item);
+  }
+}
+
+function collect(connect, monitor) {
+  return {
+    connectDropTarget: connect.dropTarget(),
+  }
+}
+
+
+class VideoList extends React.Component {
+
+  render() {
+    const { videos, redirect, deleteVideo, connectDropTarget} = this.props;
+    return connectDropTarget(
       <div>
-        {videos.map((video, i) => <VideoListEntry key={i} video={video} redirect={redirect}/>)}
+        <Paper style={style}>
+          <div>
+            {videos.map((video, i) => <VideoListEntry key={i} video={video} redirect={redirect} deleteVideo={deleteVideo}/>)}
+          </div>
+        </Paper>
       </div>
-    </Paper>
-)
+    )
+  }
+}
+
 
 const style = {
   height: 'auto',
@@ -19,4 +44,4 @@ const style = {
   padding: '30px 5px'
 }
 
-export default VideoList
+export default DropTarget(ItemTypes.VIDEO, videoSource, collect)(VideoList);

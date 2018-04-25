@@ -5,6 +5,7 @@ import $ from 'jquery';
 
 import VideoPlayer from './student-video-view/VideoPlayer.jsx'
 import TimestampList from './student-video-view/TimestampList.jsx'
+import ChatRoom from './student-video-view/ChatRoom.jsx'
 import Paper from 'material-ui/Paper';
 
 class StudentVideo extends React.Component {
@@ -97,10 +98,18 @@ class StudentVideo extends React.Component {
           </div>
           <div>
             <Paper style={paperStyle2}>
+              <ChatRoom username={this.props.location.username}
+                        videoId={this.props.location.videoId}
+              />
+            </Paper>
+          </div>
+          <div>
+            <Paper style={paperStyle2}>
               <TimestampList 
                 timestamps={this.state.timestamps} 
                 deleteTimestamp={this.deleteTimestamp}
                 changeVideo={this.changeVideo}/>
+              
             </Paper>
           </div>
         </div>

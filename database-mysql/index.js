@@ -117,7 +117,7 @@ const setVideo = (video, userId, duration, callback) => {
 //---------------------------------------------------------TIMESTAMP QUERIES
 //-------------------------------------------- GET REQUESTS
 const getTimestamp = (videoId, userId, callback) => {
-  const query = `SELECT timestamp, comment FROM timeStamps WHERE videoId = '${videoId}' AND userId = '${userId}' ORDER BY timestamp asc;`
+  const query = `SELECT timestamp, comment FROM timeStamps WHERE videoId = '${videoId}' ORDER BY timestamp asc;`
 
   connection.query(query, (err, results, fields) => {
     (err) ?
@@ -159,6 +159,16 @@ const deleteTimestamp = ({userId, videoId, timestamp}, callback) => {
       callback(results);
   })
 }
+
+const deleteVideo = (userId, videoId, callback) => {
+  const query = `DELETE FROM videos WHERE userId = ${userId} AND videoId = '${videoId}'`
+  
+  connection.query(query, (err, results) => {
+    (err) ?
+    console.error(err) : 
+    callback(results);
+  })
+}
   
 exports.getBuckets = getBuckets;
 exports.getUser = getUser;
@@ -172,3 +182,4 @@ exports.getOwnerVideos = getOwnerVideos;
 exports.getCurrentVideo = getCurrentVideo;
 exports.getOwnerTimestamp = getOwnerTimestamp;
 exports.deleteTimestamp = deleteTimestamp;
+exports.deleteVideo = deleteVideo;
