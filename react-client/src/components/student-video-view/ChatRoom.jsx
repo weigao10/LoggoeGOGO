@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 import io from 'socket.io-client';
 window.io = io;
 
@@ -33,6 +34,8 @@ class ChatRoom extends React.Component {
       msg: this.state.message,
       user: this.props.username
     });
+
+    //send post req with message, user, videoId, timestamp to server
   }
 
   changeHandler(e) {
@@ -48,9 +51,10 @@ class ChatRoom extends React.Component {
           {this.state.messages.map(message => {
             let user = JSON.parse(message).user;
             let msg = JSON.parse(message).msg;
-            return <div style={messageStyle}>
-                {user}: {msg}
-              </div>;
+            return <div 
+                      style={messageStyle}>
+                      {user}: {msg}
+                    </div>;
           })}
           </div>
         </div>

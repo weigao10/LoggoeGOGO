@@ -109,9 +109,7 @@ class StudentVideo extends React.Component {
               <TimestampList 
                 timestamps={this.state.timestamps} 
                 deleteTimestamp={this.deleteTimestamp}
-                changeVideo={this.changeVideo}
-                userId={this.state.userId}/>
-              
+                changeVideo={this.changeVideo}/>
             </Paper>
           </div>
         </div>
