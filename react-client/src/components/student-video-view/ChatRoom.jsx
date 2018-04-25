@@ -1,7 +1,6 @@
 import React from 'react';
 import io from 'socket.io-client';
-window.io = io
-let socket;
+window.io = io;
 
 class ChatRoom extends React.Component {
   constructor(props) {
@@ -10,21 +9,25 @@ class ChatRoom extends React.Component {
       message: '',
       messages: []
     }
+    this.socket = null;
     this.postMessage = this.postMessage.bind(this);
     this.changeHandler = this.changeHandler.bind(this);
   }
 
   componentDidMount(){
-    socket = window.io.connect('http://localhost:3000');
+    this.socket = window.io.connect('http://localhost:3000');
+    this.socket.on('new message', (data) => {
+      this.setState({
+        messages: [...this.state.messages, data.msg]
+      }, () => {
+        document.getElementById('message').value = ''
+      })
+    })
   }
 
   postMessage(){
-    socket.emit('send message', this.state.message);
-    this.setState({
-      messages: [...this.state.messages, this.state.message]
-    }, () => {
-      document.getElementById('message').value = ''
-    })
+    this.socket.emit('send message', {msg: this.state.message, user: this.props.username});
+
   }
 
   changeHandler(e){
@@ -40,9 +43,11 @@ class ChatRoom extends React.Component {
           <div id="messages" style={messagesStyle} />
           {
             this.state.messages.map((message) => {
-              return (<div style={messagesStyle}>{this.props.username}: {message}</div>)
-            }
-          )}
+              let user = JSON.parse(message).user;
+              let msg = JSON.parse(message).msg;
+              return (<div style={messagesStyle}>{user}: {msg}</div>)
+            })
+          }
           <div style={formStyle}>
             <input value={this.state.message}
                     onChange={this.changeHandler}
@@ -98,17 +103,12 @@ const formButtonStyle = {
 const messagesStyle = {
   'listStyleType': 'none',
   'margin': '0',
-  'padding-left': '10px',
+  'paddingLeft': '10px',
   'textAlign': 'left'
 }
 
 const messageStyle ={
   "padding": "5px 10px"
 }
-
-/*
-      #messages li { padding: 5px 10px; }
-      #messages li:nth-child(odd) { background: #eee; }
-*/
 
 export default ChatRoom;
