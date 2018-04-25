@@ -28,6 +28,7 @@ class OwnerHomepage extends React.Component {
 
   componentDidMount() {
     this.getUserId(this.props.location.username);
+    this.getYouTubeVideos('javascript');
   }
   
   getUserId(user) {
