@@ -6,109 +6,104 @@ class ChatRoom extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      message: '',
+      message: "",
       messages: []
-    }
+    };
     this.socket = null;
     this.postMessage = this.postMessage.bind(this);
     this.changeHandler = this.changeHandler.bind(this);
   }
 
-  componentDidMount(){
-    this.socket = window.io.connect('http://localhost:3000');
-    this.socket.on('new message', (data) => {
-      this.setState({
-        messages: [...this.state.messages, data.msg]
-      }, () => {
-        document.getElementById('message').value = ''
-      })
-    })
+  componentDidMount() {
+    this.socket = window.io.connect("http://localhost:3000");
+    this.socket.on("new message", data => {
+      this.setState(
+        {
+          messages: [...this.state.messages, data.msg]
+        },
+        () => {
+          document.getElementById("message").value = "";
+        }
+      );
+    });
   }
 
-  postMessage(){
-    this.socket.emit('send message', {msg: this.state.message, user: this.props.username});
-
+  postMessage() {
+    this.socket.emit("send message", {
+      msg: this.state.message,
+      user: this.props.username
+    });
   }
 
-  changeHandler(e){
+  changeHandler(e) {
     this.setState({
       message: e.target.value
-    })
+    });
   }
 
   render() {
-    return (
-      <div style={chatroomStyle}>
-        <div style={bodyStyle}>
-          <div id="messages" style={messagesStyle} />
-          {
-            this.state.messages.map((message) => {
-              let user = JSON.parse(message).user;
-              let msg = JSON.parse(message).msg;
-              return (<div style={messagesStyle}>{user}: {msg}</div>)
-            })
-          }
-          <div style={formStyle}>
-            <input value={this.state.message}
-                    onChange={this.changeHandler}
-                    style={formInputStyle} 
-                    id="message" 
-                    autoComplete="off" 
-            />
-            <button style={formButtonStyle}
-                    onClick={this.postMessage}
-            >Send</button>
+    return <div style={chatroomStyle}>
+        <div style={msgContainerStyle}>
+          <div style={overflowStyle}>
+          {this.state.messages.map(message => {
+            let user = JSON.parse(message).user;
+            let msg = JSON.parse(message).msg;
+            return <div style={messageStyle}>
+                {user}: {msg}
+              </div>;
+          })}
           </div>
         </div>
-      </div>
-    );
+        <div style={inputContainerStyle}>
+          <input value={this.state.message} onChange={this.changeHandler} style={inputStyle} id="message" autoComplete="off" />
+          <button style={buttonStyle} onClick={this.postMessage}>
+            Send
+          </button>
+        </div>
+      </div>;
   }
-
 }
 
 const chatroomStyle ={
   "margin": "0",
   "padding": "0",
-  "boxSizing": "border-box"
-}
-
-const bodyStyle = {
+  "boxSizing": "border-box",
   'font': '13px Helvetica, Arial',
-  'border': '1px black solid'
+  'border': '5px black solid'
 }
 
-const formStyle = {
+const inputContainerStyle = {
   'background': '#000',
-  'padding': '3px',
-  // 'position': 'fixed',
   'bottom':'0',
-  'width': '100%',
-  'height': '100%'
+  'width': '100%'
 }
 
-const formInputStyle = {
+const inputStyle = {
   'border': '0',
   'padding': '10px',
-  'width': '90%',
-  'marginRight': '.5%'
+  'width': '93%'
 }
 
-const formButtonStyle = {
+const buttonStyle = {
   'width': '17%',
   'background': 'rgb(130, 224, 255)',
   'border': 'none',
   'padding': '10px'
 }
 
-const messagesStyle = {
-  'listStyleType': 'none',
-  'margin': '0',
+const msgContainerStyle = {
+  'border': '1px black solid',
+  'height': '40vh'
+}
+
+const messageStyle ={
   'paddingLeft': '10px',
   'textAlign': 'left'
 }
 
-const messageStyle ={
-  "padding": "5px 10px"
+const overflowStyle = {
+  'overflowY': 'auto', 
+  'height':'100%'
 }
 
 export default ChatRoom;
