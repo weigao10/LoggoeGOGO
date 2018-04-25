@@ -1,3 +1,4 @@
+// MYSQL DATABASE QUERYING FUNCTIONS:
 const mysql = require('mysql');
 const connection = mysql.createConnection({
   host     : 'localhost',
