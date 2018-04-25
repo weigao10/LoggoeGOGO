@@ -47,8 +47,10 @@ app.post('/login', (req, res) => {
         if (err) {
           console.log(err);
         }
+        console.log(response);
         req.session.user = response[0].name;
         req.session.isOwner = response[0].owner;
+        req.session.userId = response[0].id;
         res.status(201).send(response);
       })
     }
@@ -87,7 +89,7 @@ app.post('/register', (req, res) => {
 })
 
 //---------------------------------------------------------USER ID
-//get userId for owner homepage and student homepage
+//get userId for owner homepage and homepage
 app.get('/user/id', (req, res) => {
   getUserId(req.query.user, (userId) => 
     res.send(userId)
@@ -112,7 +114,8 @@ app.get('/user/loginstatus', (req, res) => {
   res.send({
     isLoggedIn: true,
     username: req.session.user,
-    isOwner: req.session.isOwner
+    isOwner: req.session.isOwner,
+    userId: req.session.userId
   });
 })
 

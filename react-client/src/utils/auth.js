@@ -3,7 +3,8 @@ import axios from 'axios';
 const Auth = {
     isLoggedIn: false,
     username: null,
-    isOwner: null
+    isOwner: null,
+    userId: null
 }
 
 Auth.getInfo = () => {
@@ -14,11 +15,13 @@ Auth.getInfo = () => {
       if (res.data.isLoggedIn) {
         Auth.isLoggedIn = true;
         Auth.username = res.data.username;
-        Auth.isOwner = res.data.isOwner
+        Auth.isOwner = res.data.isOwner;
+        Auth.userId = res.data.userId;
       } else {
           Auth.isLoggedIn = false;
-          Auth.username = null,
-          Auth.isOwner = null
+          Auth.username = null;
+          Auth.isOwner = null;
+          Auth.userId = null;
       }
     }).catch(
       err => {
