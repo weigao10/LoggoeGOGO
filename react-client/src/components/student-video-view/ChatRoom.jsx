@@ -68,7 +68,8 @@ const chatroomStyle ={
 }
 
 const bodyStyle = {
-  'font': '13px Helvetica, Arial'
+  'font': '13px Helvetica, Arial',
+  'border': '1px black solid'
 }
 
 const formStyle = {
@@ -97,12 +98,12 @@ const formButtonStyle = {
 const messagesStyle = {
   'listStyleType': 'none',
   'margin': '0',
-  'padding': '0'
+  'padding-left': '10px',
+  'textAlign': 'left'
 }
 
 const messageStyle ={
   "padding": "5px 10px"
-
 }
 
 /*
