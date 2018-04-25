@@ -1,15 +1,38 @@
 import React from 'react';
 import io from 'socket.io-client';
 window.io = io
+let socket;
 
 class ChatRoom extends React.Component {
   constructor(props) {
     super(props);
-    this.socket = this.socket.bind(this);
+    this.state = {
+      message: '',
+      messages: []
+    }
+    this.postMessage = this.postMessage.bind(this);
+    this.changeHandler = this.changeHandler.bind(this);
+    //username will be props
+    //videoId will be props
   }
 
   componentDidMount(){
-    this.socket()
+    socket = window.io.connect('http://localhost:3000');
+  }
+
+  postMessage(){
+    socket.emit('send message', this.state.message);
+    this.setState({
+      messages: [...this.state.messages, this.state.message]
+    }, () => {
+      document.getElementById('message').value = ''
+    })
+  }
+
+  changeHandler(e){
+    this.setState({
+      message: e.target.value
+    })
   }
 
   render() {
@@ -17,19 +40,27 @@ class ChatRoom extends React.Component {
       <div style={chatroomStyle}>
         <div style={bodyStyle}>
           <ul id="messages" style={messagesStyle} />
-          <form style={formStyle} action="">
-            <input style={formInputStyle} id="m" autoComplete="off" />
-            <button style={formButtonStyle}>Send</button>
-          </form>
+          {
+            this.state.messages.map((message) => {
+              return (<li>{message}</li>)
+            }
+          )}
+          <div style={formStyle}>
+            <input value={this.state.message}
+                    onChange={this.changeHandler}
+                    style={formInputStyle} 
+                    id="message" 
+                    autoComplete="off" 
+            />
+            <button style={formButtonStyle}
+                    onClick={this.postMessage}
+            >Send</button>
+          </div>
         </div>
       </div>
     );
   }
 
-  socket() {
-    // console.log('hello', window.io)
-    var socket = window.io.connect('http://localhost:3000');
-  }
 }
 
 const chatroomStyle ={
@@ -47,7 +78,8 @@ const formStyle = {
   'padding': '3px',
   // 'position': 'fixed',
   'bottom':'0',
-  'width': '100%'
+  'width': '100%',
+  'height': '100%'
 }
 
 const formInputStyle = {
