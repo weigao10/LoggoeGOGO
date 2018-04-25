@@ -15,15 +15,28 @@ class TimestampListEntry extends React.Component {
   }
 
   onDeleteTimestamp() {
-    this.props.deleteTimestamp(this.props.timestamp.timestamp)
+    this.props.deleteTimestamp(this.props.timestamp.id)
   }
   
   render() {
     return (
       <Paper style={style}>
         <div>
+          <h4 style={{display: 'inline'}}>User logged in: </h4> 
+          {this.props.userId}
+        </div>
+        <div>
           <h4 style={{display: 'inline'}}>Timestamp: </h4> 
           {(this.props.timestamp.timestamp / 60 | 0) + ':' + String(this.props.timestamp.timestamp % 60).padStart(2, '0')}
+        </div>
+        <div>
+          <h4 style={{display: 'inline'}}>Username: </h4>
+          {this.props.timestamp.username}
+        </div>
+        <div>
+          <h4 style={{display: 'inline'}}>User ID: </h4> 
+          {this.props.timestamp.userId}
+          {/* the above is the same as this.props.userId */}
         </div>
         <div>
           <h4 style={{display: 'inline'}}>Comment: </h4> 
@@ -31,7 +44,7 @@ class TimestampListEntry extends React.Component {
         </div>
         <div>
           <button onClick={this.onChangeVideo}>Watch This Clip</button>
-          <button onClick={this.onDeleteTimestamp}>X</button>
+          {this.props.userId === this.props.timestamp.userId ? <button onClick={this.onDeleteTimestamp}>X</button> : null }
         </div>
       </Paper>
       );

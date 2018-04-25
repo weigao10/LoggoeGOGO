@@ -1,7 +1,9 @@
+// MYSQL DATABASE QUERYING FUNCTIONS:
 const mysql = require('mysql');
 const connection = mysql.createConnection({
   host     : 'localhost',
   user     : 'root',
+  password : '',
   database : 'oneTeam'
 });
 
@@ -15,7 +17,7 @@ const getUser = (user, callback) => {
       console.error(err) :
       callback(err, results);
   });
-  } 
+}
   
   const getUserId = (user, callback) => {
     let query = `SELECT id FROM users WHERE name = "${user}"`;
@@ -70,7 +72,6 @@ const getOwnerVideos = (userId, callback) => {
   });
 };
 
-
 const getBuckets = function({videoId, duration}, callback) {
   let bucketFloors = []
   for (let i = 0; i < duration; i+=duration/10) {
@@ -117,12 +118,12 @@ const setVideo = (video, userId, duration, callback) => {
 //---------------------------------------------------------TIMESTAMP QUERIES
 //-------------------------------------------- GET REQUESTS
 const getTimestamp = (videoId, userId, callback) => {
-  const query = `SELECT timestamp, comment FROM timeStamps WHERE videoId = '${videoId}' AND userId = '${userId}' ORDER BY timestamp asc;`
+  const query = `SELECT timestamp, comment, id, videoId, userId, username, addressedByTeacher, commentType, video FROM timeStamps WHERE videoId = '${videoId}' ORDER BY timestamp asc;`
 
   connection.query(query, (err, results, fields) => {
     (err) ?
       console.error(err) :
-      console.log(results, 'results from db') 
+      console.log('results from db: ', results); 
       callback(results);
   })
 }
@@ -139,9 +140,10 @@ const getOwnerTimestamp = (videoId, callback) => {
 
 //-------------------------------------------- POST REQUESTS
 const setTimestamp = ({userId, videoId, timestamp, comment}, callback) => {
-  const query = `INSERT INTO timeStamps (userId, videoId, timeStamp, comment) VALUES (${userId}, '${videoId}', ${timestamp}, '${comment}');`;
+  const query = `INSERT INTO timeStamps (userId, videoId, timeStamp, comment) VALUES (?, ?, ?, ?);`;
+  const values = [userId, videoId, timestamp, comment];
 
-  connection.query(query, (err, results, fields) => {
+  connection.query(query, values, (err, results, fields) => {
     (err) ?
       console.error(err) :
       callback(results);
@@ -149,13 +151,23 @@ const setTimestamp = ({userId, videoId, timestamp, comment}, callback) => {
 };
 
 //-------------------------------------------- DELETE REQUESTS
-const deleteTimestamp = ({userId, videoId, timestamp}, callback) => {
-  const query = `DELETE FROM timeStamps WHERE userId = ${userId} AND videoId = '${videoId}' AND timeStamp = ${timestamp};`
+const deleteTimestamp = ({userId, videoId, id}, callback) => {
+  const query = `DELETE FROM timeStamps WHERE userId = ${userId} AND videoId = '${videoId}' AND id = ${id};`
 
   connection.query(query, (err, results, fields) => {
     (err) ?
       console.error(err) :
       callback(results);
+  })
+}
+
+const deleteVideo = (userId, videoId, callback) => {
+  const query = `DELETE FROM videos WHERE userId = ${userId} AND videoId = '${videoId}'`
+  
+  connection.query(query, (err, results) => {
+    (err) ?
+    console.error(err) : 
+    callback(results);
   })
 }
   
@@ -171,3 +183,4 @@ exports.getOwnerVideos = getOwnerVideos;
 exports.getCurrentVideo = getCurrentVideo;
 exports.getOwnerTimestamp = getOwnerTimestamp;
 exports.deleteTimestamp = deleteTimestamp;
+exports.deleteVideo = deleteVideo;
