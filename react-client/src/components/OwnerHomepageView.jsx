@@ -2,6 +2,7 @@ import {withRouter} from 'react-router-dom';
 import React from 'react';
 import axios from 'axios';
 
+import Hidden from './owner-homepage-view/Hidden.jsx';
 import SearchList from './owner-homepage-view/SearchList.jsx';
 import VideoList from './owner-homepage-view/VideoList.jsx';
 import Search from './owner-homepage-view/Search.jsx';
@@ -90,6 +91,7 @@ class OwnerHomepage extends React.Component {
           <Search getVideos={this.getYouTubeVideos}/>
           <div>
           <SearchList videos={this.state.searchedVideos} save={this.saveVideo} redirect={this.sendToSelectedVideo}/>
+          <Hidden deleteVideo={this.deleteVideo}/>
           <VideoList 
             userId={this.state.userId}
             videos={this.state.videos} 

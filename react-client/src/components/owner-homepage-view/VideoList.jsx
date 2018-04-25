@@ -23,7 +23,7 @@ class VideoList extends React.Component {
   render() {
     const { videos, redirect, deleteVideo, connectDropTarget} = this.props;
     return connectDropTarget(
-      <div>
+      <div style={container}>
         <Paper style={style}>
           <div>
             {videos.map((video, i) => <VideoListEntry key={i} video={video} redirect={redirect} deleteVideo={deleteVideo}/>)}
@@ -36,12 +36,17 @@ class VideoList extends React.Component {
 
 
 const style = {
-  height: 'auto',
+  height: '100%',
   width: 'auto',
   margin: '30px',
   textAlign: 'center',
   display: 'block',
   padding: '30px 5px',
+  "overflow-y": 'auto'
+}
+
+const container = {
+  height: '70vh',
   float: 'right',
   width: '40%'
 }

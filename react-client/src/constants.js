@@ -1,3 +1,4 @@
 export const ItemTypes = {
-  VIDEO: 'video'
+  VIDEO: 'video',
+  SAVED: 'saved'
 };
