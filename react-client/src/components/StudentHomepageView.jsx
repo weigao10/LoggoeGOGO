@@ -44,6 +44,11 @@ class StudentHomepage extends React.Component {
                                 label="Search" />
                         </div>
                     </Paper>
+                    <br/>
+                    <Paper style={searchStyle} zDepth={1}>
+                    <select>
+                    </select>
+                    </Paper>
                     <VideoList 
                         videos={this.state.videoList} 
                         redirect={this.sendToSelectedVideo}/>
