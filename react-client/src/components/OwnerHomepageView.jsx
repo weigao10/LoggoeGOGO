@@ -1,8 +1,6 @@
 import {withRouter} from 'react-router-dom';
 import React from 'react';
 import axios from 'axios';
-import { DragDropContext } from 'react-dnd';
-import HTML5Backend from 'react-dnd-html5-backend';
 
 import SearchList from './owner-homepage-view/SearchList.jsx';
 import VideoList from './owner-homepage-view/VideoList.jsx';
@@ -125,4 +123,4 @@ const style = {
   background: '#D8E4EA'
 }
 
-export default withRouter((DragDropContext(HTML5Backend), OwnerHomepage))
+export default withRouter(OwnerHomepage)
