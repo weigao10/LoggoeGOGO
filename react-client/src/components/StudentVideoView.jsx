@@ -100,6 +100,7 @@ class StudentVideo extends React.Component {
             <Paper style={paperStyle2}>
               <ChatRoom username={this.props.location.username}
                         videoId={this.props.location.videoId}
+                        userId={this.props.location.userId}
               />
             </Paper>
           </div>

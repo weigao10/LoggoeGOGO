@@ -195,5 +195,5 @@ io.on('connection', (socket) => {
 
 //adds chat messages to the chats db
 app.post('/chats', (req, res) => {
-
+  //calls postChats in db index.js
 })

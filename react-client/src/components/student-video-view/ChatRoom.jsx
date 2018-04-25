@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import io from 'socket.io-client';
+import moment from 'moment';
 window.io = io;
 
 class ChatRoom extends React.Component {
@@ -34,8 +35,15 @@ class ChatRoom extends React.Component {
       msg: this.state.message,
       user: this.props.username
     });
-
     //send post req with message, user, videoId, timestamp to server
+    // axios.post('/chat', {
+    //   params: {
+    //     userId: this.props.userId,
+    //     username: this.props.username,
+    //     timestamp: moment(),
+    //     videoId: this.props.videoId
+    //   }
+    // })
   }
 
   changeHandler(e) {
@@ -48,12 +56,14 @@ class ChatRoom extends React.Component {
     return <div style={chatroomStyle}>
         <div style={msgContainerStyle}>
           <div style={overflowStyle}>
-          {this.state.messages.map(message => {
+          {this.state.messages.map((message, idx) => {
             let user = JSON.parse(message).user;
             let msg = JSON.parse(message).msg;
-            return <div 
+            let timestamp = moment().format('llll');
+            return <div key={idx}
                       style={messageStyle}>
                       {user}: {msg}
+                      <div style={timestampStyle}> {timestamp}</div>
                     </div>;
           })}
           </div>
@@ -108,6 +118,12 @@ const messageStyle ={
 const overflowStyle = {
   'overflowY': 'auto', 
   'height':'100%'
+}
+
+const timestampStyle = {
+  'font': '9px Helvetica, Arial', 
+  'fontStyle': 'italic',
+  'color': '#D3D3D3',
 }
 
 export default ChatRoom;
