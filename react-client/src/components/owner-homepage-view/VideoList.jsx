@@ -44,11 +44,4 @@ const style = {
   padding: '30px 5px'
 }
 
-const container = {
-  height: '70%',
-  float: 'right',
-  width: '40%'
-}
-
-
 export default DropTarget(ItemTypes.VIDEO, videoSource, collect)(VideoList);

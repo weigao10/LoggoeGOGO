@@ -97,9 +97,8 @@ class OwnerHomepage extends React.Component {
         <header className="navbar"><h1>Hello {this.props.location.username}</h1></header>
         <div className="main">
           <Search getVideos={this.getYouTubeVideos}/>
-          <div>
-          {this.state.searchedVideos.length === 0 ? <div style={hidden}></div> : <SearchList videos={this.state.searchedVideos} save={this.saveVideo} redirect={this.sendToSelectedVideo}/>}
-          <Hidden deleteVideo={this.deleteVideo}/>
+          <SearchList videos={this.state.searchedVideos} save={this.saveVideo} redirect={this.sendToSelectedVideo}/>
+          Saved Videos:
           <VideoList 
             userId={this.state.userId}
             videos={this.state.videos} 
@@ -122,12 +121,6 @@ const style = {
   display: 'block',
   padding: '30px',
   background: '#D8E4EA'
-}
-
-const hidden = {
-  height: '70vh',
-  float: 'left',
-  width: '40%'
 }
 
 export default withRouter(OwnerHomepage)
