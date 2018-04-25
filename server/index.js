@@ -198,7 +198,9 @@ app.get('/buckets', (req,res) => {
 
 app.get('/timestamps', (req, res) => {
   let videoId = req.query.videoId
-  getTimestamp(videoId, req.query.userId, (data) => {res.json(data)});  
+  getTimestamp(videoId, req.query.userId, (data) => {
+    res.json(data);
+  });  
 })
 
 
@@ -242,7 +244,7 @@ io.on('connection', (socket) => {
   }) 
 
   socket.on('send message', (data) => {
-    io.sockets.emit('new message', {msg: data})
+    io.sockets.emit('new message', {msg: JSON.stringify(data)})
   })
 
 });

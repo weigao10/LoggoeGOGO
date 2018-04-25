@@ -51,7 +51,7 @@ class StudentVideo extends React.Component {
     .then(() => {this.getAllTimestamps()})
   }
 
-  deleteTimestamp(timestamp) {
+  deleteTimestamp(id) {
     const user = this.state.userId;
     const videoId = this.props.location.videoId;
 
@@ -59,7 +59,7 @@ class StudentVideo extends React.Component {
       params: {
         userId: user,
         videoId: this.props.location.videoId,
-        timestamp: timestamp
+        id: id
       }
     })
     .then(() => {this.getAllTimestamps()})
@@ -77,14 +77,15 @@ class StudentVideo extends React.Component {
     })
     .then((data) => (data.data.map((TS) => TS)))
     .then((TS) => {this.setState({timestamps: TS})
-    })
+    });
   }
   
   changeVideo(timestamp) {
     this.setState({startingTimestamp: timestamp})
   }
   
-  render() {    
+  render() {
+    console.log('this.state', this.state);
     return (
       <Paper style={style} zDepth={1}>
         <div>
@@ -108,7 +109,8 @@ class StudentVideo extends React.Component {
               <TimestampList 
                 timestamps={this.state.timestamps} 
                 deleteTimestamp={this.deleteTimestamp}
-                changeVideo={this.changeVideo}/>
+                changeVideo={this.changeVideo}
+                userId={this.state.userId}/>
               
             </Paper>
           </div>

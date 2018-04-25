@@ -4,6 +4,10 @@ DROP DATABASE IF EXISTS oneTeam;
 CREATE DATABASE oneTeam;
 USE oneTeam;
 
+-- -- added in order to allow videos to be deleted that are currently
+-- -- referenced as foreign keys in timeStamps and teacherComments
+-- SET FOREIGN_KEY_CHECKS=0;
+
 CREATE TABLE users (
   -- 'name' is equivalent to username
   -- not renamed to username in order to avoid breaking legacy code
@@ -36,7 +40,7 @@ CREATE TABLE videos (
   idxInSeries INT,
 
   -- FOREIGN KEY REFERENCES TO OTHER TABLES:
-  FOREIGN KEY (userId) REFERENCES users(id)
+  FOREIGN KEY (userId) REFERENCES users(id) ON DELETE CASCADE
 );
 
 CREATE TABLE timeStamps (
@@ -46,6 +50,7 @@ CREATE TABLE timeStamps (
   userId INT NOT NULL, -- changed from INT(11) to INT in order to set as Foreign Key
   timeStamp INT(11) NOT NULL,
   comment varchar(255),
+  username varchar(255), -- added in order to play nice with legacy code
 
   -- NEW COLUMNS:
   addressedByTeacher BOOLEAN NOT NULL DEFAULT 0,
@@ -53,8 +58,8 @@ CREATE TABLE timeStamps (
   video INT,
 
   -- FOREIGN KEY REFERENCES TO OTHER TABLES:
-  FOREIGN KEY (userId) REFERENCES users(id),
-  FOREIGN KEY (video) REFERENCES videos(id)
+  FOREIGN KEY (userId) REFERENCES users(id) ON DELETE CASCADE,
+  FOREIGN KEY (video) REFERENCES videos(id) ON DELETE CASCADE
 );
 
 -- NEW TABLE:
@@ -62,27 +67,27 @@ CREATE TABLE teacherComments (
   id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   comment varchar(255),
   videoId varchar(255),
-  video INT NOT NULL,
-  userId INT NOT NULL,
+  video INT,
+  userId INT,
   begRange INT, -- Beginning timestamp of the video addressed by comment
   endRange INT, -- Ending timestamp of the video addressed by comment
   commentType varchar(255),
 
-  FOREIGN KEY (userId) REFERENCES users(id),
-  FOREIGN KEY (video) REFERENCES videos(id)
+  FOREIGN KEY (userId) REFERENCES users(id) ON DELETE CASCADE,
+  FOREIGN KEY (video) REFERENCES videos(id) ON DELETE CASCADE
 );
 
 CREATE TABLE chats (
   id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  video INT NOT NULL,
+  video INT,
   videoId varchar(255) NOT NULL,
-  name varchar(255),
-  userId INT NOT NULL,
+  username varchar(255),
+  userId INT,
   text varchar(255),
-  timeStamp INT(11) NOT NULL,
+  timeStamp DATETIME NOT NULL,
 
-  FOREIGN KEY (userId) REFERENCES users(id),
-  FOREIGN KEY (video) REFERENCES videos(id)
+  FOREIGN KEY (userId) REFERENCES users(id) ON DELETE CASCADE,
+  FOREIGN KEY (video) REFERENCES videos(id) ON DELETE CASCADE
 );
 
 INSERT INTO users (name, firstName, lastName, hashedPassword, salt, owner) VALUES ('tom', 'Tom', 'Wagner', '123', '456', true);
