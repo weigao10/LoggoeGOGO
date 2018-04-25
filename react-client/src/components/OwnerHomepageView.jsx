@@ -98,13 +98,13 @@ class OwnerHomepage extends React.Component {
         <div className="main">
           <Search getVideos={this.getYouTubeVideos}/>
           <SearchList videos={this.state.searchedVideos} save={this.saveVideo} redirect={this.sendToSelectedVideo}/>
-
           Saved Videos:
           <VideoList 
             userId={this.state.userId}
             videos={this.state.videos} 
             redirect={this.sendToSelectedVideo}
             deleteVideo={this.deleteVideo}
+            save={this.saveVideo}
           />
         </div>  
       </div>   
