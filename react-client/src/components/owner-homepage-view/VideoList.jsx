@@ -46,7 +46,7 @@ const style = {
 }
 
 const container = {
-  height: '70%',
+  height: '70vh',
   float: 'right',
   width: '40%'
 }
