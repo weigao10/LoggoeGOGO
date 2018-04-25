@@ -8,6 +8,8 @@ import AutoComplete from 'material-ui/AutoComplete';
 import FlatButton from 'material-ui/FlatButton';
 import Paper from 'material-ui/Paper';
 
+import Auth from '../utils/auth.js';
+
 class LandingPage extends React.Component {
   constructor() {
     super();
@@ -34,10 +36,12 @@ class LandingPage extends React.Component {
           const isOwner = response.data[0].owner;
           const username = response.data[0].name;
 
-          (isOwner) ? 
-            this.sendTo('/owner', username) : 
-            this.sendTo('/student', username); 
-        
+          Auth.getInfo()
+            .then(res => {
+              (isOwner) ? 
+              this.sendTo('/owner', username) : 
+              this.sendTo('/student', username);
+            })
         } else {
           this.refs['autocomplete'].setState({searchText:''});
           window.alert('Username does not exist');

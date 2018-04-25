@@ -2,6 +2,8 @@ const bodyParser = require('body-parser');
 const express = require('express');
 const moment = require('moment');
 const axios = require('axios');
+const session = require('express-session');
+const path = require('path')
 const {
   getOwnerTimestamp,
   getCurrentVideo,
@@ -24,6 +26,11 @@ const api = require('../config.js').API;
 
 const app = express();
 
+//---------------------------------------------------------SESSIONS
+app.use(session({
+  secret: 'keyboard cat'
+}))
+
 //---------------------------------------------------------MIDDLEWARE
 
 app.use(express.static(__dirname + '/../react-client/dist'));
@@ -34,9 +41,20 @@ app.use(bodyParser.json());
 
 app.post('/login', (req, res) => {
   getUser(req.body.username, (err, response) => {
-    (err) ? 
-      res.status(403).send(err) :
-      res.status(201).send(response);
+    if (err) {
+      res.status(403).send(err);
+    } else {
+      req.session.regenerate((err) => {
+        if (err) {
+          console.log(err);
+        }
+        console.log(response);
+        req.session.user = response[0].name;
+        req.session.isOwner = response[0].owner;
+        req.session.userId = response[0].id;
+        res.status(201).send(response);
+      })
+    }
   });
 });
 
@@ -49,7 +67,16 @@ app.post('/register', (req, res) => {
     let isExist = !!response.length;
 
     if (isExist) {
-      res.status(201).send(true);
+      req.session.regenerate((err) => {
+        if (err) {
+          console.log(err);
+          res.status(403).send(err);
+          return;
+        }
+        req.session.user = response[0].name;
+        req.session.isOwner = response[0].owner;
+        res.status(201).send(true);
+      })
     } 
     else {
       setUser(req.body, (err, response) => 
@@ -63,11 +90,34 @@ app.post('/register', (req, res) => {
 })
 
 //---------------------------------------------------------USER ID
-//get userId for owner homepage and student homepage
+//get userId for owner homepage and homepage
 app.get('/user/id', (req, res) => {
   getUserId(req.query.user, (userId) => 
     res.send(userId)
   )
+})
+
+//---------------------------------------------------------USER LOGIN STATUS
+
+/**
+ * Returns an object with props:
+ * isLoggedIn: bool
+ * username: string or undefined if not logged in
+ * isOwner: bool or undefined if not logged in
+ */
+app.get('/user/loginstatus', (req, res) => {
+  if (req.session.user === undefined) {
+    res.send({
+      isLoggedIn: false
+    });
+    return;
+  }
+  res.send({
+    isLoggedIn: true,
+    username: req.session.user,
+    isOwner: req.session.isOwner,
+    userId: req.session.userId
+  });
 })
 
 //---------------------------------------------------------STUDENT USER REQUESTS
@@ -159,6 +209,11 @@ app.post('/timestamps', (req, res) => {
 app.delete('/timestamps', (req, res) => {
   let params = req.query;
   deleteTimestamp(params, (success) => {res.send()})
+})
+
+//---------------------------------------------------------DEFAULT ROUTE
+app.get('/*', (req, res) => {
+  res.sendFile(path.resolve(__dirname + '/../react-client/dist/index.html'));
 })
 
 //---------------------------------------------------------SERVER
