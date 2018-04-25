@@ -71,7 +71,6 @@ const getOwnerVideos = (userId, callback) => {
   });
 };
 
-
 const getBuckets = function({videoId, duration}, callback) {
   let bucketFloors = []
   for (let i = 0; i < duration; i+=duration/10) {
