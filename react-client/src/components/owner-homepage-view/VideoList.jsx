@@ -41,7 +41,10 @@ const style = {
   margin: '30px',
   textAlign: 'center',
   display: 'block',
-  padding: '30px 5px'
+  padding: '30px 5px',
+  float: 'right',
+  width: '40%'
 }
+
 
 export default DropTarget(ItemTypes.VIDEO, videoSource, collect)(VideoList);

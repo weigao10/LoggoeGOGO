@@ -17,7 +17,6 @@ class OwnerHomepage extends React.Component {
       userId: '',
       searchedVideos: []
     }
-    // this.getVideos = this.getVideos.bind(this);
     this.getUserId = this.getUserId.bind(this);
     this.showVideoList = this.showVideoList.bind(this);
     this.sendToSelectedVideo = this.sendToSelectedVideo.bind(this);
@@ -30,14 +29,6 @@ class OwnerHomepage extends React.Component {
     this.getUserId(this.props.location.username);
   }
   
-  // getVideos(query) {
-  //   axios.get('/owner/savedVideos', {params: {query: query, userId: this.state.userId}})
-  //        .then((data) => {
-  //          console.log(data.data[0])
-  //          this.setState({videos: [...this.state.videos, data.data[0]]})
-  //         })
-  // }
-
   getUserId(user) {
     axios.get('/user/id', {params: {user: user}})
          .then((data) => {
@@ -97,8 +88,8 @@ class OwnerHomepage extends React.Component {
         <header className="navbar"><h1>Hello {this.props.location.username}</h1></header>
         <div className="main">
           <Search getVideos={this.getYouTubeVideos}/>
+          <div>
           <SearchList videos={this.state.searchedVideos} save={this.saveVideo} redirect={this.sendToSelectedVideo}/>
-          Saved Videos:
           <VideoList 
             userId={this.state.userId}
             videos={this.state.videos} 
@@ -106,6 +97,7 @@ class OwnerHomepage extends React.Component {
             deleteVideo={this.deleteVideo}
             save={this.saveVideo}
           />
+          </div>
         </div>  
       </div>   
       </Paper>
@@ -114,7 +106,7 @@ class OwnerHomepage extends React.Component {
 }
 
 const style = {
-  height: '100%',
+  height: '100vh',
   width: 'auto',
   margin: '30px',
   textAlign: 'center',
