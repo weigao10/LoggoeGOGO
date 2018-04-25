@@ -2,6 +2,7 @@ import {withRouter} from 'react-router-dom';
 import React from 'react';
 import axios from 'axios';
 
+import Hidden from './owner-homepage-view/Hidden.jsx';
 import SearchList from './owner-homepage-view/SearchList.jsx';
 import VideoList from './owner-homepage-view/VideoList.jsx';
 import Search from './owner-homepage-view/Search.jsx';
@@ -17,7 +18,6 @@ class OwnerHomepage extends React.Component {
       userId: '',
       searchedVideos: []
     }
-    // this.getVideos = this.getVideos.bind(this);
     this.getUserId = this.getUserId.bind(this);
     this.showVideoList = this.showVideoList.bind(this);
     this.sendToSelectedVideo = this.sendToSelectedVideo.bind(this);
@@ -30,14 +30,6 @@ class OwnerHomepage extends React.Component {
     this.getUserId(this.props.location.username);
   }
   
-  // getVideos(query) {
-  //   axios.get('/owner/savedVideos', {params: {query: query, userId: this.state.userId}})
-  //        .then((data) => {
-  //          console.log(data.data[0])
-  //          this.setState({videos: [...this.state.videos, data.data[0]]})
-  //         })
-  // }
-
   getUserId(user) {
     axios.get('/user/id', {params: {user: user}})
          .then((data) => {
@@ -97,8 +89,9 @@ class OwnerHomepage extends React.Component {
         <header className="navbar"><h1>Hello {this.props.location.username}</h1></header>
         <div className="main">
           <Search getVideos={this.getYouTubeVideos}/>
-          <SearchList videos={this.state.searchedVideos} save={this.saveVideo} redirect={this.sendToSelectedVideo}/>
-          Saved Videos:
+          <div>
+          {this.state.searchedVideos.length === 0 ? <div style={hidden}></div> : <SearchList videos={this.state.searchedVideos} save={this.saveVideo} redirect={this.sendToSelectedVideo}/>}
+          <Hidden deleteVideo={this.deleteVideo}/>
           <VideoList 
             userId={this.state.userId}
             videos={this.state.videos} 
@@ -106,6 +99,7 @@ class OwnerHomepage extends React.Component {
             deleteVideo={this.deleteVideo}
             save={this.saveVideo}
           />
+          </div>
         </div>  
       </div>   
       </Paper>
@@ -114,7 +108,7 @@ class OwnerHomepage extends React.Component {
 }
 
 const style = {
-  height: '100%',
+  height: '100vh',
   width: 'auto',
   margin: '30px',
   textAlign: 'center',
@@ -123,4 +117,10 @@ const style = {
   background: '#D8E4EA'
 }
 
-export default withRouter(OwnerHomepage)
+const hidden = {
+  height: '70vh',
+  float: 'left',
+  width: '40%'
+}
+
+export default withRouter(OwnerHomepage);
