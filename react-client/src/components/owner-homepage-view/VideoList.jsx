@@ -2,10 +2,10 @@ import React from 'react';
 import VideoListEntry from './VideoListEntry.jsx';
 import Paper from 'material-ui/Paper';
 
-const VideoList = ({videos, redirect}) => (
+const VideoList = ({videos, redirect, deleteVideo}) => (
     <Paper style={style}>
       <div>
-        {videos.map((video, i) => <VideoListEntry key={i} video={video} redirect={redirect}/>)}
+        {videos.map((video, i) => <VideoListEntry key={i} video={video} redirect={redirect} deleteVideo={deleteVideo}/>)}
       </div>
     </Paper>
 )

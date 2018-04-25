@@ -14,7 +14,8 @@ const {
   setVideo, 
   setUser,
   getBuckets,
-  deleteTimestamp, 
+  deleteTimestamp,
+  deleteVideo 
 } = require('../database-mysql');
 
 const searchYouTube = require ('youtube-search-api-with-axios');
@@ -116,6 +117,14 @@ app.post('/owner/save', (req, res) => {
   })
 })
 
+app.post('/owner/delete', (req, res) => {
+  let userId = req.body.userId;
+  let videoId = req.body.video.videoId;
+  deleteVideo(userId, videoId, () => {
+    res.status(201).send('Removed from db');
+  })
+})
+
 //get all videos for owner.
 app.get('/owner/videoList', (req, res) => {
   getOwnerVideos(req.query.userId, (videos) => {
@@ -160,7 +169,12 @@ app.delete('/timestamps', (req, res) => {
 })
 
 //---------------------------------------------------------SERVER
-
-app.listen(3000, () => {
+let server = app.listen(3000, () => {
   console.log('listening on port 3000!');
+});
+
+const io = require('socket.io')(server);
+
+io.on('connection', function (socket) {
+  console.log('connected')
 });
