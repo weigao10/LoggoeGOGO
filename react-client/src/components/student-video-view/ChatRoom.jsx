@@ -136,10 +136,4 @@ const timestampStyle = {
   color: "#D3D3D3"
 };
 
-const timestampStyle = {
-  'font': '9px Helvetica, Arial', 
-  'fontStyle': 'italic',
-  'color': '#D3D3D3',
-}
-
 export default ChatRoom;
