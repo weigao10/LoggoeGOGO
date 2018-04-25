@@ -117,12 +117,12 @@ const setVideo = (video, userId, duration, callback) => {
 //---------------------------------------------------------TIMESTAMP QUERIES
 //-------------------------------------------- GET REQUESTS
 const getTimestamp = (videoId, userId, callback) => {
-  const query = `SELECT timestamp, comment FROM timeStamps WHERE videoId = '${videoId}' ORDER BY timestamp asc;`
+  const query = `SELECT timestamp, comment, id, videoId, userId, username, addressedByTeacher, commentType, video FROM timeStamps WHERE videoId = '${videoId}' ORDER BY timestamp asc;`
 
   connection.query(query, (err, results, fields) => {
     (err) ?
       console.error(err) :
-      console.log(results, 'results from db') 
+      console.log('results from db: ', results); 
       callback(results);
   })
 }
@@ -150,8 +150,8 @@ const setTimestamp = ({userId, videoId, timestamp, comment}, callback) => {
 };
 
 //-------------------------------------------- DELETE REQUESTS
-const deleteTimestamp = ({userId, videoId, timestamp}, callback) => {
-  const query = `DELETE FROM timeStamps WHERE userId = ${userId} AND videoId = '${videoId}' AND timeStamp = ${timestamp};`
+const deleteTimestamp = ({userId, videoId, id}, callback) => {
+  const query = `DELETE FROM timeStamps WHERE userId = ${userId} AND videoId = '${videoId}' AND id = ${id};`
 
   connection.query(query, (err, results, fields) => {
     (err) ?
