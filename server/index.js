@@ -174,7 +174,17 @@ let server = app.listen(3000, () => {
 });
 
 const io = require('socket.io')(server);
+let users = [];
+let connections = [];
 
-io.on('connection', function (socket) {
-  console.log('connected')
+io.on('connection', (socket) => {
+  connections.push(socket);
+  console.log('Connected: %s sockets connected.', connections.length)
+
+  socket.on('disconnect', (data) => {
+    connections.splice(connections.indexOf(socket), 1);
+    console.log('Disconnected: %s sockets connected.', connections.length)
+  })
+
+
 });

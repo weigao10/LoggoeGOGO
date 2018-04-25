@@ -8,9 +8,11 @@ class ChatRoom extends React.Component {
     this.socket = this.socket.bind(this);
   }
 
-  render() {
-    // console.log('in chatroom render')
+  componentDidMount(){
     this.socket()
+  }
+
+  render() {
     return (
       <div style={chatroomStyle}>
         <div style={bodyStyle}>
