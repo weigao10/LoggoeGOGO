@@ -12,8 +12,6 @@ class ChatRoom extends React.Component {
     }
     this.postMessage = this.postMessage.bind(this);
     this.changeHandler = this.changeHandler.bind(this);
-    //username will be props
-    //videoId will be props
   }
 
   componentDidMount(){
@@ -39,10 +37,10 @@ class ChatRoom extends React.Component {
     return (
       <div style={chatroomStyle}>
         <div style={bodyStyle}>
-          <ul id="messages" style={messagesStyle} />
+          <div id="messages" style={messagesStyle} />
           {
             this.state.messages.map((message) => {
-              return (<li>{message}</li>)
+              return (<div style={messagesStyle}>{this.props.username}: {message}</div>)
             }
           )}
           <div style={formStyle}>
@@ -100,6 +98,11 @@ const messagesStyle = {
   'listStyleType': 'none',
   'margin': '0',
   'padding': '0'
+}
+
+const messageStyle ={
+  "padding": "5px 10px"
+
 }
 
 /*
