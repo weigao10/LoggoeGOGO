@@ -32,7 +32,7 @@ class SearchListEntry extends React.Component {
               src={video.snippet.thumbnails.default.url} 
               alt="" />
           </div>
-          <div style={{width: '50%', float: 'right'}}>
+          <div style={{width: '50%', float: 'right', wordWrap: 'break-word'}}>
             <div style={{fontWeight: 'bold'}}> {video.snippet.title} </div>
             <br/>
             <div style={{color: 'grey'}}> {video.snippet.description} </div>
@@ -52,7 +52,8 @@ const style = {
   margin: '30px',
   textAlign: 'center',
   display: 'block',
-  padding: '30px 5px'
+  padding: '30px 5px',
+  wordWrap: 'break-word'
 }
 
 export default DragSource(ItemTypes.VIDEO, searchSource, collect) (SearchListEntry);

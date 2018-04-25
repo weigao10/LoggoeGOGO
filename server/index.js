@@ -17,7 +17,8 @@ const {
   setUser,
   getBuckets,
   deleteTimestamp,
-  deleteVideo 
+  deleteVideo,
+  getTeachers
 } = require('../database-mysql');
 
 const searchYouTube = require ('youtube-search-api-with-axios');
@@ -127,6 +128,12 @@ app.get('/student/homepage', (req, res) =>
   )
 )
 
+app.get('/student/teachers', (req, res) => {
+  getTeachers((teachers) => {
+    res.send(teachers);
+  })
+})
+
 //---------------------------------------------------------OWNER USER REQUESTS
 
 app.get('/owner/searchYoutube', (req, res) => {
@@ -136,22 +143,6 @@ app.get('/owner/searchYoutube', (req, res) => {
     }
   )
 })
-
-// app.get('/owner/savedVideos', (req, res) => {
-//   searchYouTube({key: api, q: req.query.query, maxResults: 1}, 
-//     (video) => {
-//       let url = `https://www.googleapis.com/youtube/v3/videos?id=${video[0].id.videoId}&part=contentDetails&key=${api}`;
-//       //get duration
-//       axios.get(url).then((data) => {
-//         let duration = moment.duration(data.data.items[0].contentDetails.duration, moment.ISO_8601).asSeconds();
-//         setVideo(video[0], req.query.userId, duration, () => {
-//           getCurrentVideo(video[0].id.videoId, (video) => 
-//             res.status(200).send(video)
-//           )
-//         })
-//       });
-//     });
-// });
 
 app.post('/owner/save', (req, res) => {
   let video = req.body.video;
@@ -230,6 +221,8 @@ let server = app.listen(3000, () => {
   console.log('listening on port 3000!');
 });
 
+//---------------------------------------------------------CHATROOM
+
 const io = require('socket.io')(server);
 let users = [];
 let connections = [];
@@ -246,5 +239,8 @@ io.on('connection', (socket) => {
   socket.on('send message', (data) => {
     io.sockets.emit('new message', {msg: JSON.stringify(data)})
   })
-
 });
+
+//adds chat messages to the chats db
+app.post('/chats', (req, res) => {
+})

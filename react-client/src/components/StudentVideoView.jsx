@@ -101,6 +101,7 @@ class StudentVideo extends React.Component {
             <Paper style={paperStyle2}>
               <ChatRoom username={this.props.location.username}
                         videoId={this.props.location.videoId}
+                        userId={this.props.location.userId}
               />
             </Paper>
           </div>
@@ -109,9 +110,7 @@ class StudentVideo extends React.Component {
               <TimestampList 
                 timestamps={this.state.timestamps} 
                 deleteTimestamp={this.deleteTimestamp}
-                changeVideo={this.changeVideo}
-                userId={this.state.userId}/>
-              
+                changeVideo={this.changeVideo}/>
             </Paper>
           </div>
         </div>

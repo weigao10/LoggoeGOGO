@@ -13,11 +13,14 @@ class StudentHomepage extends React.Component {
         this.state = {
             query: '',
             videoList: [],
+            teachers: []
         }
         this.sendToSelectedVideo = this.sendToSelectedVideo.bind(this);
+        this.getTeachers = this.getTeachers.bind(this);
     }
 
     componentDidMount() {
+        this.getTeachers();
         axios.get('/student/homepage')
             .then((response) => this.setState({videoList: response.data})); 
     }
@@ -28,6 +31,19 @@ class StudentHomepage extends React.Component {
             videoId: videoId,
             username: this.props.location.username
           })
+    }
+
+    getTeachers() {
+      axios.get('/student/teachers')
+      .then(({data}) => {
+        console.log(data)
+        this.setState({
+          teachers: data
+        })
+      })
+      .catch((err) => {
+        console.log(err);
+      })
     }
 
     render() {
@@ -43,6 +59,16 @@ class StudentHomepage extends React.Component {
                             <RaisedButton 
                                 label="Search" />
                         </div>
+                    </Paper>
+                    <br/>
+                    <Paper style={searchStyle} zDepth={1}>
+                    <select>
+                    {this.state.teachers.length === 0 ? null : this.state.teachers.map((teacher) => {
+                      return(
+                        <option key={teacher.id}>{teacher.firstName}</option>
+                      )
+                    })}
+                    </select>
                     </Paper>
                     <VideoList 
                         videos={this.state.videoList} 
