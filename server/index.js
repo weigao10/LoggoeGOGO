@@ -3,6 +3,7 @@ const express = require('express');
 const moment = require('moment');
 const axios = require('axios');
 const session = require('express-session');
+const path = require('path')
 const {
   getOwnerTimestamp,
   getCurrentVideo,
@@ -26,10 +27,7 @@ const app = express();
 
 //---------------------------------------------------------SESSIONS
 app.use(session({
-  secret: 'keyboard cat',
-  resave: false,
-  saveUninitialized: true,
-  cookie: { secure: true }
+  secret: 'keyboard cat'
 }))
 
 //---------------------------------------------------------MIDDLEWARE
@@ -46,6 +44,9 @@ app.post('/login', (req, res) => {
       res.status(403).send(err);
     } else {
       req.session.regenerate((err) => {
+        if (err) {
+          console.log(err);
+        }
         req.session.user = response[0].name;
         req.session.isOwner = response[0].owner;
         res.status(201).send(response);
@@ -63,7 +64,16 @@ app.post('/register', (req, res) => {
     let isExist = !!response.length;
 
     if (isExist) {
-      res.status(201).send(true);
+      req.session.regenerate((err) => {
+        if (err) {
+          console.log(err);
+          res.status(403).send(err);
+          return;
+        }
+        req.session.user = response[0].name;
+        req.session.isOwner = response[0].owner;
+        res.status(201).send(true);
+      })
     } 
     else {
       setUser(req.body, (err, response) => 
@@ -86,7 +96,24 @@ app.get('/user/id', (req, res) => {
 
 //---------------------------------------------------------USER LOGIN STATUS
 
+/**
+ * Returns an object with props:
+ * isLoggedIn: bool
+ * username: string or undefined if not logged in
+ * isOwner: bool or undefined if not logged in
+ */
 app.get('/user/loginstatus', (req, res) => {
+  if (req.session.user === undefined) {
+    res.send({
+      isLoggedIn: false
+    });
+    return;
+  }
+  res.send({
+    isLoggedIn: true,
+    username: req.session.user,
+    isOwner: req.session.isOwner
+  });
 })
 
 //---------------------------------------------------------STUDENT USER REQUESTS
@@ -186,6 +213,11 @@ app.post('/timestamps', (req, res) => {
 app.delete('/timestamps', (req, res) => {
   let params = req.query;
   deleteTimestamp(params, (success) => {res.send()})
+})
+
+//---------------------------------------------------------DEFAULT ROUTE
+app.get('/*', (req, res) => {
+  res.sendFile(path.resolve(__dirname + '/../react-client/dist/index.html'));
 })
 
 //---------------------------------------------------------SERVER
