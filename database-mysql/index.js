@@ -28,6 +28,16 @@ const getUser = (user, callback) => {
     });
   } 
 
+  const getTeachers = (callback) => {
+    let query = `SELECT * FROM users WHERE owner = 1`;
+    
+    connection.query(query, (err, results) => {
+      (err) ?
+        console.error(err) :
+        callback(results);
+    })
+  }
+
 //-------------------------------------------- SET REQUESTS
 const setUser = (user, callback) => {
   var query = `INSERT IGNORE INTO users (name, owner) VALUE (?, ?);`
@@ -199,3 +209,4 @@ exports.deleteTimestamp = deleteTimestamp;
 exports.deleteVideo = deleteVideo;
 exports.getChats = getChats;
 exports.postChats = postChats;
+exports.getTeachers = getTeachers;
