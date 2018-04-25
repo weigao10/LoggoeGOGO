@@ -169,7 +169,12 @@ app.delete('/timestamps', (req, res) => {
 })
 
 //---------------------------------------------------------SERVER
-
-app.listen(3000, () => {
+let server = app.listen(3000, () => {
   console.log('listening on port 3000!');
+});
+
+const io = require('socket.io')(server);
+
+io.on('connection', function (socket) {
+  console.log('connected')
 });
