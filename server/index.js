@@ -173,6 +173,8 @@ let server = app.listen(3000, () => {
   console.log('listening on port 3000!');
 });
 
+//---------------------------------------------------------CHATROOM
+
 const io = require('socket.io')(server);
 let users = [];
 let connections = [];
@@ -189,5 +191,9 @@ io.on('connection', (socket) => {
   socket.on('send message', (data) => {
     io.sockets.emit('new message', {msg: JSON.stringify(data)})
   })
-
 });
+
+//adds chat messages to the chats db
+app.post('/chats', (req, res) => {
+
+})

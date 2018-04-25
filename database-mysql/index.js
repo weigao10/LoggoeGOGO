@@ -169,7 +169,20 @@ const deleteVideo = (userId, videoId, callback) => {
     callback(results);
   })
 }
+
+//---------------------------------------------------------CHATS QUERIES
+//-------------------------------------------- GET REQUESTS
+const getChats = () => {
   
+}
+//-------------------------------------------- POST REQUESTS
+const postChats = () => {
+
+}
+
+
+
+
 exports.getBuckets = getBuckets;
 exports.getUser = getUser;
 exports.setUser = setUser;
@@ -183,3 +196,5 @@ exports.getCurrentVideo = getCurrentVideo;
 exports.getOwnerTimestamp = getOwnerTimestamp;
 exports.deleteTimestamp = deleteTimestamp;
 exports.deleteVideo = deleteVideo;
+exports.getChats = getChats;
+exports.postChats = postChats;
