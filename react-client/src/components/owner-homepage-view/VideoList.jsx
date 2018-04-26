@@ -42,13 +42,13 @@ const style = {
   textAlign: 'center',
   display: 'block',
   padding: '30px 5px',
-  "overflow-y": 'auto'
+  "overflowY": 'auto',
 }
 
 const container = {
   height: '70vh',
   float: 'right',
-  width: '40%'
+  width: '40%',
 }
 
 
