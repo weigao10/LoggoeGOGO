@@ -28,7 +28,7 @@ class SeriesList extends React.Component {
         <Paper style={style}>
           <div>
             {/* NEED TO UPDATE */}
-            {videos.length === 0 ? 'Search for a video and drag it here to save it' : videos.map((video, i) => <VideoListEntry key={i} video={video} redirect={redirect} deleteVideo={deleteVideo}/>)}
+            {videos.length === 0 ? 'Search for a video and drag it here to save it' : videos.map((video, i) => <SeriesListEntry key={i} video={video} redirect={redirect} deleteVideo={deleteVideo}/>)}
           </div>
         </Paper>
       </div>

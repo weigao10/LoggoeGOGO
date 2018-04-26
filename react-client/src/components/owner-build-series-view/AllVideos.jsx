@@ -1,13 +1,13 @@
 import React from 'react';
 import Paper from 'material-ui/Paper';
-import VideoListEntry from './VideoListEntry.jsx';
+import AllVideosListEntry from './AllVideosListEntry.jsx';
 
 const AllVideos = ({videos, redirect, save}) => (
   <div style={container}>
     <Paper style={style}>
       <div>
         {/* NEED TO CHANGE PROPS BELOW AS NEEDED */}
-        {videos.map((video, i) => <VideoListEntry key={i} video={video} redirect={redirect} save={save}/>)}
+        {videos.map((video, i) => <AllVideosListEntry key={i} video={video} redirect={redirect} save={save}/>)}
       </div>
     </Paper>
   </div>
