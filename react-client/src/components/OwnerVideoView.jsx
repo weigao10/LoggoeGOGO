@@ -4,6 +4,8 @@ import axios from 'axios';
 
 import OwnerVideoPlayer from './owner-video-view/OwnerVideoPlayer.jsx';
 import OwnerTimeStamps from './owner-video-view/OwnerTimeStamps.jsx';
+import TeacherComments from './owner-video-view/TeacherComments.jsx';
+import VideoInfo from './owner-video-view/VideoInfo.jsx';
 import Analytics from './owner-video-view/Analytics.jsx';
 import Paper from 'material-ui/Paper';
 
@@ -39,13 +41,20 @@ class OwnerVideo extends React.Component {
                 </div>
               </Paper>
               <br/>
+              <Paper>
+                <TeacherComments />
+              </Paper>
+              <br/>
+              <Paper>
+                <VideoInfo />
+              </Paper>
+              <br/>
               <Paper style={{padding: '20px'}}>
                 <div>
                   {this.state.timeStamps.length !== 0 && <Analytics timeStamps={this.state.timeStamps} video={this.props.location.video}/>}
                 </div>
               </Paper>
             </div>
-
             <Paper style={style3}>
               <div>
                 {this.state.timeStamps.length !== 0 && <OwnerTimeStamps timeStamps={this.state.timeStamps}/>}
