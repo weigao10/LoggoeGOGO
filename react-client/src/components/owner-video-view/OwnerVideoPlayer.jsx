@@ -22,6 +22,11 @@ class OwnerVideoPlayer extends React.Component {
     this.onPlayVideo = this.onPlayVideo.bind(this);
     this.onPauseVideo = this.onPauseVideo.bind(this);
     this.saveComment = this.saveComment.bind(this);
+    this.getComments = this.getComments.bind(this);
+  }
+
+  componentDidMount() {
+    this.getComments();
   }
 
   onReady(event) {
@@ -50,6 +55,24 @@ class OwnerVideoPlayer extends React.Component {
     )
     .then(({data}) => {
       console.log(data)
+      this.getComments();
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+  }
+
+  getComments() {
+    axios.get('/owner/getComments', {
+      params: {
+        userId: Auth.userId
+      }
+    })
+    .then(({data}) => {
+      console.log('client', data)
+      this.setState({
+        comments: data
+      })
     })
     .catch((err) => {
       console.log(err);

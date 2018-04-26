@@ -62,6 +62,16 @@ const setTeacherComment = (comment, videoId, userId, start, end, callback) => {
   })
 }
 
+const getOwnerComments = (userId, callback) => {
+  const query = `SELECT * FROM teacherComments WHERE userId=${userId}`;
+
+  connection.query(query, (err, results) => {
+    (err) ? 
+      console.log('Could not retrieve teacher comments', err) :
+      callback(results);
+  })
+}
+
 
 //---------------------------------------------------------VIDEO QUERIES
 //-------------------------------------------- GET REQUESTS
@@ -259,3 +269,4 @@ exports.getTeachers = getTeachers;
 exports.getUploads = getUploads;
 exports.setUploads = setUploads;
 exports.setTeacherComment = setTeacherComment;
+exports.getOwnerComments = getOwnerComments;
