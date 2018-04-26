@@ -1,12 +1,11 @@
-import {withRouter} from 'react-router-dom';
-import React from 'react';
-import axios from 'axios';
+import {withRouter} from 'react-router-dom'; // done
+import React from 'react'; // done
+import axios from 'axios'; // done
 
-import Hidden from './shared-components/Hidden.jsx';
-import SearchList from './owner-homepage-view/SearchList.jsx';
-import VideoList from './owner-homepage-view/VideoList.jsx';
-import Search from './owner-homepage-view/Search.jsx';
-import OwnerVideo from './OwnerVideoView.jsx';
+import Hidden from './shared-components/Hidden.jsx'; // done
+import AllVideos from './owner-build-series-view/AllVideos.jsx'; // done
+import SeriesList from './owner-build-series-view/SeriesList.jsx'; // done
+import Search from './owner-homepage-view/Search.jsx'; // do I need this??
 import Paper from 'material-ui/Paper';
 
 class OwnerHomepage extends React.Component {
@@ -91,15 +90,14 @@ class OwnerHomepage extends React.Component {
         <div className="main">
           <Search getVideos={this.getYouTubeVideos}/>
           <div>
-          {this.state.searchedVideos.length === 0 ? <div style={hidden}></div> : <SearchList videos={this.state.searchedVideos} save={this.saveVideo} redirect={this.sendToSelectedVideo}/>}
-          <Hidden deleteVideo={this.deleteVideo}/>
-          <VideoList 
-            userId={this.state.userId}
-            videos={this.state.videos} 
-            redirect={this.sendToSelectedVideo}
-            deleteVideo={this.deleteVideo}
-            save={this.saveVideo}
-          />
+            {this.state.searchedVideos.length === 0 ? <div style={hidden}></div> : <AllVideos videos={this.state.searchedVideos} save={this.saveVideo} redirect={this.sendToSelectedVideo}/>}
+            <Hidden deleteVideo={this.deleteVideo}/>
+            <SeriesList 
+              userId={this.state.userId}
+              videos={this.state.videos} 
+              redirect={this.sendToSelectedVideo}
+              deleteVideo={this.deleteVideo}
+              save={this.saveVideo} />
           </div>
         </div>  
       </div>   

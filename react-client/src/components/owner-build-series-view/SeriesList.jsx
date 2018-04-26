@@ -1,10 +1,11 @@
 import React from 'react';
-import VideoListEntry from './VideoListEntry.jsx';
+import SeriesListEntry from './SeriesListEntry.jsx';
 import Paper from 'material-ui/Paper';
 import { ItemTypes } from '../../constants.js';
 import { DropTarget } from 'react-dnd';
 
 const videoSource = {
+  // NEED TO UPDATE
   drop(props, monitor) {
     let item = monitor.getItem();
     props.save(item.item);
@@ -17,15 +18,16 @@ function collect(connect, monitor) {
   }
 }
 
-
-class VideoList extends React.Component {
+class SeriesList extends React.Component {
 
   render() {
+    // NEED TO UPDATE
     const { videos, redirect, deleteVideo, connectDropTarget} = this.props;
     return connectDropTarget(
       <div style={container}>
         <Paper style={style}>
           <div>
+            {/* NEED TO UPDATE */}
             {videos.length === 0 ? 'Search for a video and drag it here to save it' : videos.map((video, i) => <VideoListEntry key={i} video={video} redirect={redirect} deleteVideo={deleteVideo}/>)}
           </div>
         </Paper>
@@ -33,7 +35,6 @@ class VideoList extends React.Component {
     )
   }
 }
-
 
 const style = {
   height: '100%',
@@ -51,5 +52,4 @@ const container = {
   width: '40%',
 }
 
-
-export default DropTarget(ItemTypes.VIDEO, videoSource, collect)(VideoList);
+export default DropTarget(ItemTypes.VIDEO, videoSource, collect)(SeriesList);

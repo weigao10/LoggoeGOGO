@@ -101,12 +101,11 @@ app.get('/user/id', (req, res) => {
 
 //---------------------------------------------------------USER LOGIN STATUS
 
-// /**
-//  * Returns an object with props:
-//  * isLoggedIn: bool
-//  * username: string or undefined if not logged in
-//  * isOwner: bool or undefined if not logged in
-//  */
+// Returns an object with props:
+// isLoggedIn: bool
+// username: string or undefined if not logged in
+// isOwner: bool or undefined if not logged in
+
 app.get('/user/loginstatus', (req, res) => {
   if (req.session.user === undefined) {
     res.send({
