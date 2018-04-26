@@ -10,7 +10,7 @@ const VideoListEntry = ({video, redirect}) => {
             <img src={video.image} alt="" />
           </div>
           <div style={style2}>
-            <div>{video.title}</div>
+            <div className="videoTitle">{video.title}</div>
             <br/>
             <div>{video.description}</div>
           </div>

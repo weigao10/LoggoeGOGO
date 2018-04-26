@@ -4,6 +4,7 @@ import axios from 'axios';
 import YouTube from 'react-youtube';
 import RaisedButton from 'material-ui/RaisedButton';
 import AutoComplete from 'material-ui/AutoComplete';
+import Paper from 'material-ui/Paper';
 
 class VideoPlayer extends React.Component {
   constructor(props) {
@@ -12,7 +13,8 @@ class VideoPlayer extends React.Component {
     this.state = { 
       videoId: this.props.videoId,
       player: null,
-      comment: ''
+      comment: '',
+      comments: []
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -21,6 +23,11 @@ class VideoPlayer extends React.Component {
     this.onPauseVideo = this.onPauseVideo.bind(this);
     this.saveTimeStamp = this.saveTimeStamp.bind(this);
     this.clearInput = this.clearInput.bind(this);
+    this.getComments = this.getComments.bind(this);
+  }
+
+  componentDidMount() {
+    this.getComments();
   }
 
   handleChange(comment) {
@@ -49,6 +56,22 @@ class VideoPlayer extends React.Component {
   clearInput(){
     this.setState({
       comment: ''
+    })
+  }
+
+  getComments() {
+    axios.get('/owner/getComments', {
+      params: {
+        videoId: this.state.videoId
+      }
+    })
+    .then(({data}) => {
+      this.setState({
+        comments: data
+      })
+    })
+    .catch((err) => {
+      console.log(err);
     })
   }
 
@@ -84,6 +107,17 @@ class VideoPlayer extends React.Component {
                 this.clearInput();
               }} label="Confused" style={{ margin: "5px" }} />
           </label>
+          <br/>
+          <Paper>
+            {this.state.comments.map((comment) => {
+              return(
+              <div>
+                <div>{comment.begRange}-{comment.endRange}</div>
+                <div>{comment.comment}</div>
+              </div>
+              )
+            })}
+          </Paper>
         </div>
       </div>;
   }
