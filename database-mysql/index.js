@@ -190,22 +190,40 @@ const getChats = ({videoId}, callback) => {
     (err) ?
       console.log('err', err) :
       callback(err, results);
-    // console.log('results from getchats',)
   })
 
 }
 //-------------------------------------------- POST REQUESTS
-const postChats = (messageInfo, callback) => {
-  console.log('in db post chats data', messageInfo)
-  var query = `INSERT INTO chats (username, timeStamp, videoId, text) VALUE (?, ?, ?, ?);`
+const postChats = ({ username, timeStamp, videoId, text }, callback) => {
+  var query = `INSERT INTO chats (username, timeStamp, videoId, text) VALUE (?, ?, ?, ?);`;
+  connection.query(query, [username, timeStamp, videoId, text],(err, results) => {
+    err ? console.error(err) : callback(err, results);
+  });
+};
 
-  connection.query(query, [messageInfo.username, messageInfo.timeStamp, messageInfo.videoId, messageInfo.text], (err, results) => {
+//---------------------------------------------------------UPLOADS QUERIES
+//-------------------------------------------- GET REQUESTS
+const getUploads = ({videoId}, callback) => {
+  const query = `SELECT * FROM uploads WHERE videoId='${videoId}'`;
+
+  connection.query(query, (err, results) => {
     (err) ?
-      console.error(err) :
+      console.log('err', err) :
       callback(err, results);
   })
-}
 
+}
+//-------------------------------------------- POST REQUESTS
+const setUploads = (data, callback) => {
+  console.log("data", data.data);
+
+  data.data.map(({videoId, url, filename, mimetype, size}) => {
+    var query = `INSERT INTO uploads (videoId, url, fileName, fileType, size) VALUE (?, ?, ?, ?, ?);`;
+    connection.query( query, [videoId, url, filename, mimetype, size], (err, results) => {
+      err ? console.error(err) : callback(err, results);
+    });
+  });
+};
 
 
 
@@ -225,3 +243,5 @@ exports.deleteVideo = deleteVideo;
 exports.getChats = getChats;
 exports.postChats = postChats;
 exports.getTeachers = getTeachers;
+exports.getUploads = getUploads;
+exports.setUploads = setUploads;
