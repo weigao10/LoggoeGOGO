@@ -18,7 +18,9 @@ const {
   getBuckets,
   deleteTimestamp,
   deleteVideo,
-  getTeachers
+  getTeachers, 
+  getChats,
+  postChats
 } = require('../database-mysql');
 
 const searchYouTube = require ('youtube-search-api-with-axios');
@@ -243,4 +245,20 @@ io.on('connection', (socket) => {
 
 //adds chat messages to the chats db
 app.post('/chats', (req, res) => {
+  console.log('req in server /chats', req.body)
+
+  postChats(req.body, (err, results) => {
+    (err) ?
+    console.error('ERROR IN SERVER POSTCHATS: ', err) :
+    res.status(201).send(results);
+  })
+})
+
+app.get('/chats', (req, res) => {
+  console.log('req in get chats', req.body)
+  // getChats((err, results) => {
+  //   (err) ?
+  //   console.error('ERROR IN SERVER GETCHATS: ', err) :
+  //   res.status(200).send(results);
+  // })
 })

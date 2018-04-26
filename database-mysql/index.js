@@ -1,4 +1,5 @@
 // MYSQL DATABASE QUERYING FUNCTIONS:
+const moment = require('moment');
 const mysql = require('mysql');
 const connection = mysql.createConnection({
   host     : 'localhost',
@@ -183,12 +184,26 @@ const deleteVideo = (userId, videoId, callback) => {
 
 //---------------------------------------------------------CHATS QUERIES
 //-------------------------------------------- GET REQUESTS
-const getChats = () => {
-  
+const getChats = (videoId, callback) => {
+  const query = `SELECT * FROM chats WHERE videoId='${videoId}'`;
+
+  connection.query(query, (err, results) => {
+    (err) ?
+      console.log('err', err) :
+      callback(results);
+  })
+
 }
 //-------------------------------------------- POST REQUESTS
-const postChats = () => {
+const postChats = (messageInfo, callback) => {
+  // console.log('in db get chats data', messageInfo)
+  var query = `INSERT INTO chats (username, timeStamp, videoId, text) VALUE (?, ?, ?, ?);`
 
+  connection.query(query, [messageInfo.username, moment().format('YYYY/MM/DD HH:mm:ss'), messageInfo.videoId, messageInfo.text], (err, results) => {
+    (err) ?
+      console.error(err) :
+      callback(err, results);
+  })
 }
 
 

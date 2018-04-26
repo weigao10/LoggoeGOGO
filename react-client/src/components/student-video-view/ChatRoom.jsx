@@ -14,9 +14,16 @@ class ChatRoom extends React.Component {
     this.socket = null;
     this.postMessage = this.postMessage.bind(this);
     this.changeHandler = this.changeHandler.bind(this);
+    this.connectSocket = this.connectSocket.bind(this);
+    this.loadChats = this.loadChats.bind(this);
   }
 
   componentDidMount() {
+    this.connectSocket();
+    this.loadChats();
+  }
+
+  connectSocket() {
     this.socket = window.io.connect("http://localhost:3000");
     this.socket.on("new message", data => {
       this.setState(
@@ -30,21 +37,37 @@ class ChatRoom extends React.Component {
     });
   }
 
+  loadChats() {
+    axios.get('/chats', {
+      params: {
+        videoId: this.props.videoId
+      }
+    })
+    .then((data) => {
+      console.log('data in index.jsx from get chats', data)
+    })
+  }
+
   postMessage() {
     this.socket.emit("send message", {
       msg: this.state.message,
       user: this.props.username,
       videoId: this.props.videoId
     });
-    //send post req with message, user, videoId, timestamp to server
-    // axios.post('/chat', {
-    //   params: {
-    //     userId: this.props.userId,
-    //     username: this.props.username,
-    //     timestamp: moment(),
-    //     videoId: this.props.videoId
-    //   }
-    // })
+    // send post req with message, user, videoId, timestamp to server
+    axios.post("/chats", {
+      userId: this.props.userId,
+      username: this.props.username,
+      timestamp: moment().format("llll"),
+      videoId: this.props.videoId, 
+      text: this.state.message
+    })
+    .then(() => {
+      console.log('posted message from chatroom.jsx to server')
+    })
+    .catch((err) => {
+      console.log('ERROR IN CHATROOM.JSX POSTMESSAGE: ', err);
+    })
   }
 
   changeHandler(e) {
