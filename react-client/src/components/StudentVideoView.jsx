@@ -2,6 +2,7 @@ import ReactDOM from 'react-dom';
 import React from 'react';
 import axios from 'axios';
 import $ from 'jquery';
+import {Redirect} from 'react-router-dom';
 
 import VideoPlayer from './student-video-view/VideoPlayer.jsx'
 import TimestampList from './student-video-view/TimestampList.jsx'
@@ -92,6 +93,9 @@ class StudentVideo extends React.Component {
   }
 
   render() {
+    if (!this.props.location.videoId) {
+      return <Redirect to={{pathname: '/student', state: { from: this.props.location }}}/>
+    }
     return (
       <Paper style={style} zDepth={1}>
         <div>
