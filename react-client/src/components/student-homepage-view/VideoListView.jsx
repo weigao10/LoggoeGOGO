@@ -16,7 +16,8 @@ const VideoList = ({videos, redirect}) => {
   return (
     <Paper style={style}>
     <div>
-      {videos.map((video, i) => <VideoListEntry key={i} video={video} redirect={redirect}/>)}
+    {console.log(videos)}
+      {videos.length === 0 ? 'This teacher has not yet uploaded any videos.' : videos.map((video, i) => <VideoListEntry key={i} video={video} redirect={redirect}/>)}
     </div>
     </Paper>
 )}
