@@ -136,6 +136,13 @@ app.get('/student/teachers', (req, res) => {
   })
 })
 
+app.get('/student/videos', (req, res) => {
+  let teacher = req.query.teacher;
+  getOwnerVideos(teacher, (data) => {
+    res.send(data);
+  })
+})
+
 //---------------------------------------------------------OWNER USER REQUESTS
 
 app.get('/owner/searchYoutube', (req, res) => {
@@ -263,5 +270,6 @@ app.post('/chatInfo', (req, res) => { //change to get request
     (err) ?
     console.error('ERROR IN SERVER GETCHATS: ', err) :
     res.status(201).send(results);
+    // console.log('results from getchats', results)
   });
 })

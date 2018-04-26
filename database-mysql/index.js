@@ -184,19 +184,19 @@ const deleteVideo = (userId, videoId, callback) => {
 //---------------------------------------------------------CHATS QUERIES
 //-------------------------------------------- GET REQUESTS
 const getChats = ({videoId}, callback) => {
-  console.log('videoId in db getchats', videoId)
   const query = `SELECT * FROM chats WHERE videoId='${videoId}'`;
 
   connection.query(query, (err, results) => {
     (err) ?
       console.log('err', err) :
       callback(err, results);
+    // console.log('results from getchats',)
   })
 
 }
 //-------------------------------------------- POST REQUESTS
 const postChats = (messageInfo, callback) => {
-  // console.log('in db get chats data', messageInfo)
+  console.log('in db post chats data', messageInfo)
   var query = `INSERT INTO chats (username, timeStamp, videoId, text) VALUE (?, ?, ?, ?);`
 
   connection.query(query, [messageInfo.username, messageInfo.timeStamp, messageInfo.videoId, messageInfo.text], (err, results) => {

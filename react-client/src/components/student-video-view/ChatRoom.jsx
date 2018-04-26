@@ -40,6 +40,7 @@ class ChatRoom extends React.Component {
   loadChats() {
     axios.post('/chatInfo', {videoId: this.props.videoId})
     .then((data) => {
+      let timeStamp = moment(data.data[0].timeStamp, "YYYY-MM-DD").format('lll')
       this.setState({
         messages: [...this.state.messages, ...data.data]
       })
@@ -78,18 +79,20 @@ class ChatRoom extends React.Component {
   }
 
   render() {
-    console.log('in render')
     return (
       <div style={chatroomStyle}>
         <div style={msgContainerStyle}>
           <div style={overflowStyle}>
             {this.state.messages.map((message, idx) => {
-              let timestamp = moment().format("llll");
+              let timeStamp = moment().format("llll");
+              if(message.timeStamp){
+                timeStamp = moment(message.timeStamp).format('llll')
+              }
               if (message.videoId === this.props.videoId) {
                 return (
                   <div key={idx} style={messageStyle}>
                     {message.username}: {message.text}
-                    <div style={timestampStyle}> {timestamp}</div>
+                    <div style={timestampStyle}> {timeStamp}</div>
                   </div>
                 );
               }
