@@ -8,7 +8,7 @@ const videoSource = {
   // NEED TO UPDATE
   drop(props, monitor) {
     let item = monitor.getItem();
-    props.save(item.item);
+    props.addToSeries(item.item);
   }
 }
 
@@ -22,13 +22,13 @@ class SeriesList extends React.Component {
 
   render() {
     // NEED TO UPDATE
-    const { videos, redirect, deleteVideo, connectDropTarget} = this.props;
+    const { videosInSeries, videos, redirect, deleteVideo, connectDropTarget} = this.props;
     return connectDropTarget(
       <div style={container}>
         <Paper style={style}>
           <div>
             {/* NEED TO UPDATE */}
-            {videos.length === 0 ? 'Search for a video and drag it here to save it' : videos.map((video, i) => <SeriesListEntry key={i} video={video} redirect={redirect} deleteVideo={deleteVideo}/>)}
+            {videosInSeries.length === 0 ? 'Search for a video and drag it here to save it' : videosInSeries.map((video, i) => <SeriesListEntry key={i} video={video} redirect={redirect} deleteVideo={deleteVideo}/>)}
           </div>
         </Paper>
       </div>

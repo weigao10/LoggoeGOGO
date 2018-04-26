@@ -35,7 +35,7 @@ class SeriesListEntry extends React.Component {
               <div style={{fontWeight: 'bold'}} onClick={()=>{redirect(video)}}> {video.title} </div>
               <br/>
               <div style={{color: 'grey'}}> {video.description} </div>
-              <button onClick={() => {deleteVideo(video)}}>Remove from Videos</button>
+              <button onClick={() => {deleteVideo(video)}}>Remove from Series</button>
               <br/>
             </div>
           </div>

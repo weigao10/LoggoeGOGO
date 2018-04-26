@@ -15,7 +15,8 @@ class OwnerHomepage extends React.Component {
       videos: [],
       video: '',
       userId: '',
-      searchedVideos: []
+      searchedVideos: [],
+      videosInSeries: [],
     }
     this.getUserId = this.getUserId.bind(this);
     this.showVideoList = this.showVideoList.bind(this);
@@ -23,6 +24,8 @@ class OwnerHomepage extends React.Component {
     this.getYouTubeVideos = this.getYouTubeVideos.bind(this);
     this.saveVideo = this.saveVideo.bind(this);
     this.deleteVideo = this.deleteVideo.bind(this);
+    this.addToSeries = this.addToSeries.bind(this);
+    this.saveSeries = this.saveSeries.bind(this);
   }
 
   componentDidMount() {
@@ -82,26 +85,41 @@ class OwnerHomepage extends React.Component {
     })
   }
 
+  addToSeries(video) {
+    console.log('firing addToSeries!', video);
+  }
+
+  saveSeries(videoList) {
+
+  }
+
   render () {
+    console.log('this.state in build: ', this.state);
     return (
       <Paper style={style} zDepth={1}>
-      <div id="owner-homepage-app">
-        <header className="navbar"><h1>Hello {this.props.location.username}</h1></header>
-        <div className="main">
-          This is build series view!!
-          <Search getVideos={this.getYouTubeVideos}/>
-          <div>
-            {this.state.searchedVideos.length === 0 ? <div style={hidden}></div> : <AllVideos videos={this.state.searchedVideos} save={this.saveVideo} redirect={this.sendToSelectedVideo}/>}
-            <Hidden deleteVideo={this.deleteVideo}/>
-            <SeriesList 
-              userId={this.state.userId}
-              videos={this.state.videos} 
-              redirect={this.sendToSelectedVideo}
-              deleteVideo={this.deleteVideo}
-              save={this.saveVideo} />
-          </div>
-        </div>  
-      </div>   
+        <div id="owner-homepage-app">
+          <header className="navbar"><h1>Hello {this.props.location.username}</h1></header>
+          <div className="main">
+            Drag videos from the left column to the right column or click "Add to Series" to create a video series, then save the series by hitting the save button below
+            <div>
+              <AllVideos
+                videos={this.state.videos}
+                save={this.saveVideo}
+                redirect={this.sendToSelectedVideo}
+                addToSeries={this.addToSeries} />
+              <Hidden deleteVideo={this.deleteVideo}/>
+              <SeriesList 
+                userId={this.state.userId}
+                videos={this.state.videos}
+                redirect={this.sendToSelectedVideo}
+                deleteVideo={this.deleteVideo}
+                save={this.saveVideo}
+                addToSeries={this.addToSeries}
+                saveSeries={this.saveSeries}
+                videosInSeries={this.state.videosInSeries} />
+            </div>
+          </div>  
+        </div>
       </Paper>
     )
   }
