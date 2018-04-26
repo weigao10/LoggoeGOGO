@@ -90,6 +90,15 @@ CREATE TABLE chats (
   FOREIGN KEY (video) REFERENCES videos(id) ON DELETE CASCADE
 );
 
+CREATE TABLE uploads (
+  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  videoId varchar(255) NOT NULL,
+  url varchar(255) NOT NULL,
+  fileName varchar(255),
+  fileType varchar(50),
+  size INT
+);
+
 INSERT INTO users (name, firstName, lastName, hashedPassword, salt, owner) VALUES ('tom', 'Tom', 'Wagner', '123', '456', true);
 INSERT INTO users (name, firstName, lastName, hashedPassword, salt, owner) VALUES ('amy', 'Amy', 'San Felipe', '123', '456', true);
 INSERT INTO users (name, firstName, lastName, hashedPassword, salt, owner) VALUES ('ian', 'Ian', 'Pradhan', '123', '456', false);
