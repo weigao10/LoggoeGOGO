@@ -19,8 +19,8 @@ class ChatRoom extends React.Component {
   }
 
   componentDidMount() {
-    this.connectSocket();
     this.loadChats();
+    this.connectSocket();
   }
 
   connectSocket() {
@@ -38,20 +38,21 @@ class ChatRoom extends React.Component {
   }
 
   loadChats() {
-    axios.get('/chats', {
-      params: {
-        videoId: this.props.videoId
-      }
-    })
+    axios.post('/chatInfo', {videoId: this.props.videoId})
     .then((data) => {
-      console.log('data in index.jsx from get chats', data)
+      this.setState({
+        messages: [...this.state.messages, ...data.data]
+      })
+    })
+    .catch((err) => {
+      console.log('ERROR IN CHATROOM.JSX POSTMESSAGE: ', err);
     })
   }
 
   postMessage() {
     this.socket.emit("send message", {
-      msg: this.state.message,
-      user: this.props.username,
+      text: this.state.message,
+      username: this.props.username,
       videoId: this.props.videoId
     });
     // send post req with message, user, videoId, timestamp to server
@@ -77,6 +78,7 @@ class ChatRoom extends React.Component {
   }
 
   render() {
+    console.log('in render')
     return (
       <div style={chatroomStyle}>
         <div style={msgContainerStyle}>
@@ -86,7 +88,7 @@ class ChatRoom extends React.Component {
               if (message.videoId === this.props.videoId) {
                 return (
                   <div key={idx} style={messageStyle}>
-                    {message.user}: {message.msg}
+                    {message.username}: {message.text}
                     <div style={timestampStyle}> {timestamp}</div>
                   </div>
                 );

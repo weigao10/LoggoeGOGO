@@ -184,13 +184,14 @@ const deleteVideo = (userId, videoId, callback) => {
 
 //---------------------------------------------------------CHATS QUERIES
 //-------------------------------------------- GET REQUESTS
-const getChats = (videoId, callback) => {
+const getChats = ({videoId}, callback) => {
+  console.log('videoId in db getchats', videoId)
   const query = `SELECT * FROM chats WHERE videoId='${videoId}'`;
 
   connection.query(query, (err, results) => {
     (err) ?
       console.log('err', err) :
-      callback(results);
+      callback(err, results);
   })
 
 }

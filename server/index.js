@@ -245,7 +245,7 @@ io.on('connection', (socket) => {
 
 //adds chat messages to the chats db
 app.post('/chats', (req, res) => {
-  console.log('req in server /chats', req.body)
+  console.log('req in server post chats', req.body)
 
   postChats(req.body, (err, results) => {
     (err) ?
@@ -254,11 +254,11 @@ app.post('/chats', (req, res) => {
   })
 })
 
-app.get('/chats', (req, res) => {
-  console.log('req in get chats', req.body)
-  // getChats((err, results) => {
-  //   (err) ?
-  //   console.error('ERROR IN SERVER GETCHATS: ', err) :
-  //   res.status(200).send(results);
-  // })
+app.post('/chatInfo', (req, res) => { //change to get request
+  // console.log('req in server get chats', req.body)
+  getChats(req.body, (err, results) => {
+    (err) ?
+    console.error('ERROR IN SERVER GETCHATS: ', err) :
+    res.status(201).send(results);
+  });
 })
