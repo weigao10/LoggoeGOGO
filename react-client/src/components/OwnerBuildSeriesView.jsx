@@ -86,7 +86,11 @@ class OwnerHomepage extends React.Component {
   }
 
   addToSeries(video) {
-    console.log('firing addToSeries!', video);
+    console.log(this.video);
+    let videosInSeries = this.state.videosInSeries;
+    videosInSeries.push(video);
+    this.setState({ videosInSeries });
+    console.log(this.state);
   }
 
   saveSeries(videoList) {
