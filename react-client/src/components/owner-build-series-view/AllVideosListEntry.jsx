@@ -23,6 +23,7 @@ class AllVideosListEntry extends React.Component {
   render() {
     // NEED TO UPDATE
     const { isDragging, connectDragSource, video, save, redirect, addToSeries } = this.props
+
     return connectDragSource(
       <div>
         <Paper style={style}>

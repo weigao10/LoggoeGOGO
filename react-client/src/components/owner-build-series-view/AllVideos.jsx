@@ -10,7 +10,7 @@ const AllVideos = ({videos, redirect, save, addToSeries}) => {
         <div>
           {/* NEED TO CHANGE PROPS BELOW AS NEEDED */}
           {videos.length >= 2 ?
-            videos.map((video, i) => <AllVideosListEntry key={i} video={video} redirect={redirect} save={save} addToSeries={addToSeries}/>) :            
+            videos.map(video => <AllVideosListEntry key={video.id} video={video} redirect={redirect} save={save} addToSeries={addToSeries}/>) :            
             <div>Save/add at least two videos to your classroom, then come back to build a series!</div>
           }
         </div>
