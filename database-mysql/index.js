@@ -62,12 +62,22 @@ const setTeacherComment = (comment, videoId, userId, start, end, callback) => {
   })
 }
 
-const getOwnerComments = (userId, callback) => {
-  const query = `SELECT * FROM teacherComments WHERE userId=${userId}`;
+const getOwnerComments = (videoId, callback) => {
+  const query = `SELECT * FROM teacherComments WHERE videoId='${videoId}'`;
 
   connection.query(query, (err, results) => {
     (err) ? 
       console.log('Could not retrieve teacher comments', err) :
+      callback(results);
+  })
+}
+
+const deleteOwnerComment = (commentId, callback) => {
+  const query = `DELETE FROM teacherComments WHERE id=${commentId}`;
+
+  connection.query(query, (err, results) => {
+    (err) ? 
+      console.log('Could not delete comment', err) :
       callback(results);
   })
 }
@@ -270,3 +280,4 @@ exports.getUploads = getUploads;
 exports.setUploads = setUploads;
 exports.setTeacherComment = setTeacherComment;
 exports.getOwnerComments = getOwnerComments;
+exports.deleteOwnerComment = deleteOwnerComment;

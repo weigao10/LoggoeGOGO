@@ -24,7 +24,8 @@ const {
   getUploads,
   setUploads,
   setTeacherComment,
-  getOwnerComments
+  getOwnerComments,
+  deleteOwnerComment
 } = require('../database-mysql');
 
 const searchYouTube = require ('youtube-search-api-with-axios');
@@ -185,16 +186,20 @@ app.get('/owner/videoList', (req, res) => {
 
 //---------------------------------------------------------OWNER COMMENTS
 app.post('/owner/saveComment', (req, res) => {
-  let start = Number(req.body.start.split(':').join(''));
-  let end = Number(req.body.end.split(':').join(''));
-  setTeacherComment(req.body.comment, req.body.videoId, req.body.userId, start, end, (comment) => {
-    res.send('Comment Saved to DB');
+  setTeacherComment(req.body.comment, req.body.videoId, req.body.userId, req.body.start, req.body.end, (comment) => {
+    res.send('Comment saved to DB');
   })
 })
 
 app.get('/owner/getComments', (req, res) => {
-  getOwnerComments(req.query.userId, (comments) => {
+  getOwnerComments(req.query.videoId, (comments) => {
     res.send(comments);
+  })
+})
+
+app.post('/owner/deleteComment', (req, res) => {
+  deleteOwnerComment(req.body.comment.id, (comment) => {
+    res.send('Comment deleted from DB')
   })
 })
 

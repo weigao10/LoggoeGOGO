@@ -69,8 +69,8 @@ CREATE TABLE teacherComments (
   videoId varchar(255),
   video INT,
   userId INT,
-  begRange INT, -- Beginning timestamp of the video addressed by comment
-  endRange INT, -- Ending timestamp of the video addressed by comment
+  begRange VARCHAR(11), -- Beginning timestamp of the video addressed by comment
+  endRange VARCHAR(11), -- Ending timestamp of the video addressed by comment
   commentType varchar(255),
 
   FOREIGN KEY (userId) REFERENCES users(id) ON DELETE CASCADE,

@@ -23,6 +23,7 @@ class OwnerVideoPlayer extends React.Component {
     this.onPauseVideo = this.onPauseVideo.bind(this);
     this.saveComment = this.saveComment.bind(this);
     this.getComments = this.getComments.bind(this);
+    this.deleteComment = this.deleteComment.bind(this);
   }
 
   componentDidMount() {
@@ -65,14 +66,24 @@ class OwnerVideoPlayer extends React.Component {
   getComments() {
     axios.get('/owner/getComments', {
       params: {
-        userId: Auth.userId
+        videoId: this.state.videoId
       }
     })
     .then(({data}) => {
-      console.log('client', data)
       this.setState({
         comments: data
       })
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+  }
+
+  deleteComment(comment) {
+    axios.post('/owner/deleteComment', {comment: comment})
+    .then(() => {
+      console.log('Successfully deleted comment');
+      this.getComments();
     })
     .catch((err) => {
       console.log(err);
@@ -126,7 +137,7 @@ class OwnerVideoPlayer extends React.Component {
         </Paper>
         <br/>
         <Paper>
-          <TeacherComments comments={this.state.comments}/>
+          <TeacherComments comments={this.state.comments} deleteComment={this.deleteComment}/>
         </Paper>
       </div>
     );
