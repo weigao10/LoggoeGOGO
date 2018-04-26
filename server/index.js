@@ -260,5 +260,6 @@ app.post('/chatInfo', (req, res) => { //change to get request
     (err) ?
     console.error('ERROR IN SERVER GETCHATS: ', err) :
     res.status(201).send(results);
+    // console.log('results from getchats', results)
   });
 })
