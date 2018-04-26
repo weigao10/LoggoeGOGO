@@ -15,7 +15,8 @@ class OwnerVideoPlayer extends React.Component {
     this.state = { 
       videoId: this.props.videoId,
       player: null,
-      comments: []
+      comments: [],
+      showCommentForm: false
     };
 
     this.onReady = this.onReady.bind(this);
@@ -90,7 +91,6 @@ class OwnerVideoPlayer extends React.Component {
     })
   }
 
-
   // saveStartTime() {
   //   let startTime = Math.floor(this.state.player.getCurrentTime());
   // }
@@ -129,11 +129,13 @@ class OwnerVideoPlayer extends React.Component {
             label="Pause"/>
           <RaisedButton 
             style={{margin: '5px'}} 
-            label="Add Comment"/>
+            label={this.state.showCommentForm ? 'Hide Form' : 'Add Comment'}
+            onClick={() => {this.setState({showCommentForm: !this.state.showCommentForm})}}
+            />
         </div>
         <br/>
         <Paper>
-          <TeacherForm video={this.state.videoId} save={this.saveComment}/>
+          {this.state.showCommentForm ? <TeacherForm video={this.state.videoId} save={this.saveComment}/> : null}
         </Paper>
         <br/>
         <Paper>

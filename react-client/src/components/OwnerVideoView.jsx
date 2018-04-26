@@ -72,13 +72,13 @@ const style = {
 }
 
 const style2 = {
-  width: '55%', 
+  width: '60%', 
   float: 'left', 
   margin: '20px',
 }
 
 const style3 = {
-  width: '35%', 
+  width: '30%', 
   float: 'left', 
   textAlign: 'left', 
   margin: '20px',
