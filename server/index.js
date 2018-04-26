@@ -23,6 +23,7 @@ const {
   postChats,
   getUploads,
   setUploads
+  setTeacherComment
 } = require('../database-mysql');
 
 const searchYouTube = require ('youtube-search-api-with-axios');
@@ -181,6 +182,15 @@ app.get('/owner/videoList', (req, res) => {
   })
 })
 
+//---------------------------------------------------------OWNER COMMENTS
+app.post('/owner/saveComment', (req, res) => {
+  let start = Number(req.body.start.split(':').join(''));
+  let end = Number(req.body.end.split(':').join(''));
+  setTeacherComment(req.body.comment, req.body.videoId, req.body.userId, start, end, (comment) => {
+    res.send('Comment Saved to DB');
+  })
+})
+
 //---------------------------------------------------------ANALYTICS
 
 app.get('/buckets', (req,res) => {
@@ -193,7 +203,7 @@ app.get('/buckets', (req,res) => {
   })
 })
 
-//---------------------------------------------------------WORKING WITH TIMESTAMPS
+//---------------------------------------------------------WORKING WITH STUDENT COMMENTS
 
 app.get('/timestamps', (req, res) => {
   let videoId = req.query.videoId
