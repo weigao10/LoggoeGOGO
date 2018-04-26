@@ -20,7 +20,9 @@ const {
   deleteVideo,
   getTeachers, 
   getChats,
-  postChats
+  postChats,
+  getUploads,
+  setUploads
 } = require('../database-mysql');
 
 const searchYouTube = require ('youtube-search-api-with-axios');
@@ -50,7 +52,6 @@ app.post('/login', (req, res) => {
         if (err) {
           console.log(err);
         }
-        console.log(response);
         req.session.user = response[0].name;
         req.session.isOwner = response[0].owner;
         req.session.userId = response[0].id;
@@ -156,7 +157,6 @@ app.get('/owner/searchYoutube', (req, res) => {
 app.post('/owner/save', (req, res) => {
   let video = req.body.video;
   let userId = req.body.userId;
-  console.log(video)
   let url = `https://www.googleapis.com/youtube/v3/videos?id=${video.id.videoId}&part=contentDetails&key=${api}`;
   axios.get(url)
   .then((data) => {
@@ -211,7 +211,6 @@ app.get('/timestamps/owner', (req, res) => {
 
 app.post('/timestamps', (req, res) => {
   let params = req.body.params;
-  console.log(params)
   setTimestamp(params, (success) => {res.status(201).send()});
 })
 
@@ -219,6 +218,22 @@ app.delete('/timestamps', (req, res) => {
   let params = req.query;
   deleteTimestamp(params, (success) => {res.send()})
 })
+
+//---------------------------------------------------------TEACHER COMMENTS
+
+app.post('/teacherUploads', (req, res) => {
+  console.log('req.body', req.body)
+  setUploads(req.body, (err, results) => {
+    (err) ?
+    console.error('ERROR IN SERVER POST UPLOADS: ', err) :
+    res.status(201).send(results);
+  })
+})
+
+// app.get('/teacherUploads', (req, res) => {
+  
+// })
+
 
 //---------------------------------------------------------DEFAULT ROUTE
 app.get('/*/bundle.js', (req, res) => {
@@ -270,6 +285,5 @@ app.post('/chatInfo', (req, res) => { //change to get request
     (err) ?
     console.error('ERROR IN SERVER GETCHATS: ', err) :
     res.status(201).send(results);
-    // console.log('results from getchats', results)
   });
 })
