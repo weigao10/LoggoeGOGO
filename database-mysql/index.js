@@ -41,7 +41,7 @@ const getUser = (user, callback) => {
 
 //-------------------------------------------- SET REQUESTS
 const setUser = (user, callback) => {
-  var query = `INSERT IGNORE INTO users (name, owner) VALUE (?, ?);`
+  var query = `INSERT IGNORE INTO users (name, owner) VALUES (?, ?);`
 
   connection.query(query, [user.username, user.isOwner], (err, results) => {
     (err) ?
@@ -49,6 +49,39 @@ const setUser = (user, callback) => {
       callback(err, results);
   })
 }
+
+//---------------------------------------------------------OWNER QUERIES
+const setTeacherComment = (comment, videoId, userId, start, end, callback) => {
+  const query = `INSERT INTO teacherComments (comment, videoId, userId, begRange, endRange) VALUES (?, ?, ?, ?, ?);`;
+  const values = [comment, videoId, userId, start, end];
+
+  connection.query(query, values, (err, results) => {
+    (err) ?
+      console.log('error saving teacher comment', err) :
+      callback(results);
+  })
+}
+
+const getOwnerComments = (videoId, callback) => {
+  const query = `SELECT * FROM teacherComments WHERE videoId='${videoId}'`;
+
+  connection.query(query, (err, results) => {
+    (err) ? 
+      console.log('Could not retrieve teacher comments', err) :
+      callback(results);
+  })
+}
+
+const deleteOwnerComment = (commentId, callback) => {
+  const query = `DELETE FROM teacherComments WHERE id=${commentId}`;
+
+  connection.query(query, (err, results) => {
+    (err) ? 
+      console.log('Could not delete comment', err) :
+      callback(results);
+  })
+}
+
 
 //---------------------------------------------------------VIDEO QUERIES
 //-------------------------------------------- GET REQUESTS
@@ -245,3 +278,6 @@ exports.postChats = postChats;
 exports.getTeachers = getTeachers;
 exports.getUploads = getUploads;
 exports.setUploads = setUploads;
+exports.setTeacherComment = setTeacherComment;
+exports.getOwnerComments = getOwnerComments;
+exports.deleteOwnerComment = deleteOwnerComment;

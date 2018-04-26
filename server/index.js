@@ -22,7 +22,10 @@ const {
   getChats,
   postChats,
   getUploads,
-  setUploads
+  setUploads,
+  setTeacherComment,
+  getOwnerComments,
+  deleteOwnerComment
 } = require('../database-mysql');
 
 const searchYouTube = require ('youtube-search-api-with-axios');
@@ -181,6 +184,25 @@ app.get('/owner/videoList', (req, res) => {
   })
 })
 
+//---------------------------------------------------------OWNER COMMENTS
+app.post('/owner/saveComment', (req, res) => {
+  setTeacherComment(req.body.comment, req.body.videoId, req.body.userId, req.body.start, req.body.end, (comment) => {
+    res.send('Comment saved to DB');
+  })
+})
+
+app.get('/owner/getComments', (req, res) => {
+  getOwnerComments(req.query.videoId, (comments) => {
+    res.send(comments);
+  })
+})
+
+app.post('/owner/deleteComment', (req, res) => {
+  deleteOwnerComment(req.body.comment.id, (comment) => {
+    res.send('Comment deleted from DB')
+  })
+})
+
 //---------------------------------------------------------ANALYTICS
 
 app.get('/buckets', (req,res) => {
@@ -193,7 +215,7 @@ app.get('/buckets', (req,res) => {
   })
 })
 
-//---------------------------------------------------------WORKING WITH TIMESTAMPS
+//---------------------------------------------------------WORKING WITH STUDENT COMMENTS
 
 app.get('/timestamps', (req, res) => {
   let videoId = req.query.videoId
