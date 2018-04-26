@@ -59,7 +59,7 @@ class ChatRoom extends React.Component {
     axios.post("/chats", {
       userId: this.props.userId,
       username: this.props.username,
-      timestamp: moment().format("llll"),
+      timeStamp: moment().format("YYYY/MM/DD HH:mm:ss"),
       videoId: this.props.videoId, 
       text: this.state.message
     })
