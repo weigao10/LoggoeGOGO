@@ -98,6 +98,7 @@ class StudentVideo extends React.Component {
     }
     return (
       <Paper style={style} zDepth={1}>
+        <h6>You are logged in as {this.props.location.username}</h6>
         <div>
           <div>
             <Paper style={paperStyle1}>

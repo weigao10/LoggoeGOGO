@@ -49,6 +49,7 @@ class StudentHomepage extends React.Component {
     render() {
         return (
             <Paper style={style} zDepth={1}>
+                    <h6>You are logged in as {this.props.location.username}</h6>
                 <div>
                     <Paper 
                         style={searchStyle} 
