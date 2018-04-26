@@ -3,6 +3,7 @@ const mysql = require('mysql');
 const connection = mysql.createConnection({
   host     : 'localhost',
   user     : 'root',
+  password : '',
   database : 'oneTeam'
 });
 
@@ -16,7 +17,7 @@ const getUser = (user, callback) => {
       console.error(err) :
       callback(err, results);
   });
-  } 
+}
   
   const getUserId = (user, callback) => {
     let query = `SELECT id FROM users WHERE name = "${user}"`;
@@ -27,6 +28,16 @@ const getUser = (user, callback) => {
         callback(results);
     });
   } 
+
+  const getTeachers = (callback) => {
+    let query = `SELECT * FROM users WHERE owner = 1`;
+    
+    connection.query(query, (err, results) => {
+      (err) ?
+        console.error(err) :
+        callback(results);
+    })
+  }
 
 //-------------------------------------------- SET REQUESTS
 const setUser = (user, callback) => {
@@ -70,7 +81,6 @@ const getOwnerVideos = (userId, callback) => {
       callback(results);
   });
 };
-
 
 const getBuckets = function({videoId, duration}, callback) {
   let bucketFloors = []
@@ -170,7 +180,35 @@ const deleteVideo = (userId, videoId, callback) => {
     callback(results);
   })
 }
-  
+
+//---------------------------------------------------------CHATS QUERIES
+//-------------------------------------------- GET REQUESTS
+const getChats = ({videoId}, callback) => {
+  const query = `SELECT * FROM chats WHERE videoId='${videoId}'`;
+
+  connection.query(query, (err, results) => {
+    (err) ?
+      console.log('err', err) :
+      callback(err, results);
+    // console.log('results from getchats',)
+  })
+
+}
+//-------------------------------------------- POST REQUESTS
+const postChats = (messageInfo, callback) => {
+  console.log('in db post chats data', messageInfo)
+  var query = `INSERT INTO chats (username, timeStamp, videoId, text) VALUE (?, ?, ?, ?);`
+
+  connection.query(query, [messageInfo.username, messageInfo.timeStamp, messageInfo.videoId, messageInfo.text], (err, results) => {
+    (err) ?
+      console.error(err) :
+      callback(err, results);
+  })
+}
+
+
+
+
 exports.getBuckets = getBuckets;
 exports.getUser = getUser;
 exports.setUser = setUser;
@@ -184,3 +222,6 @@ exports.getCurrentVideo = getCurrentVideo;
 exports.getOwnerTimestamp = getOwnerTimestamp;
 exports.deleteTimestamp = deleteTimestamp;
 exports.deleteVideo = deleteVideo;
+exports.getChats = getChats;
+exports.postChats = postChats;
+exports.getTeachers = getTeachers;

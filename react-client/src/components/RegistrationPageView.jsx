@@ -8,6 +8,8 @@ import FlatButton from 'material-ui/FlatButton';
 import Toggle from 'material-ui/Toggle';
 import Paper from 'material-ui/Paper';
 
+import Auth from '../utils/auth.js';
+
 class Registration extends React.Component {
   constructor(props) {
     super(props);
@@ -64,7 +66,6 @@ class Registration extends React.Component {
   }
 
   render () {
-
     return (
       <Paper style={paperStyle}>
 

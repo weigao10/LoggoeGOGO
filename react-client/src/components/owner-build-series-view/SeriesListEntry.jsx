@@ -3,7 +3,6 @@ import Paper from 'material-ui/Paper';
 import { DragSource } from 'react-dnd';
 import { ItemTypes } from '../../constants.js';
 
-
 const videoSource = {
   beginDrag(props) {
     console.log('begin dragging', props)
@@ -16,22 +15,21 @@ const videoSource = {
 function collect(connect, monitor) {
   return {
     connectDragSource: connect.dragSource(),
-    isDragging: monitor.isDragging()
+    isDragging: monitor.isDragging(),
   }
 }
 
-class VideoListEntry extends React.Component {
+class SeriesListEntry extends React.Component {
 
   render() {
+    // NEED TO UPDATE:
     const { video, redirect, deleteVideo, connectDragSource } = this.props;
     return connectDragSource(
       <div>
         <Paper style={style} key={video.id}>
           <div key={video.id} style={{display: 'inline-block'}}>
             <div style={{width: '30%', float: 'left'}}>
-              <img className="media-object" 
-                src={video.image} 
-                alt="" />
+              <img className="media-object" src={video.image} alt="" />
             </div>
             <div style={{width: '50%', float: 'right'}}>
               <div style={{fontWeight: 'bold'}} onClick={()=>{redirect(video)}}> {video.title} </div>
@@ -47,7 +45,6 @@ class VideoListEntry extends React.Component {
   }
 }
 
-
 const style = {
   height: 'auto',
   width: 'auto',
@@ -57,4 +54,4 @@ const style = {
   padding: '30px 5px'
 }
 
-export default DragSource(ItemTypes.SAVED, videoSource, collect)(VideoListEntry);
+export default DragSource(ItemTypes.SAVED, videoSource, collect)(SeriesListEntry);
