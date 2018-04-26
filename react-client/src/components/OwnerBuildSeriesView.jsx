@@ -88,6 +88,7 @@ class OwnerHomepage extends React.Component {
       <div id="owner-homepage-app">
         <header className="navbar"><h1>Hello {this.props.location.username}</h1></header>
         <div className="main">
+          This is build series view!!
           <Search getVideos={this.getYouTubeVideos}/>
           <div>
             {this.state.searchedVideos.length === 0 ? <div style={hidden}></div> : <AllVideos videos={this.state.searchedVideos} save={this.saveVideo} redirect={this.sendToSelectedVideo}/>}
