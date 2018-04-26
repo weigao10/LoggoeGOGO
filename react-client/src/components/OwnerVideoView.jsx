@@ -4,11 +4,7 @@ import axios from 'axios';
 
 import OwnerVideoPlayer from './owner-video-view/OwnerVideoPlayer.jsx';
 import OwnerTimeStamps from './owner-video-view/OwnerTimeStamps.jsx';
-<<<<<<< HEAD
 import TeacherUploads from './owner-video-view/TeacherUploads.jsx';
-=======
->>>>>>> teacher comments save to DB
-import VideoInfo from './owner-video-view/VideoInfo.jsx';
 import Analytics from './owner-video-view/Analytics.jsx';
 import Paper from 'material-ui/Paper';
 
@@ -46,10 +42,6 @@ class OwnerVideo extends React.Component {
               <br/>
               <Paper>
                 <TeacherUploads videoId={this.props.location.video.videoId}/>
-              </Paper>
-              <br/>
-              <Paper>
-                <VideoInfo />
               </Paper>
               <br/>
               <Paper style={{padding: '20px'}}>
