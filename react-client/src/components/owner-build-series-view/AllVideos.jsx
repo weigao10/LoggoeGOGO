@@ -1,12 +1,13 @@
 import React from 'react';
 import Paper from 'material-ui/Paper';
-import SearchListEntry from './SearchListEntry.jsx';
+import VideoListEntry from './VideoListEntry.jsx';
 
-const SearchList = ({videos, redirect, save}) => (
+const AllVideos = ({videos, redirect, save}) => (
   <div style={container}>
     <Paper style={style}>
       <div>
-        {videos.map((video, i) => <SearchListEntry key={i} video={video} redirect={redirect} save={save}/>)}
+        {/* NEED TO CHANGE PROPS BELOW AS NEEDED */}
+        {videos.map((video, i) => <VideoListEntry key={i} video={video} redirect={redirect} save={save}/>)}
       </div>
     </Paper>
   </div>
@@ -28,4 +29,4 @@ const container = {
   width: '40%'
 }
 
-export default SearchList;
+export default AllVideos;
