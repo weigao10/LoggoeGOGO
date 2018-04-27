@@ -5,6 +5,6 @@ package-lock.json
 *.log
 
 build/
-dist/
+dist/bundle.js
 
 config.js
