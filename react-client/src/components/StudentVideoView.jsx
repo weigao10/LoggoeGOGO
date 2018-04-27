@@ -2,6 +2,7 @@ import ReactDOM from 'react-dom';
 import React from 'react';
 import axios from 'axios';
 import $ from 'jquery';
+import {Redirect} from 'react-router-dom';
 
 import VideoPlayer from './student-video-view/VideoPlayer.jsx'
 import TimestampList from './student-video-view/TimestampList.jsx'
@@ -11,11 +12,11 @@ import Paper from 'material-ui/Paper';
 class StudentVideo extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { 
+    this.state = {
       timestamps: [],
       startingTimestamp: 0,
-      userId: ''
-    }
+      userId: ""
+    };
 
     this.getAllTimestamps = this.getAllTimestamps.bind(this);
     this.saveTimeStamp = this.saveTimeStamp.bind(this);
@@ -23,100 +24,112 @@ class StudentVideo extends React.Component {
     this.changeVideo = this.changeVideo.bind(this);
   }
 
-  componentDidMount(){
+  componentDidMount() {
     const videoId = this.props.location.videoId;
-    this.getUserId(this.props.location.username); 
+    this.getUserId(this.props.location.username);
   }
 
   getUserId(user) {
-    axios.get('/user/id', {params: {user: user}})
-         .then((data) => {
-           this.setState({userId: data.data[0].id})
-           this.getAllTimestamps();
-         })
+    axios.get("/user/id", { params: { user: user } }).then(data => {
+      this.setState({ userId: data.data[0].id });
+      this.getAllTimestamps();
+    });
   }
 
   saveTimeStamp(timestamp, comment) {
     const user = this.state.userId;
     const videoId = this.props.location.videoId;
 
-    axios.post('/timestamps', {
-      params: {
-        userId: user,
-        videoId: this.props.location.videoId,
-        timestamp: timestamp,
-        comment: comment
-      }
-    })
-    .then(() => {this.getAllTimestamps()})
+    axios
+      .post("/timestamps", {
+        params: {
+          userId: user,
+          videoId: this.props.location.videoId,
+          timestamp: timestamp,
+          comment: comment
+        }
+      })
+      .then(() => {
+        this.getAllTimestamps();
+      });
   }
 
   deleteTimestamp(id) {
     const user = this.state.userId;
     const videoId = this.props.location.videoId;
 
-    axios.delete('/timestamps', {
-      params: {
-        userId: user,
-        videoId: this.props.location.videoId,
-        id: id
-      }
-    })
-    .then(() => {this.getAllTimestamps()})
-    .then(this.setState({startingTimestamp: this.state.timestamps[0]})) 
+    axios
+      .delete("/timestamps", {
+        params: {
+          userId: user,
+          videoId: this.props.location.videoId,
+          id: id
+        }
+      })
+      .then(() => {
+        this.getAllTimestamps();
+      })
+      .then(this.setState({ startingTimestamp: this.state.timestamps[0] }));
   }
 
   getAllTimestamps() {
     const videoId = this.props.location.videoId;
-    
-    axios.get('/timestamps', {
-      params: {
-        videoId: this.props.location.videoId,
-        userId: this.state.userId
-      }
-    })
-    .then((data) => (data.data.map((TS) => TS)))
-    .then((TS) => {this.setState({timestamps: TS})
-    });
+
+    axios
+      .get("/timestamps", {
+        params: {
+          videoId: this.props.location.videoId,
+          userId: this.state.userId
+        }
+      })
+      .then(data => data.data.map(TS => TS))
+      .then(TS => {
+        this.setState({ timestamps: TS });
+      });
   }
-  
+
   changeVideo(timestamp) {
-    this.setState({startingTimestamp: timestamp})
+    this.setState({ startingTimestamp: timestamp });
   }
-  
+
   render() {
-    console.log('this.state', this.state);
+    if (!this.props.location.videoId) {
+      return <Redirect to={{pathname: '/student', state: { from: this.props.location }}}/>
+    }
     return (
       <Paper style={style} zDepth={1}>
+        <h6>You are logged in as {this.props.location.username}</h6>
         <div>
           <div>
             <Paper style={paperStyle1}>
-              <VideoPlayer 
-                videoId={this.props.location.videoId} 
+              <VideoPlayer
+                videoId={this.props.location.videoId}
                 startingTimestamp={this.state.startingTimestamp}
-                saveTimeStamp={this.saveTimeStamp}/>
-            </Paper>
-          </div>
-          <div>
-            <Paper style={paperStyle2}>
-              <ChatRoom username={this.props.location.username}
-                        videoId={this.props.location.videoId}
+                saveTimeStamp={this.saveTimeStamp}
               />
             </Paper>
           </div>
           <div>
             <Paper style={paperStyle2}>
-              <TimestampList 
-                timestamps={this.state.timestamps} 
+              <ChatRoom
+                username={this.props.location.username}
+                videoId={this.props.location.videoId}
+                userId={this.props.location.userId}
+              />
+            </Paper>
+          </div>
+          <div>
+            <Paper style={paperStyle2}>
+              <TimestampList
+                timestamps={this.state.timestamps}
                 deleteTimestamp={this.deleteTimestamp}
                 changeVideo={this.changeVideo}
-                userId={this.state.userId}/>
-              
+              />
             </Paper>
           </div>
         </div>
       </Paper>
-    )
+    );
   }
 }
 

@@ -29,9 +29,19 @@ const getUser = (user, callback) => {
     });
   } 
 
+  const getTeachers = (callback) => {
+    let query = `SELECT * FROM users WHERE owner = 1`;
+    
+    connection.query(query, (err, results) => {
+      (err) ?
+        console.error(err) :
+        callback(results);
+    })
+  }
+
 //-------------------------------------------- SET REQUESTS
 const setUser = (user, callback) => {
-  var query = `INSERT IGNORE INTO users (name, owner) VALUE (?, ?);`
+  var query = `INSERT IGNORE INTO users (name, owner) VALUES (?, ?);`
 
   connection.query(query, [user.username, user.isOwner], (err, results) => {
     (err) ?
@@ -39,6 +49,39 @@ const setUser = (user, callback) => {
       callback(err, results);
   })
 }
+
+//---------------------------------------------------------OWNER QUERIES
+const setTeacherComment = (comment, videoId, userId, start, end, callback) => {
+  const query = `INSERT INTO teacherComments (comment, videoId, userId, begRange, endRange) VALUES (?, ?, ?, ?, ?);`;
+  const values = [comment, videoId, userId, start, end];
+
+  connection.query(query, values, (err, results) => {
+    (err) ?
+      console.log('error saving teacher comment', err) :
+      callback(results);
+  })
+}
+
+const getOwnerComments = (videoId, callback) => {
+  const query = `SELECT * FROM teacherComments WHERE videoId='${videoId}'`;
+
+  connection.query(query, (err, results) => {
+    (err) ? 
+      console.log('Could not retrieve teacher comments', err) :
+      callback(results);
+  })
+}
+
+const deleteOwnerComment = (commentId, callback) => {
+  const query = `DELETE FROM teacherComments WHERE id=${commentId}`;
+
+  connection.query(query, (err, results) => {
+    (err) ? 
+      console.log('Could not delete comment', err) :
+      callback(results);
+  })
+}
+
 
 //---------------------------------------------------------VIDEO QUERIES
 //-------------------------------------------- GET REQUESTS
@@ -170,7 +213,55 @@ const deleteVideo = (userId, videoId, callback) => {
     callback(results);
   })
 }
-  
+
+//---------------------------------------------------------CHATS QUERIES
+//-------------------------------------------- GET REQUESTS
+const getChats = ({videoId}, callback) => {
+  const query = `SELECT * FROM chats WHERE videoId='${videoId}'`;
+
+  connection.query(query, (err, results) => {
+    (err) ?
+      console.log('err', err) :
+      callback(err, results);
+  })
+
+}
+//-------------------------------------------- POST REQUESTS
+const postChats = ({ username, timeStamp, videoId, text }, callback) => {
+  var query = `INSERT INTO chats (username, timeStamp, videoId, text) VALUE (?, ?, ?, ?);`;
+  connection.query(query, [username, timeStamp, videoId, text],(err, results) => {
+    err ? console.error(err) : callback(err, results);
+  });
+};
+
+//---------------------------------------------------------UPLOADS QUERIES
+//-------------------------------------------- GET REQUESTS
+const getUploads = ({videoId}, callback) => {
+
+  // console.log('videoDI', videoId)
+  const query = `SELECT * FROM uploads WHERE videoId='${videoId}'`;
+
+  connection.query(query, (err, results) => {
+    (err) ?
+      console.log('err', err) :
+      callback(err, results);
+  })
+
+}
+//-------------------------------------------- POST REQUESTS
+const setUploads = (data, callback) => {
+  // console.log("data", data.data);
+
+  data.data.map(({videoId, url, filename, mimetype, size}) => {
+    var query = `INSERT INTO uploads (videoId, url, filename, fileType, size) VALUE (?, ?, ?, ?, ?);`;
+    connection.query( query, [videoId, url, filename, mimetype, size], (err, results) => {
+      err ? console.error(err) : callback(err, results);
+    });
+  });
+};
+
+
+
 exports.getBuckets = getBuckets;
 exports.getUser = getUser;
 exports.setUser = setUser;
@@ -184,3 +275,11 @@ exports.getCurrentVideo = getCurrentVideo;
 exports.getOwnerTimestamp = getOwnerTimestamp;
 exports.deleteTimestamp = deleteTimestamp;
 exports.deleteVideo = deleteVideo;
+exports.getChats = getChats;
+exports.postChats = postChats;
+exports.getTeachers = getTeachers;
+exports.getUploads = getUploads;
+exports.setUploads = setUploads;
+exports.setTeacherComment = setTeacherComment;
+exports.getOwnerComments = getOwnerComments;
+exports.deleteOwnerComment = deleteOwnerComment;

@@ -69,8 +69,8 @@ CREATE TABLE teacherComments (
   videoId varchar(255),
   video INT,
   userId INT,
-  begRange INT, -- Beginning timestamp of the video addressed by comment
-  endRange INT, -- Ending timestamp of the video addressed by comment
+  begRange VARCHAR(11), -- Beginning timestamp of the video addressed by comment
+  endRange VARCHAR(11), -- Ending timestamp of the video addressed by comment
   commentType varchar(255),
 
   FOREIGN KEY (userId) REFERENCES users(id) ON DELETE CASCADE,
@@ -88,6 +88,15 @@ CREATE TABLE chats (
 
   FOREIGN KEY (userId) REFERENCES users(id) ON DELETE CASCADE,
   FOREIGN KEY (video) REFERENCES videos(id) ON DELETE CASCADE
+);
+
+CREATE TABLE uploads (
+  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  videoId varchar(255) NOT NULL,
+  url varchar(255) NOT NULL,
+  filename varchar(255),
+  fileType varchar(50),
+  size INT
 );
 
 INSERT INTO users (name, firstName, lastName, hashedPassword, salt, owner) VALUES ('tom', 'Tom', 'Wagner', '123', '456', true);

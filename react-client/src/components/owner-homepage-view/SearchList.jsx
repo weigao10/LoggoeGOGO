@@ -19,7 +19,7 @@ const style = {
   textAlign: 'center',
   display: 'block',
   padding: '30px 5px',
-  "overflow-y": 'auto'
+  "overflowY": 'auto'
 }
 
 const container = {

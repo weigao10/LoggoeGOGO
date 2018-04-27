@@ -17,7 +17,15 @@ const {
   setUser,
   getBuckets,
   deleteTimestamp,
-  deleteVideo 
+  deleteVideo,
+  getTeachers, 
+  getChats,
+  postChats,
+  getUploads,
+  setUploads,
+  setTeacherComment,
+  getOwnerComments,
+  deleteOwnerComment
 } = require('../database-mysql');
 
 const searchYouTube = require ('youtube-search-api-with-axios');
@@ -47,7 +55,6 @@ app.post('/login', (req, res) => {
         if (err) {
           console.log(err);
         }
-        console.log(response);
         req.session.user = response[0].name;
         req.session.isOwner = response[0].owner;
         req.session.userId = response[0].id;
@@ -98,12 +105,11 @@ app.get('/user/id', (req, res) => {
 
 //---------------------------------------------------------USER LOGIN STATUS
 
-/**
- * Returns an object with props:
- * isLoggedIn: bool
- * username: string or undefined if not logged in
- * isOwner: bool or undefined if not logged in
- */
+// Returns an object with props:
+// isLoggedIn: bool
+// username: string or undefined if not logged in
+// isOwner: bool or undefined if not logged in
+
 app.get('/user/loginstatus', (req, res) => {
   if (req.session.user === undefined) {
     res.send({
@@ -127,6 +133,19 @@ app.get('/student/homepage', (req, res) =>
   )
 )
 
+app.get('/student/teachers', (req, res) => {
+  getTeachers((teachers) => {
+    res.send(teachers);
+  })
+})
+
+app.get('/student/videos', (req, res) => {
+  let teacher = req.query.teacher;
+  getOwnerVideos(teacher, (data) => {
+    res.send(data);
+  })
+})
+
 //---------------------------------------------------------OWNER USER REQUESTS
 
 app.get('/owner/searchYoutube', (req, res) => {
@@ -137,26 +156,9 @@ app.get('/owner/searchYoutube', (req, res) => {
   )
 })
 
-// app.get('/owner/savedVideos', (req, res) => {
-//   searchYouTube({key: api, q: req.query.query, maxResults: 1}, 
-//     (video) => {
-//       let url = `https://www.googleapis.com/youtube/v3/videos?id=${video[0].id.videoId}&part=contentDetails&key=${api}`;
-//       //get duration
-//       axios.get(url).then((data) => {
-//         let duration = moment.duration(data.data.items[0].contentDetails.duration, moment.ISO_8601).asSeconds();
-//         setVideo(video[0], req.query.userId, duration, () => {
-//           getCurrentVideo(video[0].id.videoId, (video) => 
-//             res.status(200).send(video)
-//           )
-//         })
-//       });
-//     });
-// });
-
 app.post('/owner/save', (req, res) => {
   let video = req.body.video;
   let userId = req.body.userId;
-  console.log(video)
   let url = `https://www.googleapis.com/youtube/v3/videos?id=${video.id.videoId}&part=contentDetails&key=${api}`;
   axios.get(url)
   .then((data) => {
@@ -182,6 +184,25 @@ app.get('/owner/videoList', (req, res) => {
   })
 })
 
+//---------------------------------------------------------OWNER COMMENTS
+app.post('/owner/saveComment', (req, res) => {
+  setTeacherComment(req.body.comment, req.body.videoId, req.body.userId, req.body.start, req.body.end, (comment) => {
+    res.send('Comment saved to DB');
+  })
+})
+
+app.get('/owner/getComments', (req, res) => {
+  getOwnerComments(req.query.videoId, (comments) => {
+    res.send(comments);
+  })
+})
+
+app.post('/owner/deleteComment', (req, res) => {
+  deleteOwnerComment(req.body.comment.id, (comment) => {
+    res.send('Comment deleted from DB')
+  })
+})
+
 //---------------------------------------------------------ANALYTICS
 
 app.get('/buckets', (req,res) => {
@@ -194,7 +215,7 @@ app.get('/buckets', (req,res) => {
   })
 })
 
-//---------------------------------------------------------WORKING WITH TIMESTAMPS
+//---------------------------------------------------------WORKING WITH STUDENT COMMENTS
 
 app.get('/timestamps', (req, res) => {
   let videoId = req.query.videoId
@@ -211,7 +232,6 @@ app.get('/timestamps/owner', (req, res) => {
 
 app.post('/timestamps', (req, res) => {
   let params = req.body.params;
-  console.log(params)
   setTimestamp(params, (success) => {res.status(201).send()});
 })
 
@@ -220,7 +240,30 @@ app.delete('/timestamps', (req, res) => {
   deleteTimestamp(params, (success) => {res.send()})
 })
 
+//---------------------------------------------------------TEACHER UPLOADS
+
+app.post('/teacherUploads', (req, res) => {
+  setUploads(req.body, (err, results) => {
+    (err) ?
+    console.error('ERROR IN SERVER POST UPLOADS: ', err) :
+    res.status(201).send(results);
+  })
+})
+
+app.get('/teacherUploads', (req, res) => {
+  // console.log('in get teacher uploads', req.query)
+  getUploads(req.query, (err, results) => {
+    (err) ?
+    console.error('ERROR IN SERVER GET UPLOADS: ', err) :
+    res.status(200).send(results);
+  })
+})
+
+
 //---------------------------------------------------------DEFAULT ROUTE
+app.get('/*/bundle.js', (req, res) => {
+  res.sendFile(path.resolve(__dirname + '/../react-client/dist/bundle.js'));
+})
 app.get('/*', (req, res) => {
   res.sendFile(path.resolve(__dirname + '/../react-client/dist/index.html'));
 })
@@ -229,6 +272,8 @@ app.get('/*', (req, res) => {
 let server = app.listen(3000, () => {
   console.log('listening on port 3000!');
 });
+
+//---------------------------------------------------------CHATROOM
 
 const io = require('socket.io')(server);
 let users = [];
@@ -246,5 +291,23 @@ io.on('connection', (socket) => {
   socket.on('send message', (data) => {
     io.sockets.emit('new message', {msg: JSON.stringify(data)})
   })
-
 });
+
+//adds chat messages to the chats db
+app.post('/chats', (req, res) => {
+
+  postChats(req.body, (err, results) => {
+    (err) ?
+    console.error('ERROR IN SERVER POSTCHATS: ', err) :
+    res.status(201).send(results);
+  })
+})
+
+app.post('/chatInfo', (req, res) => { //change to get request
+  // console.log('req in server get chats', req.body)
+  getChats(req.body, (err, results) => {
+    (err) ?
+    console.error('ERROR IN SERVER GETCHATS: ', err) :
+    res.status(201).send(results);
+  });
+})
