@@ -1,17 +1,24 @@
 import React from 'react';
 import Paper from 'material-ui/Paper';
-import VideoListEntry from './VideoListEntry.jsx';
+import AllVideosListEntry from './AllVideosListEntry.jsx';
 
-const AllVideos = ({videos, redirect, save}) => (
-  <div style={container}>
-    <Paper style={style}>
-      <div>
-        {/* NEED TO CHANGE PROPS BELOW AS NEEDED */}
-        {videos.map((video, i) => <VideoListEntry key={i} video={video} redirect={redirect} save={save}/>)}
-      </div>
-    </Paper>
-  </div>
-)
+const AllVideos = ({videos, videosInDB, redirect, save, addToSeries}) => {
+  console.log('videos: ', videos);
+  console.log(videosInDB);
+  return (
+    <div style={container}>
+      <Paper style={style}>
+        <div>
+          {/* NEED TO CHANGE PROPS BELOW AS NEEDED */}
+          {videosInDB >= 2 ?
+            videos.map(video => <AllVideosListEntry key={video.id} video={video} redirect={redirect} save={save} addToSeries={addToSeries}/>) :            
+            <div>Save/add at least two videos to your classroom, then come back to build a series!</div>
+          }
+        </div>
+      </Paper>
+    </div>
+  )
+}
 
 const style = {
   height: '100%',
