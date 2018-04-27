@@ -240,10 +240,9 @@ app.delete('/timestamps', (req, res) => {
   deleteTimestamp(params, (success) => {res.send()})
 })
 
-//---------------------------------------------------------TEACHER COMMENTS
+//---------------------------------------------------------TEACHER UPLOADS
 
 app.post('/teacherUploads', (req, res) => {
-  console.log('req.body', req.body)
   setUploads(req.body, (err, results) => {
     (err) ?
     console.error('ERROR IN SERVER POST UPLOADS: ', err) :
@@ -251,9 +250,14 @@ app.post('/teacherUploads', (req, res) => {
   })
 })
 
-// app.get('/teacherUploads', (req, res) => {
-  
-// })
+app.get('/teacherUploads', (req, res) => {
+  // console.log('in get teacher uploads', req.query)
+  getUploads(req.query, (err, results) => {
+    (err) ?
+    console.error('ERROR IN SERVER GET UPLOADS: ', err) :
+    res.status(200).send(results);
+  })
+})
 
 
 //---------------------------------------------------------DEFAULT ROUTE
@@ -291,7 +295,6 @@ io.on('connection', (socket) => {
 
 //adds chat messages to the chats db
 app.post('/chats', (req, res) => {
-  console.log('req in server post chats', req.body)
 
   postChats(req.body, (err, results) => {
     (err) ?

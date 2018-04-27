@@ -14,19 +14,28 @@ class TeacherUploads extends React.Component {
     };
 
     this.openPicker = this.openPicker.bind(this);
+    this.getUploads = this.getUploads.bind(this);
     this.handleFileUpload = this.handleFileUpload.bind(this);
   }
 
   componentDidMount() {
-    //get uploads
+    this.getUploads();
   }
 
   render() {
     return (
       <Paper>
-        <RaisedButton 
-          label="Upload File"
-          onClick={this.openPicker} />
+        <div>
+          <div id="uploadButton">
+            <RaisedButton label="Upload File" onClick={this.openPicker} />
+          </div>
+          <ul>
+            {this.state.uploads.map((upload) => {
+              console.log('in map', this.state.uploads)
+              return (<div><a href={upload.url} target="_blank">{upload.filename}</a> </div>)
+            })}
+          </ul>
+        </div>
       </Paper>
     );
   }
@@ -44,33 +53,49 @@ class TeacherUploads extends React.Component {
           "github"
         ]
       })
-      .then((response) => {
+      .then(response => {
         this.handleFileUpload(response.filesUploaded);
         this.saveToDb(response.filesUploaded);
       })
-      .catch((err) => console.log('ERROR IN FILE UPLOAD', err))
+      .catch(err => console.log("ERROR IN FILE UPLOAD", err));
   }
 
   handleFileUpload(data) {
     let uploads = [];
-    data.forEach((upload) => {
-      upload['videoId'] = this.props.videoId;
-      console.log('upload', upload)
+    data.forEach(upload => {
+      upload["videoId"] = this.props.videoId;
       uploads.push(upload);
-    })
+    });
     this.setState({
-      uploads: uploads
-    })
+      uploads: [...this.state.uploads, ...uploads]
+    }, () => {
+
+    });
   }
 
   saveToDb(data) {
-    axios.post('/teacherUploads', {
-      data: data
-    })
-    .then(() => {
-      console.log('successfully saved file upload to db!')
-    })
-    .catch((err) => console.log('ERROR IN SAVING FILE UPLOAD TO DB', err))
+    axios
+      .post("/teacherUploads", {
+        data: data
+      })
+      .then(() => {
+        console.log("successfully saved file upload to db!");
+      })
+      .catch(err => console.log("ERROR IN SAVING FILE UPLOAD TO DB", err));
+  }
+
+  getUploads() {
+    axios
+      .get("/teacherUploads", { params: { videoId: this.props.videoId } })
+      .then((data) => {
+        console.log("successfully getting file uploads from db!", data);
+        this.setState({
+          uploads: [...this.state.uploads, ...data.data]
+        }, () => {
+          console.log('state', this.state)
+        })
+      })
+      .catch(err => console.log("ERROR IN GETTING UPLOADS FROM DB", err));
   }
 }
 
