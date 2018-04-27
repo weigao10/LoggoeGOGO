@@ -148,6 +148,7 @@ const getBuckets = function({videoId, duration}, callback) {
 
 //-------------------------------------------- POST REQUESTS
 const setVideo = (video, userId, duration, callback) => {
+  console.log(duration)
   const query = "INSERT IGNORE INTO videos (videoId, title, description, image, userId, duration) VALUES (?, ?, ?, ?, ?, ?);";
   const values = [video.id.videoId, video.snippet.title, video.snippet.description, video.snippet.thumbnails.default.url, userId, duration];
 
@@ -236,7 +237,9 @@ const postChats = ({ username, timeStamp, videoId, text }, callback) => {
 
 //---------------------------------------------------------UPLOADS QUERIES
 //-------------------------------------------- GET REQUESTS
-const getUploads = ({videoId}, callback) => {
+const getUploads = ({videoId, username}, callback) => {
+
+  // console.log('username', username)
   const query = `SELECT * FROM uploads WHERE videoId='${videoId}'`;
 
   connection.query(query, (err, results) => {
@@ -248,16 +251,33 @@ const getUploads = ({videoId}, callback) => {
 }
 //-------------------------------------------- POST REQUESTS
 const setUploads = (data, callback) => {
-  console.log("data", data.data);
+  // console.log("data", data.data);
 
-  data.data.map(({videoId, url, filename, mimetype, size}) => {
-    var query = `INSERT INTO uploads (videoId, url, fileName, fileType, size) VALUE (?, ?, ?, ?, ?);`;
-    connection.query( query, [videoId, url, filename, mimetype, size], (err, results) => {
+  data.data.map(({videoId, username, url, filename, mimetype, size}) => {
+    var query = `INSERT INTO uploads (videoId, username, url, filename, fileType, size) VALUE (?, ?, ?, ?, ?, ?);`;
+    connection.query( query, [videoId, username, url, filename, mimetype, size], (err, results) => {
       err ? console.error(err) : callback(err, results);
     });
   });
 };
 
+//-------------------------------------------- SAVE SERIES TO DB
+
+const saveSeries = ({ videoList, userId, username, series }, callback) => {
+  console.log('videoList, userID, username, series in DB: ', videoList, userId, username, series);
+  videoList.forEach((video, idx) => {
+
+    // Maybe add: WHERE... AND series = null;
+    let query = `UPDATE videos SET series = '${series}', idxInSeries = ${idx + 1} WHERE id = ${video.id} AND userId = ${userId};`;
+    console.log(query);
+    connection.query(query, (err, results) => {
+      err ? callback(err, null) : null;
+    });
+  })
+
+  // if no error thrown during forEach iteration:
+  callback(null, 'huzzah!!');
+}
 
 
 exports.getBuckets = getBuckets;
@@ -281,3 +301,4 @@ exports.setUploads = setUploads;
 exports.setTeacherComment = setTeacherComment;
 exports.getOwnerComments = getOwnerComments;
 exports.deleteOwnerComment = deleteOwnerComment;
+exports.saveSeries = saveSeries;
