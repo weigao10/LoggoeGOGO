@@ -7,5 +7,4 @@ package-lock.json
 build/
 react-client/dist/bundle.js
 
-
 config.js
