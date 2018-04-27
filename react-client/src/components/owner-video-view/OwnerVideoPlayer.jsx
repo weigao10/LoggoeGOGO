@@ -50,7 +50,7 @@ class OwnerVideoPlayer extends React.Component {
   }
 
   saveComment(start, end, comment, callback) {
-    axios.post('/owner/saveComment',
+    axios.post('/owner/comment',
       {
         userId: Auth.userId,
         videoId: this.state.videoId,
@@ -70,7 +70,7 @@ class OwnerVideoPlayer extends React.Component {
   }
 
   getComments() {
-    axios.get('/owner/getComments', {
+    axios.get('/owner/comment', {
       params: {
         videoId: this.state.videoId
       }
@@ -86,7 +86,7 @@ class OwnerVideoPlayer extends React.Component {
   }
 
   deleteComment(comment) {
-    axios.post('/owner/deleteComment', {comment: comment})
+    axios.delete('/owner/comment', {params: {comment: comment}})
     .then(() => {
       console.log('Successfully deleted comment');
       this.getComments();
