@@ -53,7 +53,8 @@ const style = {
   textAlign: 'center',
   display: 'block',
   padding: '30px 5px',
-  wordWrap: 'break-word'
+  wordWrap: 'break-word',
+  cursor: 'move'
 }
 
 export default DragSource(ItemTypes.VIDEO, searchSource, collect) (SearchListEntry);

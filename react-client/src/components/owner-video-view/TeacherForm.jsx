@@ -1,6 +1,7 @@
 import React from 'react';
 import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
+import AutoComplete from 'material-ui/AutoComplete';
 import moment from 'moment';
 
 class TeacherForm extends React.Component {
@@ -13,9 +14,9 @@ class TeacherForm extends React.Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
-  handleChange(event) {
+  handleChange(comment) {
     this.setState({
-      [event.target.name]: event.target.value
+      comment: comment
     })
   }
 
@@ -32,7 +33,11 @@ class TeacherForm extends React.Component {
   render() {
     return(
       <div>
-        Comment: <input name="comment" id="comment" value={this.state.comment} onChange={this.handleChange}></input>
+        <AutoComplete dataSource={[]} 
+          refs={"autocomplete"} 
+          searchText={this.state.comment}
+          onUpdateInput={this.handleChange}
+        />
         <br/>
         <RaisedButton 
           style={{margin: '5px'}} 
@@ -48,7 +53,4 @@ export default TeacherForm;
 
 
 /* 
-        Start Time: <input name="start" id="start" value={this.state.start} onChange={this.handleChange}></input>
-        <br/>
-        End Time: <input name="end" id="end" value={this.state.end} onChange={this.handleChange}></input>
-        <br/>*/
+             Comment: <input name="comment" id="comment" value={this.state.comment} onChange={this.handleChange}></input> */
