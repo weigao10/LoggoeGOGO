@@ -103,8 +103,6 @@ class OwnerHomepage extends React.Component {
   }
 
   removeFromSeries(video) {
-    console.log(video);
-
     let videos = this.state.videos;
     videos.push(video);
 
@@ -114,8 +112,15 @@ class OwnerHomepage extends React.Component {
     }));
   }
 
-  saveSeries(videoList) {
-
+  saveSeries(videoList, userId, username) {
+    // var seriesData = { videoList, userId, username };
+    axios.post('/owner/build', { videoList, userId, username })
+      .then((result) => {
+        console.log(result);
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }
 
   render () {
@@ -136,10 +141,11 @@ class OwnerHomepage extends React.Component {
               <Hidden deleteVideo={this.deleteVideo}/>
               <SeriesList 
                 userId={this.state.userId}
+                username={this.props.location.username}
                 videos={this.state.videos}
                 redirect={this.sendToSelectedVideo}
-                deleteVideo={this.deleteVideo}
-                save={this.saveVideo}
+                /* deleteVideo={this.deleteVideo} */
+                /* save={this.saveVideo} */
                 addToSeries={this.addToSeries}
                 saveSeries={this.saveSeries}
                 videosInSeries={this.state.videosInSeries}

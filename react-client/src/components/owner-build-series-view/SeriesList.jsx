@@ -19,15 +19,42 @@ function collect(connect, monitor) {
 }
 
 class SeriesList extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      seriesDropDown: null,
+      seriesInput: '',
+    }
+
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange(evt) {
+    this.setState({ seriesInput: evt.target.value })
+  }
 
   render() {
     // NEED TO UPDATE
-    const { videosInSeries, videos, redirect, removeFromSeries, connectDropTarget} = this.props;
+    const { userId, username, videosInSeries, videos, removeFromSeries, addToSeries, redirect, saveSeries, connectDropTarget} = this.props;
+    
+    // render input element if VideoSeriesList is not empty
+    const conditionalInput = videosInSeries.length === 0 ?
+      <div></div> :
+      <input style={add10pxBottom} type="text" value={this.state.seriesInput} onChange={this.handleChange} />;
+
+    // render save button if VideoSeriesList is not empty
+    const conditionalSaveBtn = videosInSeries.length === 0 ?
+      <div></div> :
+      <button style={add10pxBottom} onClick={() => {saveSeries(videosInSeries, userId, username)}}>Save Series</button>;
+
+
     return connectDropTarget(
       <div style={container}>
         <Paper style={style}>
           <div>
-            {videosInSeries.length === 0 ? 'Search for a video and drag it here to save it' : `Videos in series: ${videosInSeries.length}` }
+            {videosInSeries.length === 0 ? 'Search for a video and drag it here to save it' : <div style={add10pxBottom} >Videos in series: {videosInSeries.length}</div> }
+            Series Title: {conditionalInput}<br/>
+            {conditionalSaveBtn}
             {videosInSeries.length === 0 ? null :
               videosInSeries.map((video) => {
                 return (
@@ -55,6 +82,10 @@ const container = {
   height: '70vh',
   float: 'right',
   width: '40%',
+}
+
+const add10pxBottom = {
+  marginBottom: '10px'
 }
 
 export default DropTarget(ItemTypes.VIDEO, videoSource, collect)(SeriesList);

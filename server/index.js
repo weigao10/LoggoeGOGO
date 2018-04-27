@@ -319,3 +319,10 @@ app.post('/chatInfo', (req, res) => { //change to get request
     res.status(201).send(results);
   });
 })
+
+//---------------------------------------------------------OWNER BUILD SERIES
+
+app.post('/owner/build', (req, res) => {
+  console.log(req.body);
+  res.status(200).send('it worked!');
+})
