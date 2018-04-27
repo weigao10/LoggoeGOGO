@@ -1,4 +1,4 @@
-import {withRouter} from 'react-router-dom';
+import {withRouter, Redirect} from 'react-router-dom';
 import React from 'react';
 import axios from 'axios';
 
@@ -29,6 +29,9 @@ class OwnerVideo extends React.Component {
   }
 
   render() {
+    if (!this.props.location.video) {
+      return <Redirect to={{pathname: '/owner', state: { from: this.props.location }}}/>
+    }
     return (
       <Paper style={style} zDepth={1}>
         <div style={{display: 'inline-block'}}>

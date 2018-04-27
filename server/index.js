@@ -46,6 +46,10 @@ app.post('/login', (req, res) => {
     if (err) {
       res.status(403).send(err);
     } else {
+      if (response.length === 0) {
+        res.status(403).send('user not found');
+        return;
+      }
       req.session.regenerate((err) => {
         if (err) {
           console.log(err);
@@ -69,22 +73,23 @@ app.post('/register', (req, res) => {
     let isExist = !!response.length;
 
     if (isExist) {
-      req.session.regenerate((err) => {
-        if (err) {
-          console.log(err);
-          res.status(403).send(err);
-          return;
-        }
-        req.session.user = response[0].name;
-        req.session.isOwner = response[0].owner;
         res.status(201).send(true);
-      })
-    } 
+    }
     else {
-      setUser(req.body, (err, response) => 
-        (err) ? 
-          res.status(403).send(err) :
-          res.status(201).send(false)
+      setUser(req.body, (err, response) => {
+        getUser(req.body.username, (err, response) => {
+          req.session.regenerate((err) => {
+            if (err) {
+              console.log(err);
+            }
+            req.session.user = response[0].name;
+            req.session.isOwner = response[0].owner;
+            req.session.userId = response[0].id;
+            res.status(201).send(false)
+          })
+          }
+          );
+        }
       )      
     }
 
