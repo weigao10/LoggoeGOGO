@@ -22,20 +22,21 @@ function collect(connect, monitor) {
 class AllVideosListEntry extends React.Component {
   render() {
     // NEED TO UPDATE
-    const { isDragging, connectDragSource, video, save, redirect } = this.props
+    const { isDragging, connectDragSource, video, save, redirect, addToSeries } = this.props
+
     return connectDragSource(
       <div>
         <Paper style={style}>
           <div style={{display: 'inline-block'}}>
             <div style={{width: '30%', float: 'left'}}>
-              <img className="media-object" src={video.snippet.thumbnails.default.url} alt="" />
+              <img className="media-object" src={video.image} alt="" />
             </div>
             <div style={{width: '50%', float: 'right', wordWrap: 'break-word'}}>
-              <div style={{fontWeight: 'bold'}}> {video.snippet.title} </div>
+              <div style={{fontWeight: 'bold'}}> {video.title} </div>
               <br/>
-              <div style={{color: 'grey'}}> {video.snippet.description} </div>
+              <div style={{color: 'grey'}}> {video.description} </div>
               <br/>
-              <button onClick={() => { save(video) }}>Save to Videos</button>
+              <button onClick={() => { addToSeries(video) }}>Add to Series</button>
             </div>
           </div>
         </Paper>
