@@ -6,7 +6,6 @@ import YouTube from 'react-youtube';
 import Paper from 'material-ui/Paper';
 import TeacherComments from './TeacherComments.jsx';
 import CommentSlider from './CommentSlider.jsx';
-import TeacherForm from './TeacherForm.jsx';
 import Auth from '../../utils/auth.js';
 
 
@@ -131,10 +130,8 @@ class OwnerVideoPlayer extends React.Component {
             />
         </div>
         <br/>
-        <CommentSlider video={this.state.video}/>
-        <br/>
         <Paper>
-          {this.state.showCommentForm ? <TeacherForm video={this.state.videoId} save={this.saveComment}/> : null}
+          {this.state.showCommentForm ? <CommentSlider video={this.state.video} save={this.saveComment}/> : null}
         </Paper>
         <br/>
         <Paper>

@@ -1,35 +1,41 @@
 import React from 'react';
 import Slider, {Range} from 'rc-slider';
-
-const style = {
-  width: '600',
-  margin: '50'
-};
+import TeacherForm from './TeacherForm.jsx';
 
 class CommentSlider extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: 50,
-      duration: this.props.video.duration
+      start: 0,
+      end: 0
     }
   }
 
   onSliderChange = (value) => {
     console.log(value);
     this.setState({
-      value: value
+      start: value[0],
+      end: value[1]
     })
   }
 
 
   render() {
     return(
-      <div style={style}>
-        <Range allowCross={false}  defaultValue={[0, 1]} min={0} max={this.state.duration} onChange={this.onSliderChange} />
+      <div>
+        <div style={style}>
+          <Range allowCross={false}  defaultValue={[0, 0]} min={0} max={this.props.video.duration} onChange={this.onSliderChange} />
+        </div>
+        <div>
+          <TeacherForm save={this.props.save} video={this.props.video} start={this.state.start} end={this.state.end}/>
+        </div>
       </div>
     )
   }
+}
+
+const style = {
+  padding: '10px'
 }
 
 
