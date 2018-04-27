@@ -17,6 +17,7 @@ class OwnerHomepage extends React.Component {
       userId: '',
       searchedVideos: [],
       videosInSeries: [],
+      videosInDB: 1000 // set to an arbitrary number >= 2 for rendering logic purposes --> updated instantly at page load
     }
     this.getUserId = this.getUserId.bind(this);
     this.showVideoList = this.showVideoList.bind(this);
@@ -26,6 +27,7 @@ class OwnerHomepage extends React.Component {
     this.deleteVideo = this.deleteVideo.bind(this);
     this.addToSeries = this.addToSeries.bind(this);
     this.saveSeries = this.saveSeries.bind(this);
+    this.removeFromSeries = this.removeFromSeries.bind(this);
   }
 
   componentDidMount() {
@@ -34,23 +36,28 @@ class OwnerHomepage extends React.Component {
   }
   
   getUserId(user) {
-    axios.get('/user/id', {params: {user: user}})
-         .then((data) => {
-           this.setState({userId: data.data[0].id}, ()=> this.showVideoList());
-         })
+    axios
+      .get('/user/id', {params: {user: user}})
+      .then((data) => {
+        this.setState({userId: data.data[0].id}, ()=> this.showVideoList());
+      });
   }
 
   showVideoList() {
-    axios.get('/owner/videoList', {params: {userId: this.state.userId}})
-          .then(({data}) => {this.setState({videos: data})})
+    axios
+      .get('/owner/videoList', {params: {userId: this.state.userId}})
+      .then(({data}) => {this.setState({
+        videos: data,
+        videosInDB: data.length,
+      })});
   }
 
   sendToSelectedVideo(video) {
     this.props.history.push({
-        pathname: '/owner/video',
-        video: video, 
-        userId: this.state.userId
-      })
+      pathname: '/owner/video',
+      video: video, 
+      userId: this.state.userId,
+    });
   }
 
   getYouTubeVideos(query) {
@@ -60,7 +67,7 @@ class OwnerHomepage extends React.Component {
       this.setState({
         searchedVideos: data
       })
-    })
+    });
   }
 
   saveVideo(video) {
@@ -71,7 +78,7 @@ class OwnerHomepage extends React.Component {
     })
     .catch((err) => {
       console.log(err);
-    })
+    });
   }
 
   deleteVideo(video) {
@@ -95,6 +102,18 @@ class OwnerHomepage extends React.Component {
     }));
   }
 
+  removeFromSeries(video) {
+    console.log(video);
+
+    let videos = this.state.videos;
+    videos.push(video);
+
+    this.setState((prevState) => ({
+      videos: videos,
+      videosInSeries: prevState.videosInSeries.filter((item, i) => item.id !== video.id),
+    }));
+  }
+
   saveSeries(videoList) {
 
   }
@@ -110,6 +129,7 @@ class OwnerHomepage extends React.Component {
             <div>
               <AllVideos
                 videos={this.state.videos}
+                videosInDB={this.state.videosInDB}
                 save={this.saveVideo}
                 redirect={this.sendToSelectedVideo}
                 addToSeries={this.addToSeries} />
@@ -122,7 +142,8 @@ class OwnerHomepage extends React.Component {
                 save={this.saveVideo}
                 addToSeries={this.addToSeries}
                 saveSeries={this.saveSeries}
-                videosInSeries={this.state.videosInSeries} />
+                videosInSeries={this.state.videosInSeries}
+                removeFromSeries={this.removeFromSeries} />
             </div>
           </div>  
         </div>

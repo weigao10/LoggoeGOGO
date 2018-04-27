@@ -23,7 +23,7 @@ class SeriesListEntry extends React.Component {
 
   render() {
     // NEED TO UPDATE:
-    const { video, redirect, deleteVideo, connectDragSource } = this.props;
+    const { video, redirect, removeFromSeries, connectDragSource } = this.props;
     return connectDragSource(
       <div>
         <Paper style={style} key={video.id}>
@@ -35,7 +35,7 @@ class SeriesListEntry extends React.Component {
               <div style={{fontWeight: 'bold'}} onClick={()=>{redirect(video)}}> {video.title} </div>
               <br/>
               <div style={{color: 'grey'}}> {video.description} </div>
-              <button onClick={() => {deleteVideo(video)}}>Remove from Series</button>
+              <button onClick={() => {removeFromSeries(video)}}>Remove from Series</button>
               <br/>
             </div>
           </div>

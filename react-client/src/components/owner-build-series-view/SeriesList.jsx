@@ -22,7 +22,7 @@ class SeriesList extends React.Component {
 
   render() {
     // NEED TO UPDATE
-    const { videosInSeries, videos, redirect, deleteVideo, connectDropTarget} = this.props;
+    const { videosInSeries, videos, redirect, removeFromSeries, connectDropTarget} = this.props;
     return connectDropTarget(
       <div style={container}>
         <Paper style={style}>
@@ -31,7 +31,7 @@ class SeriesList extends React.Component {
             {videosInSeries.length === 0 ? null :
               videosInSeries.map((video) => {
                 return (
-                  <SeriesListEntry key={video.videoId} video={video} redirect={redirect} deleteVideo={deleteVideo}/>
+                  <SeriesListEntry key={video.videoId} video={video} redirect={redirect} removeFromSeries={removeFromSeries}/>
                 );
               })}
           </div>
