@@ -35,12 +35,12 @@ const style = {
   display: 'block',
   padding: '30px 5px',
   "overflowY": 'auto'
-}
+};
 
 const container = {
   height: '70vh',
   float: 'left',
   width: '40%'
-}
+};
 
 export default AllVideos;
