@@ -23,6 +23,7 @@ class CommentSlider extends React.Component {
   render() {
     return(
       <div>
+        <div style={{marginBottom: '10px', paddingTop: '10px'}}>Set time range:</div>
         <div style={style}>
           <Range allowCross={false} defaultValue={[0, 0]} min={0} max={this.props.video.duration} onChange={this.onSliderChange} />
         </div>
@@ -36,7 +37,6 @@ class CommentSlider extends React.Component {
 
 const style = {
   padding: '10px',
-  marginTop: '10px'
 }
 
 
