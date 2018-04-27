@@ -21,6 +21,7 @@ class VideoPlayer extends React.Component {
     this.onPauseVideo = this.onPauseVideo.bind(this);
     this.saveTimeStamp = this.saveTimeStamp.bind(this);
     this.clearInput = this.clearInput.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   onReady(event) {
@@ -31,6 +32,10 @@ class VideoPlayer extends React.Component {
   
   onPlayVideo() {
     this.state.player.playVideo();
+  }
+
+  handleChange(comment) {
+    this.setState({comment:comment});
   }
 
   onPauseVideo() {
@@ -47,14 +52,6 @@ class VideoPlayer extends React.Component {
       comment: ''
     })
   }
-
-
-  // handleClick(start) {
-  //   this.setState({
-  //     startingTimestamp: start
-  //   })
-  // }
-
 
   render() {
     const opts = {
