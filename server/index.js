@@ -246,7 +246,7 @@ app.delete('/timestamps', (req, res) => {
 
 //---------------------------------------------------------TEACHER UPLOADS
 
-app.post('/teacherUploads', (req, res) => {
+app.post('/teacherUpload', (req, res) => {
   setUploads(req.body, (err, results) => {
     (err) ?
     console.error('ERROR IN SERVER POST UPLOADS: ', err) :
@@ -254,13 +254,17 @@ app.post('/teacherUploads', (req, res) => {
   })
 })
 
-app.get('/teacherUploads', (req, res) => {
+app.get('/teacherUpload', (req, res) => {
   // console.log('in get teacher uploads', req.query)
   getUploads(req.query, (err, results) => {
     (err) ?
     console.error('ERROR IN SERVER GET UPLOADS: ', err) :
     res.status(200).send(results);
   })
+})
+
+app.delete('/teacherUpload', (req, res) => {
+  console.log('req', req)
 })
 
 

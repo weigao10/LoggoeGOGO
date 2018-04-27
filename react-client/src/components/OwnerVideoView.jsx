@@ -41,7 +41,8 @@ class OwnerVideo extends React.Component {
               </Paper>
               <br/>
               <Paper>
-                <TeacherUploads videoId={this.props.location.video.videoId}/>
+                <TeacherUploads username={this.props.location.username}
+                                videoId={this.props.location.video.videoId}/>
               </Paper>
               <br/>
               <Paper style={{padding: '20px'}}>

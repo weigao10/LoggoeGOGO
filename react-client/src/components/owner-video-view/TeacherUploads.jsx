@@ -15,7 +15,7 @@ class TeacherUploads extends React.Component {
 
     this.openPicker = this.openPicker.bind(this);
     this.getUploads = this.getUploads.bind(this);
-    this.handleFileUpload = this.handleFileUpload.bind(this);
+    this.removeUpload = this.removeUpload.bind(this);
   }
 
   componentDidMount() {
@@ -31,8 +31,9 @@ class TeacherUploads extends React.Component {
           </div>
           <ul>
             {this.state.uploads.map((upload) => {
-              console.log('in map', this.state.uploads)
-              return (<div><a href={upload.url} target="_blank">{upload.filename}</a> </div>)
+              // console.log('in map', this.state.uploads)
+              return (<div><a href={upload.url} target="_blank">{upload.filename}</a> &nbsp;
+                          <button value={upload.url} onClick={this.removeUpload}>remove</button></div>)
             })}
           </ul>
         </div>
@@ -54,67 +55,58 @@ class TeacherUploads extends React.Component {
         ]
       })
       .then(response => {
-        this.handleFileUpload(response.filesUploaded);
         this.saveToDb(response.filesUploaded);
+        this.getUploads();
       })
       .catch(err => console.log("ERROR IN FILE UPLOAD", err));
   }
 
-  handleFileUpload(data) {
-    let uploads = [];
-    data.forEach(upload => {
-      upload["videoId"] = this.props.videoId;
-      uploads.push(upload);
-    });
-    this.setState({
-      uploads: [...this.state.uploads, ...uploads]
-    }, () => {
-
-    });
-  }
-
   saveToDb(data) {
     axios
-      .post("/teacherUploads", {
-        data: data
-      })
-      .then(() => {
-        console.log("successfully saved file upload to db!");
-      })
+      .post("/teacherUpload", { data: data})
+      .then(() => console.log("successfully saved file upload to db!"))
       .catch(err => console.log("ERROR IN SAVING FILE UPLOAD TO DB", err));
   }
 
   getUploads() {
     axios
-      .get("/teacherUploads", { params: { videoId: this.props.videoId } })
+      .get("/teacherUpload", { params: { videoId: this.props.videoId, username: this.props.username } })
       .then((data) => {
-        console.log("successfully getting file uploads from db!", data);
-        this.setState({
-          uploads: [...this.state.uploads, ...data.data]
-        }, () => {
-          console.log('state', this.state)
-        })
+        this.setState({uploads: [...data.data]})
       })
       .catch(err => console.log("ERROR IN GETTING UPLOADS FROM DB", err));
   }
+
+  removeUpload(e) {
+    this.state.uploads.forEach((upload) => {
+      if(upload.url === e.target.value){
+        axios.delete('/teacherUpload', { data: { url: upload.url }})
+          .then(() => console.log("successfully deleted upload from db!"))
+          .catch((err) => console.log("ERROR IN DELETING FILE FROM DB", err));
+      }
+    })
+    this.getUploads();
+  }
 }
 
-let temp = {
-  filesUploaded: [
-    {
-      filename: "zoom_0.mp4",
-      handle: "VVcCQkvRg2kSE2QpAhwk",
-      mimetype: "video/mp4",
-      originalFile: { name: "zoom_0.mp4", type: "video/mp4", size: 27819834 },
-      originalPath: "zoom_0.mp4",
-      size: 27819834,
-      source: "local_file_system",
-      status: "Stored",
-      uploadId: "71c1154dffaec2859afe59c4f429038f4",
-      url: "https://cdn.filestackcontent.com/VVcCQkvRg2kSE2QpAhwk",
-      videoId: 'Ukg_U3CnJWI'
-    }
-  ]
-};
+
+
+// let temp = {
+//   filesUploaded: [
+//     {
+//       filename: "zoom_0.mp4",
+//       handle: "VVcCQkvRg2kSE2QpAhwk",
+//       mimetype: "video/mp4",
+//       originalFile: { name: "zoom_0.mp4", type: "video/mp4", size: 27819834 },
+//       originalPath: "zoom_0.mp4",
+//       size: 27819834,
+//       source: "local_file_system",
+//       status: "Stored",
+//       uploadId: "71c1154dffaec2859afe59c4f429038f4",
+//       url: "https://cdn.filestackcontent.com/VVcCQkvRg2kSE2QpAhwk",
+//       videoId: 'Ukg_U3CnJWI'
+//     }
+//   ]
+// };
 
 export default TeacherUploads;
