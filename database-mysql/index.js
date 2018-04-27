@@ -237,6 +237,8 @@ const postChats = ({ username, timeStamp, videoId, text }, callback) => {
 //---------------------------------------------------------UPLOADS QUERIES
 //-------------------------------------------- GET REQUESTS
 const getUploads = ({videoId}, callback) => {
+
+  // console.log('videoDI', videoId)
   const query = `SELECT * FROM uploads WHERE videoId='${videoId}'`;
 
   connection.query(query, (err, results) => {
@@ -248,10 +250,10 @@ const getUploads = ({videoId}, callback) => {
 }
 //-------------------------------------------- POST REQUESTS
 const setUploads = (data, callback) => {
-  console.log("data", data.data);
+  // console.log("data", data.data);
 
   data.data.map(({videoId, url, filename, mimetype, size}) => {
-    var query = `INSERT INTO uploads (videoId, url, fileName, fileType, size) VALUE (?, ?, ?, ?, ?);`;
+    var query = `INSERT INTO uploads (videoId, url, filename, fileType, size) VALUE (?, ?, ?, ?, ?);`;
     connection.query( query, [videoId, url, filename, mimetype, size], (err, results) => {
       err ? console.error(err) : callback(err, results);
     });
