@@ -13,7 +13,6 @@ class VideoUploads extends React.Component {
   }
 
   componentDidMount() {
-    // console.log('props', this.props);
     this.getUploads();
   }
 
@@ -34,12 +33,12 @@ class VideoUploads extends React.Component {
 
   getUploads() {
     axios
-      .get("/teacherUploads", { params: { videoId: this.props.videoId } })
+      .get("/teacherUpload", { params: { videoId: this.props.videoId } })
       // .get("/teacherUploads", { params: { videoId: this.props.videoId, username: this.props.username } })
       .then((data) => {
-        // console.log("successfully getting file uploads from db!", data);
+        console.log("successfully getting file uploads from db!", data.data);
         this.setState({
-          uploads: [...this.state.uploads, ...data.data]
+          uploads: [...data.data]
         })
       })
       .catch(err => console.log("ERROR IN GETTING UPLOADS FROM DB", err));
