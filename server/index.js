@@ -25,7 +25,8 @@ const {
   setUploads,
   setTeacherComment,
   getOwnerComments,
-  deleteOwnerComment
+  deleteOwnerComment,
+  saveSeries,
 } = require('../database-mysql');
 
 const searchYouTube = require ('youtube-search-api-with-axios');
@@ -323,6 +324,9 @@ app.post('/chatInfo', (req, res) => { //change to get request
 //---------------------------------------------------------OWNER BUILD SERIES
 
 app.post('/owner/build', (req, res) => {
-  console.log(req.body);
-  res.status(200).send('it worked!');
-})
+  saveSeries(req.body, (err, success) => {
+    err ?
+      res.status(500).send('error') :
+      res.status(200).send(success);
+  });
+});

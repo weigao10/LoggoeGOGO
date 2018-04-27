@@ -112,9 +112,9 @@ class OwnerHomepage extends React.Component {
     }));
   }
 
-  saveSeries(videoList, userId, username) {
+  saveSeries(videoList, userId, username, series) {
     // var seriesData = { videoList, userId, username };
-    axios.post('/owner/build', { videoList, userId, username })
+    axios.post('/owner/build', { videoList, userId, username, series })
       .then((result) => {
         console.log(result);
       })
@@ -130,7 +130,10 @@ class OwnerHomepage extends React.Component {
         <div id="owner-homepage-app">
           <header className="navbar"><h1>Hello {this.props.location.username}</h1></header>
           <div className="main">
-            Drag videos from the left column to the right column or click "Add to Series" to create a video series, then save the series by hitting the save button below
+            <p>Drag videos from the left column to the right column or click "Add to Series" to create a video series, then save the series by hitting the save button below</p>
+            <p><i>**Only videos not currently in a series can be added to a new series and as such only those videos are shown below</i></p>
+            
+            
             <div>
               <AllVideos
                 videos={this.state.videos}

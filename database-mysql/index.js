@@ -261,6 +261,23 @@ const setUploads = (data, callback) => {
   });
 };
 
+//-------------------------------------------- SAVE SERIES TO DB
+
+const saveSeries = ({ videoList, userId, username, series }, callback) => {
+  console.log('videoList, userID, username, series in DB: ', videoList, userId, username, series);
+  videoList.forEach((video, idx) => {
+
+    // Maybe add: WHERE... AND series = null;
+    let query = `UPDATE videos SET series = '${series}', idxInSeries = ${idx + 1} WHERE id = ${video.id} AND userId = ${userId};`;
+    console.log(query);
+    connection.query(query, (err, results) => {
+      err ? callback(err, null) : null;
+    });
+  })
+
+  // if no error thrown during forEach iteration:
+  callback(null, 'huzzah!!');
+}
 
 
 exports.getBuckets = getBuckets;
@@ -284,3 +301,4 @@ exports.setUploads = setUploads;
 exports.setTeacherComment = setTeacherComment;
 exports.getOwnerComments = getOwnerComments;
 exports.deleteOwnerComment = deleteOwnerComment;
+exports.saveSeries = saveSeries;
