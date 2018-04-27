@@ -20,7 +20,9 @@ class VideoUploads extends React.Component {
   render() {
     return (
       <Paper>
-        <div><ul>
+        <div>
+          <div>Supplemental Material:</div>
+          <ul>
             {this.state.uploads.map((upload) => {
               return (<div><a href={upload.url} target="_blank">{upload.filename}</a> </div>)
             })}

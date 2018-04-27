@@ -15,11 +15,10 @@ class TeacherUploads extends React.Component {
 
     this.openPicker = this.openPicker.bind(this);
     this.getUploads = this.getUploads.bind(this);
-    this.handleFileUpload = this.handleFileUpload.bind(this);
+    this.removeUpload = this.removeUpload.bind(this);
   }
 
   componentDidMount() {
-    // console.log('props', this.props);
     this.getUploads();
   }
 
@@ -33,7 +32,8 @@ class TeacherUploads extends React.Component {
           <ul>
             {this.state.uploads.map((upload) => {
               // console.log('in map', this.state.uploads)
-              return (<div><a href={upload.url} target="_blank">{upload.filename}</a> </div>)
+              return (<div><a href={upload.url} target="_blank">{upload.filename}</a> &nbsp;
+                          <button value={upload.url} onClick={this.removeUpload}>remove</button></div>)
             })}
           </ul>
         </div>
@@ -55,51 +55,41 @@ class TeacherUploads extends React.Component {
         ]
       })
       .then(response => {
-        this.handleFileUpload(response.filesUploaded);
         this.saveToDb(response.filesUploaded);
+        this.getUploads();
       })
       .catch(err => console.log("ERROR IN FILE UPLOAD", err));
   }
 
-  handleFileUpload(data) {
-    let uploads = [];
-    data.forEach(upload => {
-      upload["videoId"] = this.props.videoId;
-      upload["username"] = this.props.username;
-      uploads.push(upload);
-    });
-    this.setState({
-      uploads: [...this.state.uploads, ...uploads]
-    }, () => {
-
-    });
-  }
-
   saveToDb(data) {
     axios
-      .post("/teacherUploads", {
-        data: data
-      })
-      .then(() => {
-        console.log("successfully saved file upload to db!");
-      })
+      .post("/teacherUpload", { data: data})
+      .then(() => console.log("successfully saved file upload to db!"))
       .catch(err => console.log("ERROR IN SAVING FILE UPLOAD TO DB", err));
   }
 
   getUploads() {
     axios
-      .get("/teacherUploads", { params: { videoId: this.props.videoId, username: this.props.username } })
+      .get("/teacherUpload", { params: { videoId: this.props.videoId, username: this.props.username } })
       .then((data) => {
-        // console.log("successfully getting file uploads from db!", data);
-        this.setState({
-          uploads: [...this.state.uploads, ...data.data]
-        }, () => {
-          console.log('state', this.state)
-        })
+        this.setState({uploads: [...data.data]})
       })
       .catch(err => console.log("ERROR IN GETTING UPLOADS FROM DB", err));
   }
+
+  removeUpload(e) {
+    this.state.uploads.forEach((upload) => {
+      if(upload.url === e.target.value){
+        axios.delete('/teacherUpload', { data: { url: upload.url }})
+          .then(() => console.log("successfully deleted upload from db!"))
+          .catch((err) => console.log("ERROR IN DELETING FILE FROM DB", err));
+      }
+    })
+    this.getUploads();
+  }
 }
+
+
 
 // let temp = {
 //   filesUploaded: [

@@ -252,9 +252,9 @@ const getUploads = ({videoId, username}, callback) => {
 const setUploads = (data, callback) => {
   // console.log("data", data.data);
 
-  data.data.map(({videoId, url, filename, mimetype, size}) => {
-    var query = `INSERT INTO uploads (videoId, url, filename, fileType, size) VALUE (?, ?, ?, ?, ?, ?);`;
-    connection.query( query, [videoId, url, filename, mimetype, size], (err, results) => {
+  data.data.map(({videoId, username, url, filename, mimetype, size}) => {
+    var query = `INSERT INTO uploads (videoId, username, url, filename, fileType, size) VALUE (?, ?, ?, ?, ?, ?);`;
+    connection.query( query, [videoId, username, url, filename, mimetype, size], (err, results) => {
       err ? console.error(err) : callback(err, results);
     });
   });
