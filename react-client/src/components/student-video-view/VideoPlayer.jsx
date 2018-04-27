@@ -28,6 +28,7 @@ class VideoPlayer extends React.Component {
 
   componentDidMount() {
     this.getComments();
+    console.log(this.state.comments)
   }
 
   handleChange(comment) {
@@ -60,7 +61,7 @@ class VideoPlayer extends React.Component {
   }
 
   getComments() {
-    axios.get('/owner/getComments', {
+    axios.get('/owner/comment', {
       params: {
         videoId: this.state.videoId
       }
@@ -109,15 +110,15 @@ class VideoPlayer extends React.Component {
           </label>
           <br/>
           <Paper>
-            {this.state.comments.map((comment) => {
-              return(
-              <div>
-                <div>{comment.begRange}-{comment.endRange}</div>
-                <div>{comment.comment}</div>
-              </div>
-              )
-            })}
-          </Paper>
+          {this.state.comments.length === 0 ? null : this.state.comments.map((comment) => {
+            return(
+            <div>
+              <div>{comment.begRange}-{comment.endRange}</div>
+              <div>{comment.comment}</div>
+            </div>
+            )
+          })}
+        </Paper>
         </div>
       </div>;
   }

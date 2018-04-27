@@ -148,6 +148,7 @@ const getBuckets = function({videoId, duration}, callback) {
 
 //-------------------------------------------- POST REQUESTS
 const setVideo = (video, userId, duration, callback) => {
+  console.log(duration)
   const query = "INSERT IGNORE INTO videos (videoId, title, description, image, userId, duration) VALUES (?, ?, ?, ?, ?, ?);";
   const values = [video.id.videoId, video.snippet.title, video.snippet.description, video.snippet.thumbnails.default.url, userId, duration];
 

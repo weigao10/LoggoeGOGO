@@ -156,24 +156,26 @@ app.get('/owner/searchYoutube', (req, res) => {
   )
 })
 
-app.post('/owner/save', (req, res) => {
+app.post('/owner/video', (req, res) => {
   let video = req.body.video;
   let userId = req.body.userId;
   let url = `https://www.googleapis.com/youtube/v3/videos?id=${video.id.videoId}&part=contentDetails&key=${api}`;
   axios.get(url)
   .then((data) => {
+    console.log(data.data.items[0].contentDetails.duration)
     let duration = moment.duration(data.data.items[0].contentDetails.duration, moment.ISO_8601).asSeconds();
+    console.log(duration)
     setVideo(video, userId, duration, () => {
-      res.status(201).send('Saved to db');
+      res.send('Saved to db');
     })
   })
 })
 
-app.post('/owner/delete', (req, res) => {
-  let userId = req.body.userId;
-  let videoId = req.body.video.videoId;
-  deleteVideo(userId, videoId, () => {
-    res.status(201).send('Removed from db');
+app.delete('/owner/video', (req, res) => {
+  let userId = JSON.parse(req.query.userId);
+  let videoId = JSON.parse(req.query.video);
+  deleteVideo(userId, videoId.videoId, () => {
+    res.send('Removed from db');
   })
 })
 
@@ -185,20 +187,21 @@ app.get('/owner/videoList', (req, res) => {
 })
 
 //---------------------------------------------------------OWNER COMMENTS
-app.post('/owner/saveComment', (req, res) => {
+app.post('/owner/comment', (req, res) => {
   setTeacherComment(req.body.comment, req.body.videoId, req.body.userId, req.body.start, req.body.end, (comment) => {
     res.send('Comment saved to DB');
   })
 })
 
-app.get('/owner/getComments', (req, res) => {
+app.get('/owner/comment', (req, res) => {
   getOwnerComments(req.query.videoId, (comments) => {
     res.send(comments);
   })
 })
 
-app.post('/owner/deleteComment', (req, res) => {
-  deleteOwnerComment(req.body.comment.id, (comment) => {
+app.delete('/owner/comment', (req, res) => {
+  let query = JSON.parse(req.query.comment)
+  deleteOwnerComment(query.id, (comment) => {
     res.send('Comment deleted from DB')
   })
 })
@@ -236,6 +239,7 @@ app.post('/timestamps', (req, res) => {
 })
 
 app.delete('/timestamps', (req, res) => {
+  console.log(params)
   let params = req.query;
   deleteTimestamp(params, (success) => {res.send()})
 })
