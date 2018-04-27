@@ -19,6 +19,7 @@ class TeacherUploads extends React.Component {
   }
 
   componentDidMount() {
+    // console.log('props', this.props);
     this.getUploads();
   }
 
@@ -31,7 +32,7 @@ class TeacherUploads extends React.Component {
           </div>
           <ul>
             {this.state.uploads.map((upload) => {
-              console.log('in map', this.state.uploads)
+              // console.log('in map', this.state.uploads)
               return (<div><a href={upload.url} target="_blank">{upload.filename}</a> </div>)
             })}
           </ul>
@@ -64,6 +65,7 @@ class TeacherUploads extends React.Component {
     let uploads = [];
     data.forEach(upload => {
       upload["videoId"] = this.props.videoId;
+      upload["username"] = this.props.username;
       uploads.push(upload);
     });
     this.setState({
@@ -86,9 +88,9 @@ class TeacherUploads extends React.Component {
 
   getUploads() {
     axios
-      .get("/teacherUploads", { params: { videoId: this.props.videoId } })
+      .get("/teacherUploads", { params: { videoId: this.props.videoId, username: this.props.username } })
       .then((data) => {
-        console.log("successfully getting file uploads from db!", data);
+        // console.log("successfully getting file uploads from db!", data);
         this.setState({
           uploads: [...this.state.uploads, ...data.data]
         }, () => {
@@ -99,22 +101,22 @@ class TeacherUploads extends React.Component {
   }
 }
 
-let temp = {
-  filesUploaded: [
-    {
-      filename: "zoom_0.mp4",
-      handle: "VVcCQkvRg2kSE2QpAhwk",
-      mimetype: "video/mp4",
-      originalFile: { name: "zoom_0.mp4", type: "video/mp4", size: 27819834 },
-      originalPath: "zoom_0.mp4",
-      size: 27819834,
-      source: "local_file_system",
-      status: "Stored",
-      uploadId: "71c1154dffaec2859afe59c4f429038f4",
-      url: "https://cdn.filestackcontent.com/VVcCQkvRg2kSE2QpAhwk",
-      videoId: 'Ukg_U3CnJWI'
-    }
-  ]
-};
+// let temp = {
+//   filesUploaded: [
+//     {
+//       filename: "zoom_0.mp4",
+//       handle: "VVcCQkvRg2kSE2QpAhwk",
+//       mimetype: "video/mp4",
+//       originalFile: { name: "zoom_0.mp4", type: "video/mp4", size: 27819834 },
+//       originalPath: "zoom_0.mp4",
+//       size: 27819834,
+//       source: "local_file_system",
+//       status: "Stored",
+//       uploadId: "71c1154dffaec2859afe59c4f429038f4",
+//       url: "https://cdn.filestackcontent.com/VVcCQkvRg2kSE2QpAhwk",
+//       videoId: 'Ukg_U3CnJWI'
+//     }
+//   ]
+// };
 
 export default TeacherUploads;

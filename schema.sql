@@ -93,6 +93,7 @@ CREATE TABLE chats (
 CREATE TABLE uploads (
   id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   videoId varchar(255) NOT NULL,
+  username varchar(255),
   url varchar(255) NOT NULL,
   filename varchar(255),
   fileType varchar(50),

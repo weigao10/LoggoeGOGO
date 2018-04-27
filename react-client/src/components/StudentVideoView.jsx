@@ -5,6 +5,7 @@ import $ from 'jquery';
 import {Redirect} from 'react-router-dom';
 
 import VideoPlayer from './student-video-view/VideoPlayer.jsx'
+import VideoUploads from './student-video-view/VideoUploads.jsx'
 import TimestampList from './student-video-view/TimestampList.jsx'
 import ChatRoom from './student-video-view/ChatRoom.jsx'
 import Paper from 'material-ui/Paper';
@@ -109,6 +110,7 @@ class StudentVideo extends React.Component {
               />
             </Paper>
           </div>
+          
           <div>
             <Paper style={paperStyle2}>
               <ChatRoom
@@ -118,12 +120,20 @@ class StudentVideo extends React.Component {
               />
             </Paper>
           </div>
+          
           <div>
             <Paper style={paperStyle2}>
               <TimestampList
                 timestamps={this.state.timestamps}
                 deleteTimestamp={this.deleteTimestamp}
                 changeVideo={this.changeVideo}
+              />
+            </Paper>
+          </div>
+          <div>
+            <Paper style={paperStyle1}>
+              <VideoUploads 
+                videoId={this.props.location.videoId}
               />
             </Paper>
           </div>
