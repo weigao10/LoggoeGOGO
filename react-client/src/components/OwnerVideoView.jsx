@@ -36,7 +36,7 @@ class OwnerVideo extends React.Component {
             <div style={style2}>
               <Paper style={{padding: '20px'}}>
                 <div>
-                  {!!this.props.location.video && <OwnerVideoPlayer videoId={this.props.location.video.videoId}/>}
+                  {!!this.props.location.video && <OwnerVideoPlayer video={this.props.location.video} videoId={this.props.location.video.videoId}/>}
                 </div>
               </Paper>
               <br/>

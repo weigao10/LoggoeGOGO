@@ -5,8 +5,10 @@ import RaisedButton from 'material-ui/RaisedButton';
 import YouTube from 'react-youtube';
 import Paper from 'material-ui/Paper';
 import TeacherComments from './TeacherComments.jsx';
+import CommentSlider from './CommentSlider.jsx';
 import TeacherForm from './TeacherForm.jsx';
 import Auth from '../../utils/auth.js';
+
 
 class OwnerVideoPlayer extends React.Component {
   constructor(props) {
@@ -14,6 +16,7 @@ class OwnerVideoPlayer extends React.Component {
 
     this.state = { 
       videoId: this.props.videoId,
+      video: this.props.video,
       player: null,
       comments: [],
       showCommentForm: false
@@ -29,6 +32,7 @@ class OwnerVideoPlayer extends React.Component {
 
   componentDidMount() {
     this.getComments();
+    console.log(this.props.video)
   }
 
   onReady(event) {
@@ -45,7 +49,7 @@ class OwnerVideoPlayer extends React.Component {
     this.state.player.pauseVideo();
   }
 
-  saveComment(start, end, comment) {
+  saveComment(start, end, comment, callback) {
     axios.post('/owner/saveComment',
       {
         userId: Auth.userId,
@@ -57,6 +61,7 @@ class OwnerVideoPlayer extends React.Component {
     )
     .then(({data}) => {
       console.log(data)
+      callback();
       this.getComments();
     })
     .catch((err) => {
@@ -90,14 +95,6 @@ class OwnerVideoPlayer extends React.Component {
       console.log(err);
     })
   }
-
-  // saveStartTime() {
-  //   let startTime = Math.floor(this.state.player.getCurrentTime());
-  // }
-
-  // saveEndTime() {
-  //   let endTime = Math.floor(this.state.player.getCurrentTime())
-  // }
   
   render() {
     const opts = {
@@ -133,6 +130,8 @@ class OwnerVideoPlayer extends React.Component {
             onClick={() => {this.setState({showCommentForm: !this.state.showCommentForm})}}
             />
         </div>
+        <br/>
+        <CommentSlider video={this.state.video}/>
         <br/>
         <Paper>
           {this.state.showCommentForm ? <TeacherForm video={this.state.videoId} save={this.saveComment}/> : null}

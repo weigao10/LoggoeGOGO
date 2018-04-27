@@ -162,7 +162,9 @@ app.post('/owner/save', (req, res) => {
   let url = `https://www.googleapis.com/youtube/v3/videos?id=${video.id.videoId}&part=contentDetails&key=${api}`;
   axios.get(url)
   .then((data) => {
+    console.log(data.data.items[0].contentDetails.duration)
     let duration = moment.duration(data.data.items[0].contentDetails.duration, moment.ISO_8601).asSeconds();
+    console.log(duration)
     setVideo(video, userId, duration, () => {
       res.status(201).send('Saved to db');
     })
