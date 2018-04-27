@@ -6,14 +6,15 @@ import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import axios from 'axios';
 
-import RegistrationPage from './components/RegistrationPageView.jsx';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import StudentHomepage from './components/StudentHomepageView.jsx';
-import OwnerHomepage from './components/OwnerHomepageView.jsx';
-import StudentVideo from './components/StudentVideoView.jsx';
-import LandingPage from './components/LandingPageView.jsx';
-import OwnerVideo from './components/OwnerVideoView.jsx';
 import PrivateRoute from './components/router/PrivateRoute.jsx';
+import LandingPage from './components/LandingPageView.jsx';
+import RegistrationPage from './components/RegistrationPageView.jsx';
+import StudentHomepage from './components/StudentHomepageView.jsx';
+import StudentVideo from './components/StudentVideoView.jsx';
+import OwnerHomepage from './components/OwnerHomepageView.jsx';
+import OwnerVideo from './components/OwnerVideoView.jsx';
+import OwnerBuildSeriesView from './components/OwnerBuildSeriesView.jsx';
 
 import Auth from './utils/auth.js';
 
@@ -60,6 +61,9 @@ class App extends React.Component {
             <PrivateRoute
               exact path="/owner/video"
               component={OwnerVideo}/>
+            <PrivateRoute
+              exact path="/owner/build"
+              component={OwnerBuildSeriesView}/>
           </Switch>
         </Router>
       </MuiThemeProvider>
