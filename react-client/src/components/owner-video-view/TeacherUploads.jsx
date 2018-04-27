@@ -15,6 +15,7 @@ class TeacherUploads extends React.Component {
 
     this.openPicker = this.openPicker.bind(this);
     this.getUploads = this.getUploads.bind(this);
+    this.saveUploads = this.saveUploads.bind(this);
     this.removeUpload = this.removeUpload.bind(this);
   }
 
@@ -31,7 +32,6 @@ class TeacherUploads extends React.Component {
           </div>
           <ul>
             {this.state.uploads.map((upload) => {
-              // console.log('in map', this.state.uploads)
               return (<div><a href={upload.url} target="_blank">{upload.filename}</a> &nbsp;
                           <button value={upload.url} onClick={this.removeUpload}>remove</button></div>)
             })}
@@ -55,13 +55,19 @@ class TeacherUploads extends React.Component {
         ]
       })
       .then(response => {
-        this.saveToDb(response.filesUploaded);
+        console.log('testing')
+        this.saveUploads(response.filesUploaded);
         this.getUploads();
       })
       .catch(err => console.log("ERROR IN FILE UPLOAD", err));
   }
 
-  saveToDb(data) {
+
+  saveUploads(data) {
+    data.forEach((upload) => {
+      upload['videoId'] = this.props.videoId;
+    });
+    console.log('this is save uploads', data)
     axios
       .post("/teacherUpload", { data: data})
       .then(() => console.log("successfully saved file upload to db!"))
