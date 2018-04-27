@@ -30,7 +30,7 @@ class SeriesList extends React.Component {
   }
 
   handleChange(evt) {
-    this.setState({ seriesInput: evt.target.value })
+    this.setState({ seriesInput: evt.target.value });
   }
 
   render() {
@@ -40,25 +40,28 @@ class SeriesList extends React.Component {
     // render input element if VideoSeriesList is not empty
     const conditionalInput = videosInSeries.length === 0 ?
       <div></div> :
-      <input style={add10pxBottom} type="text" value={this.state.seriesInput} onChange={this.handleChange} />;
+      <div>
+        Series Title: <input type="text" value={this.state.seriesInput} onChange={this.handleChange} />
+      </div>
 
     // render save button if VideoSeriesList is not empty
     const conditionalSaveBtn = videosInSeries.length === 0 ?
       <div></div> :
-      <button style={add10pxBottom} onClick={() => {saveSeries(videosInSeries, userId, username)}}>Save Series</button>;
-
+      <div>
+        <button style={add10pxBottom} onClick={() => {saveSeries(videosInSeries, userId, username, this.state.seriesInput)}}>Save Series</button>
+      </div>
 
     return connectDropTarget(
       <div style={container}>
         <Paper style={style}>
           <div>
-            {videosInSeries.length === 0 ? 'Search for a video and drag it here to save it' : <div style={add10pxBottom} >Videos in series: {videosInSeries.length}</div> }
-            Series Title: {conditionalInput}<br/>
+            {videosInSeries.length === 0 ? 'Drag a videos here to build a series!' : <div style={add10pxBottom} >Videos in series: {videosInSeries.length}</div> }
+            {conditionalInput}<br/>
             {conditionalSaveBtn}
             {videosInSeries.length === 0 ? null :
-              videosInSeries.map((video) => {
+              videosInSeries.map((video, idx) => {
                 return (
-                  <SeriesListEntry key={video.videoId} video={video} redirect={redirect} removeFromSeries={removeFromSeries}/>
+                  <SeriesListEntry key={video.videoId} idx={idx} video={video} redirect={redirect} removeFromSeries={removeFromSeries}/>
                 );
               })}
           </div>
