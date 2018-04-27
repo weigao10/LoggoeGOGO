@@ -15,7 +15,9 @@ class OwnerHomepage extends React.Component {
       videos: [],
       video: '',
       userId: '',
-      searchedVideos: []
+      searchedVideos: [],
+      videosInSeries: [],
+      videosInDB: 1000 // set to an arbitrary number >= 2 for rendering logic purposes --> updated instantly at page load
     }
     this.getUserId = this.getUserId.bind(this);
     this.showVideoList = this.showVideoList.bind(this);
@@ -23,6 +25,9 @@ class OwnerHomepage extends React.Component {
     this.getYouTubeVideos = this.getYouTubeVideos.bind(this);
     this.saveVideo = this.saveVideo.bind(this);
     this.deleteVideo = this.deleteVideo.bind(this);
+    this.addToSeries = this.addToSeries.bind(this);
+    this.saveSeries = this.saveSeries.bind(this);
+    this.removeFromSeries = this.removeFromSeries.bind(this);
   }
 
   componentDidMount() {
@@ -31,23 +36,28 @@ class OwnerHomepage extends React.Component {
   }
   
   getUserId(user) {
-    axios.get('/user/id', {params: {user: user}})
-         .then((data) => {
-           this.setState({userId: data.data[0].id}, ()=> this.showVideoList());
-         })
+    axios
+      .get('/user/id', {params: {user: user}})
+      .then((data) => {
+        this.setState({userId: data.data[0].id}, ()=> this.showVideoList());
+      });
   }
 
   showVideoList() {
-    axios.get('/owner/videoList', {params: {userId: this.state.userId}})
-          .then(({data}) => {this.setState({videos: data})})
+    axios
+      .get('/owner/videoList', {params: {userId: this.state.userId}})
+      .then(({data}) => {this.setState({
+        videos: data,
+        videosInDB: data.length,
+      })});
   }
 
   sendToSelectedVideo(video) {
     this.props.history.push({
-        pathname: '/owner/video',
-        video: video, 
-        userId: this.state.userId
-      })
+      pathname: '/owner/video',
+      video: video, 
+      userId: this.state.userId,
+    });
   }
 
   getYouTubeVideos(query) {
@@ -57,7 +67,7 @@ class OwnerHomepage extends React.Component {
       this.setState({
         searchedVideos: data
       })
-    })
+    });
   }
 
   saveVideo(video) {
@@ -68,7 +78,7 @@ class OwnerHomepage extends React.Component {
     })
     .catch((err) => {
       console.log(err);
-    })
+    });
   }
 
   deleteVideo(video) {
@@ -82,26 +92,61 @@ class OwnerHomepage extends React.Component {
     })
   }
 
+  addToSeries(video) {
+    let videosInSeries = this.state.videosInSeries;
+    videosInSeries.push(video);
+
+    this.setState((prevState) => ({
+      videosInSeries: videosInSeries,
+      videos: prevState.videos.filter((item, i) => item.id !== video.id) 
+    }));
+  }
+
+  removeFromSeries(video) {
+    console.log(video);
+
+    let videos = this.state.videos;
+    videos.push(video);
+
+    this.setState((prevState) => ({
+      videos: videos,
+      videosInSeries: prevState.videosInSeries.filter((item, i) => item.id !== video.id),
+    }));
+  }
+
+  saveSeries(videoList) {
+
+  }
+
   render () {
+    console.log('this.state in build: ', this.state);
     return (
       <Paper style={style} zDepth={1}>
-      <div id="owner-homepage-app">
-        <header className="navbar"><h1>Hello {this.props.location.username}</h1></header>
-        <div className="main">
-          This is build series view!!
-          <Search getVideos={this.getYouTubeVideos}/>
-          <div>
-            {this.state.searchedVideos.length === 0 ? <div style={hidden}></div> : <AllVideos videos={this.state.searchedVideos} save={this.saveVideo} redirect={this.sendToSelectedVideo}/>}
-            <Hidden deleteVideo={this.deleteVideo}/>
-            <SeriesList 
-              userId={this.state.userId}
-              videos={this.state.videos} 
-              redirect={this.sendToSelectedVideo}
-              deleteVideo={this.deleteVideo}
-              save={this.saveVideo} />
-          </div>
-        </div>  
-      </div>   
+        <div id="owner-homepage-app">
+          <header className="navbar"><h1>Hello {this.props.location.username}</h1></header>
+          <div className="main">
+            Drag videos from the left column to the right column or click "Add to Series" to create a video series, then save the series by hitting the save button below
+            <div>
+              <AllVideos
+                videos={this.state.videos}
+                videosInDB={this.state.videosInDB}
+                save={this.saveVideo}
+                redirect={this.sendToSelectedVideo}
+                addToSeries={this.addToSeries} />
+              <Hidden deleteVideo={this.deleteVideo}/>
+              <SeriesList 
+                userId={this.state.userId}
+                videos={this.state.videos}
+                redirect={this.sendToSelectedVideo}
+                deleteVideo={this.deleteVideo}
+                save={this.saveVideo}
+                addToSeries={this.addToSeries}
+                saveSeries={this.saveSeries}
+                videosInSeries={this.state.videosInSeries}
+                removeFromSeries={this.removeFromSeries} />
+            </div>
+          </div>  
+        </div>
       </Paper>
     )
   }

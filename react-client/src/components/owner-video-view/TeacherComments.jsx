@@ -1,16 +1,19 @@
 import React from 'react';
-import Paper from 'material-ui/Paper';
 
-class TeacherComments extends React.Component {
 
-  render() {
-    return(
-      <Paper>
-        <div>Teacher Comments Box</div>
-      </Paper>
-    )
-  }
-}
+const TeacherComments = (props) => (
+  <div>
+    {props.comments.map((comment) => {
+      return (
+        <div>
+          <div>{comment.begRange} - {comment.endRange}</div>
+          <div>{comment.comment}</div>
+          <button onClick={() => {props.deleteComment(comment)}}>X</button>
+        </div>
+      )
+    })}
+  </div>
+)
 
 
 export default TeacherComments;

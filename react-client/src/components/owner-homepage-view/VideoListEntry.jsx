@@ -34,9 +34,9 @@ class VideoListEntry extends React.Component {
                 alt="" />
             </div>
             <div style={{width: '50%', float: 'right'}}>
-              <div style={{fontWeight: 'bold'}} onClick={()=>{redirect(video)}}> {video.title} </div>
+              <div className="videoTitle" style={{fontWeight: 'bold'}} onClick={()=>{redirect(video)}}> {video.title} </div>
               <br/>
-              <div style={{color: 'grey'}}> {video.description} </div>
+              <div style={{color: 'grey'}}>{video.description}</div>
               <button onClick={() => {deleteVideo(video)}}>Remove from Videos</button>
               <br/>
             </div>
