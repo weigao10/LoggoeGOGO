@@ -7,6 +7,7 @@ import {Redirect} from 'react-router-dom';
 import VideoPlayer from './student-video-view/VideoPlayer.jsx'
 import TimestampList from './student-video-view/TimestampList.jsx'
 import ChatRoom from './student-video-view/ChatRoom.jsx'
+import Comments from './student-video-view/Comments.jsx'
 import Paper from 'material-ui/Paper';
 
 class StudentVideo extends React.Component {
@@ -107,7 +108,15 @@ class StudentVideo extends React.Component {
                 startingTimestamp={this.state.startingTimestamp}
                 saveTimeStamp={this.saveTimeStamp}
               />
+              <br/>
+              <Comments
+                videoId={this.props.location.videoId}
+                saveTimeStamp={this.saveTimeStamp}
+                changeVideo={this.changeVideo}
+              />
             </Paper>
+          </div>
+          <div>
           </div>
           <div>
             <Paper style={paperStyle2}>
@@ -157,6 +166,5 @@ const paperStyle2 = {
   width: '30%', 
   float: 'left',
 }
-
 
 export default StudentVideo;
