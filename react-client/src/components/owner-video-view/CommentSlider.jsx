@@ -12,6 +12,7 @@ class CommentSlider extends React.Component {
     }
     this.onSliderChange = this.onSliderChange.bind(this);
     this.convertTime = this.convertTime.bind(this);
+    this.getTimeStamp = this.getTimeStamp.bind(this);
   }
 
   onSliderChange = (value) => {
@@ -26,12 +27,25 @@ class CommentSlider extends React.Component {
     return output;
   }
 
+  getTimeStamp(start) {
+    console.log(start)
+    var time;
+    if (start.length === 5) {
+      time = moment(start, 'mm:ss').diff(moment().startOf('day'), 'seconds');
+    } else if (start.length === 2) {
+      time = start;
+    } else {
+      time = moment(start, 'HH:mm:ss').diff(moment().startOf('day'), 'seconds');
+    }
+    this.props.changeVideo(time);
+  }
+
   render() {
     return(
       <div>
         <div style={{marginBottom: '10px', paddingTop: '10px'}}>Set time range:</div>
         <div style={style}>
-          <Range allowCross={false} defaultValue={[0, 0]} min={0} max={this.props.video.duration} onChange={this.onSliderChange} />
+          <Range allowCross={false} defaultValue={[0, 0]} min={0} max={this.props.video.duration} onChange={this.onSliderChange} onAfterChange={() => {this.getTimeStamp(this.state.start)}}/>
           <div>Start: {this.state.start} End: {this.state.end}</div>
         </div>
         <div>
