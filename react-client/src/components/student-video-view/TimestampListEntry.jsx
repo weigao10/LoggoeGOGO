@@ -1,6 +1,7 @@
 import React from 'react';
 import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
+import Auth from '../../utils/auth.js';
 
 class TimestampListEntry extends React.Component {
   constructor(props) {
@@ -44,7 +45,7 @@ class TimestampListEntry extends React.Component {
         </div>
         <div>
           <button onClick={this.onChangeVideo}>Watch This Clip</button>
-          {this.props.userId === this.props.timestamp.userId ? <button onClick={this.onDeleteTimestamp}>X</button> : null }
+          {Auth.userId === this.props.timestamp.userId ? <button onClick={this.onDeleteTimestamp}>X</button> : null }
         </div>
       </Paper>
       );

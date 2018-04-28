@@ -28,7 +28,7 @@ const {
   getOwnerComments,
   deleteOwnerComment,
   saveSeries,
-  removeFromSeries,
+  removeFromSeries
 } = require('../database-mysql');
 
 const searchYouTube = require ('youtube-search-api-with-axios');
@@ -58,10 +58,14 @@ app.post('/login', (req, res) => {
         if (err) {
           console.log(err);
         }
-        req.session.user = response[0].name;
-        req.session.isOwner = response[0].owner;
-        req.session.userId = response[0].id;
-        res.status(201).send(response);
+        if (response.length === 0) {
+          res.status(404).send('Username not found');
+        } else {
+          req.session.user = response[0].name;
+          req.session.isOwner = response[0].owner;
+          req.session.userId = response[0].id;
+          res.status(201).send(response);
+        }
       })
     }
   });
@@ -242,7 +246,6 @@ app.post('/timestamps', (req, res) => {
 })
 
 app.delete('/timestamps', (req, res) => {
-  console.log(params)
   let params = req.query;
   deleteTimestamp(params, (success) => {res.send()})
 })
@@ -267,7 +270,6 @@ app.get('/teacherUpload', (req, res) => {
 })
 
 app.delete('/teacherUpload', (req, res) => {
-
   deleteUpload(req.body.url, (err, results) => {
     (err) ?
     console.error('ERROR IN SERVER DELETE UPLOAD: ', err) :
