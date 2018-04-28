@@ -80,7 +80,7 @@ class TeacherUploads extends React.Component {
 
   getUploads() {
     axios
-      .get("/teacherUpload", { params: { videoId: this.props.videoId, username: this.props.username } })
+      .get("/teacherUpload", { params: { videoId: this.props.videoId, username: Auth.username } })
       .then((data) => {
         this.setState({uploads: [...data.data]})
       })
