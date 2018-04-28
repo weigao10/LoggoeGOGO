@@ -1,6 +1,8 @@
 import React from 'react';
 import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
+import DeleteIcon from 'material-ui/svg-icons/action/delete';
+import IconButton from 'material-ui/IconButton';
 import Auth from '../../utils/auth.js';
 
 class TimestampListEntry extends React.Component {
@@ -45,7 +47,10 @@ class TimestampListEntry extends React.Component {
         </div>
         <div>
           <button onClick={this.onChangeVideo}>Watch This Clip</button>
-          {Auth.userId === this.props.timestamp.userId ? <button onClick={this.onDeleteTimestamp}>X</button> : null }
+          {Auth.userId === this.props.timestamp.userId ? 
+            <IconButton onClick={this.onDeleteTimestamp} aria-label="Delete">
+              <DeleteIcon />
+            </IconButton> : null }
         </div>
       </Paper>
       );
