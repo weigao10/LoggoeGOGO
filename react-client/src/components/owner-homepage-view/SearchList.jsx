@@ -1,13 +1,12 @@
 import React from 'react';
 import Paper from 'material-ui/Paper';
 import SearchListEntry from './SearchListEntry.jsx';
+import moment from 'moment';
 
 const SearchList = ({videos, redirect, save, videosInSeries, selectedSeries}) => {
   console.log('videos: ', videosInSeries);
 
-  
-
-  if (selectedSeries === null) {
+  if (selectedSeries === null || selectedSeries === 'All Videos') {
     return (
       <div style={container}>
         <Paper style={style}>
@@ -20,9 +19,14 @@ const SearchList = ({videos, redirect, save, videosInSeries, selectedSeries}) =>
   } else {
     var totalDuration = 0;
 
+
     for (var item of videosInSeries) {
       totalDuration += item.duration;
     }
+
+    var totalPrettified = convertTime(totalDuration);
+    var averageDuration = totalDuration / videosInSeries.length;
+    var averagePrettified = convertTime(averageDuration);
 
     return (
       <div style={container}>
@@ -30,8 +34,8 @@ const SearchList = ({videos, redirect, save, videosInSeries, selectedSeries}) =>
           <h2>Series Information:</h2>
           <h5><i>Series name:</i> {selectedSeries} </h5>
           <h5><i>Series length:</i> {videosInSeries.length} </h5>
-          <h5><i>Average video duration:</i> {totalDuration / videosInSeries.length}</h5>
-          <h5><i>Total series length:</i> {totalDuration}</h5>
+          <h5><i>Average video duration:</i> {averagePrettified}</h5>
+          <h5><i>Total series length:</i> {totalPrettified}</h5>
         </Paper>
       </div>
     );
@@ -64,5 +68,10 @@ const container = {
   float: 'left',
   width: '40%'
 };
+
+const convertTime = time => {
+  let output = time >= 3600 ? moment.utc(time*1000).format('HH:mm:ss') : moment.utc(time*1000).format('mm:ss');
+  return output;
+}
 
 export default SearchList;
