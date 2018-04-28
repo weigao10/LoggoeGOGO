@@ -54,7 +54,8 @@ const style = {
   margin: '30px',
   textAlign: 'center',
   display: 'block',
-  padding: '30px 5px'
+  padding: '30px 5px',
+  cursor: 'move'
 }
 
 export default DragSource(ItemTypes.SAVED, videoSource, collect)(VideoListEntry);

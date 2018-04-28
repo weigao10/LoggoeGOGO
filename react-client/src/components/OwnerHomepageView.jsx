@@ -62,7 +62,7 @@ class OwnerHomepage extends React.Component {
   }
 
   saveVideo(video) {
-    axios.post('/owner/save', {video: video, userId: this.state.userId})
+    axios.post('/owner/video', {video: video, userId: this.state.userId})
     .then(() => {
       console.log('Video saved.');
       this.showVideoList();
@@ -73,7 +73,7 @@ class OwnerHomepage extends React.Component {
   }
 
   deleteVideo(video) {
-    axios.post('/owner/delete', {video: video, userId: this.state.userId})
+    axios.delete('/owner/video', {params: {video: video, userId: this.state.userId}})
     .then(() => {
       console.log('Video deleted');
       this.showVideoList();

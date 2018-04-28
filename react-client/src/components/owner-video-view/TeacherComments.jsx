@@ -6,7 +6,7 @@ const TeacherComments = (props) => (
     {props.comments.map((comment) => {
       return (
         <div>
-          <div>{comment.begRange} - {comment.endRange}</div>
+          <div style={timeStyle}>{comment.begRange} - {comment.endRange}</div>
           <div>{comment.comment}</div>
           <button onClick={() => {props.deleteComment(comment)}}>X</button>
         </div>
@@ -14,6 +14,11 @@ const TeacherComments = (props) => (
     })}
   </div>
 )
+
+const timeStyle = {
+  float: 'left',
+  fontWeight: '800'
+}
 
 
 export default TeacherComments;
