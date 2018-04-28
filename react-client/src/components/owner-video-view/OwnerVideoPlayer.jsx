@@ -16,8 +16,7 @@ class OwnerVideoPlayer extends React.Component {
     this.state = { 
       videoId: this.props.videoId,
       video: this.props.video,
-      player: null,
-      showCommentForm: false
+      player: null
     };
 
     this.onReady = this.onReady.bind(this);
@@ -82,8 +81,8 @@ class OwnerVideoPlayer extends React.Component {
             label="Pause"/>
           <RaisedButton 
             style={{margin: '5px'}} 
-            label={this.state.showCommentForm ? 'Hide Form' : 'Add Comment'}
-            onClick={() => {this.setState({showCommentForm: !this.state.showCommentForm})}}
+            label={this.props.showCommentForm ? 'Hide Form' : 'Add Comment'}
+            onClick={this.props.toggleCommentForm}
             />
         </div>
         <br/>
