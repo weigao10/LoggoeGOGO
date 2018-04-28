@@ -305,8 +305,5 @@ exports.setTeacherComment = setTeacherComment;
 exports.getOwnerComments = getOwnerComments;
 exports.deleteOwnerComment = deleteOwnerComment;
 exports.saveSeries = saveSeries;
-<<<<<<< HEAD
 exports.getTimestamps = getTimestamps;
-=======
 exports.removeFromSeries = removeFromSeries;
->>>>>>> 2cbb1845c9cdcb86bf3f17bf8bdb0cd10570354b
