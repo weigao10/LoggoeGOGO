@@ -1,0 +1,221 @@
+USE oneTeam;
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 837, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 2417, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 759, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 872, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 863, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 2365, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 755, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 2401, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 2330, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 796, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 1740, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 701, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 2400, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 1715, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 2356, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 843, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 835, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 1671, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 2309, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 719, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 823, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 811, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 2350, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 761, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 861, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 2398, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 798, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 2396, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 804, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 844, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 699, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 860, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 1740, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 2404, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 854, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 1777, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 2418, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 905, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 2418, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 1723, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 1675, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 726, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 1713, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 2410, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 2339, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 1762, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 1720, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 1762, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 835, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 926, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 841, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 2365, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 822, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 1740, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 1643, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 874, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 2347, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 1706, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 2314, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 2530, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 717, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 1735, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 1681, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 737, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 1718, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 1648, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 2353, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 1738, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 1695, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 721, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 1659, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 772, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 839, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 659, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 1733, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 1664, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 902, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 763, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 2358, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 793, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 1677, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 796, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 871, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 2373, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 784, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 2377, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 1655, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 2412, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 715, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 2379, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 761, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 1693, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 877, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 1731, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 870, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 2338, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 1678, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 1727, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 1744, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 1654, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 268, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 2012, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 696, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 2147, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 403, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 2184, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 1911, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 1903, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 61, "Hello so confused!", false, null, 1);
+INSERT INTO timeStamps(videoId, userId, timeStamp, comment, addressedByTeacher, commentType, video)
+    VALUES("ZK3O402wf1c", 4, 2284, "Hello so confused!", false, null, 1);
