@@ -127,7 +127,9 @@ class Visualization extends React.Component {
   }
 
   componentDidMount() {
-    axios.get('/vis-data')
+    const VIDEO_ID = this.props.videoId || 'ZK3O402wf1c';
+
+    axios.get('/vis-data', {params: {videoId: VIDEO_ID}})
     .then(res => {
         console.log('got data', res);
         console.log('Video length:', res.data.length);
