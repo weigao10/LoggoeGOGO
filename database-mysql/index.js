@@ -238,6 +238,16 @@ const saveSeries = ({ videoList, userId, username, series }, callback) => {
   // if no error thrown during forEach iteration:
   callback(null, 'huzzah!!');
 }
+const deleteUpload = (url, callback) => {
+  const query = `DELETE FROM uploads WHERE url = '${url}'`
+  
+  connection.query(query, (err, results) => {
+    (err) ?
+    console.error(err) : 
+    callback(results);
+  })
+}
+
 
 
 exports.getBuckets = getBuckets;
@@ -258,6 +268,7 @@ exports.postChats = postChats;
 exports.getTeachers = getTeachers;
 exports.getUploads = getUploads;
 exports.setUploads = setUploads;
+exports.deleteUpload = deleteUpload;
 exports.setTeacherComment = setTeacherComment;
 exports.getOwnerComments = getOwnerComments;
 exports.deleteOwnerComment = deleteOwnerComment;
