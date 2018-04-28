@@ -28,8 +28,7 @@ const {
   getOwnerComments,
   deleteOwnerComment,
   saveSeries,
-  removeFromSeries,
-  deleteUpload
+  removeFromSeries
 } = require('../database-mysql');
 
 const searchYouTube = require ('youtube-search-api-with-axios');

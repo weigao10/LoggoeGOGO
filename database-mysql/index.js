@@ -298,4 +298,3 @@ exports.getOwnerComments = getOwnerComments;
 exports.deleteOwnerComment = deleteOwnerComment;
 exports.saveSeries = saveSeries;
 exports.removeFromSeries = removeFromSeries;
-exports.deleteUpload = deleteUpload;
