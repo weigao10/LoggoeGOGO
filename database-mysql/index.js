@@ -221,6 +221,16 @@ const setUploads = (data, callback) => {
   });
 };
 
+const deleteUpload = (url, callback) => {
+  const query = `DELETE FROM uploads WHERE url = '${url}'`
+  
+  connection.query(query, (err, results) => {
+    (err) ?
+    console.error(err) : 
+    callback(results);
+  })
+}
+
 //-------------------------------------------- SAVE SERIES TO DB
 
 const saveSeries = ({ videoList, userId, username, series }, callback) => {
@@ -288,3 +298,4 @@ exports.getOwnerComments = getOwnerComments;
 exports.deleteOwnerComment = deleteOwnerComment;
 exports.saveSeries = saveSeries;
 exports.removeFromSeries = removeFromSeries;
+exports.deleteUpload = deleteUpload;
