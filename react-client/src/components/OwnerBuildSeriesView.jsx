@@ -163,11 +163,11 @@ class OwnerHomepage extends React.Component {
 }
 
 const style = {
-  height: '100vh',
-  width: 'auto',
+  height: 'auto',
+  width: '95%',
   margin: '30px',
   textAlign: 'center',
-  display: 'block',
+  display: 'inline-block',
   padding: '30px',
   background: '#D8E4EA'
 }

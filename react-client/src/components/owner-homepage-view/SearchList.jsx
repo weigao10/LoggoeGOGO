@@ -10,6 +10,7 @@ const SearchList = ({videos, redirect, save, videosInSeries, selectedSeries}) =>
     return (
       <div style={container}>
         <Paper style={style}>
+        <h4>Search Results:</h4>
           <div>
             {videos.map((video, i) => <SearchListEntry key={i} video={video} redirect={redirect} save={save}/>)}
           </div>
@@ -64,7 +65,7 @@ const styleTextLeft = {
 };
 
 const container = {
-  height: '70vh',
+  height: '75vh',
   float: 'left',
   width: '40%'
 };

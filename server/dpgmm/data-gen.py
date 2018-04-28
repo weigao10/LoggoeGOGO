@@ -29,8 +29,8 @@ if False:
     plt.show()
 
 # add noise
-X = np.append(X, np.random.uniform(0, 10, 10))
-C = np.append(C, [0 for _ in range(10)])
+X = np.append(X, np.random.uniform(0, 10, 50))
+C = np.append(C, [0 for _ in range(50)])
 
 np.savetxt('data/X.csv', X)
 np.savetxt('data/clusters.csv', C)
