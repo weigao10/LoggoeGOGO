@@ -38,11 +38,12 @@ class App extends React.Component {
   }
 
   handleLogout() {
-    console.log('in handle logout');
-    // axios.post('/logout')
-    // .then(res => {
-    //   this.setState({isLoggedIn: false});
-    // })
+      axios.post('/logout')
+      .then(res => {
+        this.setState({isLoggedIn: false}, () => {
+          window.location.reload()
+        });
+      })
   }
 
   render () {
@@ -59,7 +60,7 @@ class App extends React.Component {
                                           isLoggedIn={Auth.isLoggedIn}/>
             }}/>
 
-            <PrivateRoute path='/registration' component={({...rest}) => {
+            <Route path='/registration' component={({...rest}) => {
               return <NavBar {...rest} path={'/registration'} 
                                         isLoggedIn={Auth.isLoggedIn}/>          
             }}/>

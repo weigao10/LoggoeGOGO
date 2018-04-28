@@ -102,6 +102,13 @@ app.post('/register', (req, res) => {
   })
 })
 
+//---------------------------------------------------------USER REGISTRATION
+
+app.post('/logout', (req, res) => {
+  req.session.destroy();
+  res.status(200).send('yay');
+})
+
 //---------------------------------------------------------USER ID
 //get userId for owner homepage and homepage
 app.get('/user/id', (req, res) => {
