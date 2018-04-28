@@ -3,6 +3,7 @@ import SeriesListEntry from './SeriesListEntry.jsx';
 import Paper from 'material-ui/Paper';
 import { ItemTypes } from '../../constants.js';
 import { DropTarget } from 'react-dnd';
+import RaisedButton from 'material-ui/RaisedButton';
 
 const videoSource = {
   // NEED TO UPDATE
@@ -48,7 +49,7 @@ class SeriesList extends React.Component {
     const conditionalSaveBtn = videosInSeries.length === 0 ?
       <div></div> :
       <div>
-        <button style={add10pxBottom} onClick={() => {saveSeries(videosInSeries, userId, username, this.state.seriesInput)}}>Save Series</button>
+        <RaisedButton style={add10pxBottom} onClick={() => {saveSeries(videosInSeries, userId, username, this.state.seriesInput)}}>Save Series</RaisedButton>
       </div>
 
     return connectDropTarget(
@@ -88,7 +89,9 @@ const container = {
 }
 
 const add10pxBottom = {
-  marginBottom: '10px'
+  marginBottom: '10px',
+  padding: '5px',
+  height: 'auto'
 }
 
 export default DropTarget(ItemTypes.VIDEO, videoSource, collect)(SeriesList);

@@ -128,8 +128,8 @@ class OwnerVideo extends React.Component {
 }
 
 const style = {
-  height: '100%',
-  width: '100%',
+  height: 'auto',
+  width: '95%',
   margin: '30px',
   textAlign: 'center',
   display: 'inline-block',
@@ -138,7 +138,7 @@ const style = {
 }
 
 const style2 = {
-  width: '60%', 
+  width: 'auto', 
   float: 'left', 
   margin: '20px',
 }
