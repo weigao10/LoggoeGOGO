@@ -206,11 +206,11 @@ class OwnerHomepage extends React.Component {
 }
 
 const style = {
-  height: '100vh',
+  height: 'auto',
   width: 'auto',
   margin: '30px',
   textAlign: 'center',
-  display: 'block',
+  display: 'inline-block',
   padding: '30px',
   background: '#D8E4EA'
 };
@@ -222,7 +222,7 @@ const hidden = {
 };
 
 const searchStyle = {
-  height: '100%',
+  height: 'auto',
   width: 'auto',
   margin: '20px',
   textAlign: 'center',
