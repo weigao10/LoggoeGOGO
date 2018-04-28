@@ -55,7 +55,6 @@ class App extends React.Component {
       <MuiThemeProvider>
         <Router>
           <div>
-
             <Route exact={true} path='/' component={() => {
               return <NavBar exact={true} path={'/'} 
                                           isLoggedIn={Auth.isLoggedIn}/>

@@ -65,7 +65,11 @@ app.get('/vis-data', (req, res) => {
         res.status(400).send('NOT ENOUGH DATA');
       } else {
         getCurrentVideo(VIDEO_ID, (results) => {
-          res.status(200).send({data: JSON.parse(data), length: results[0].duration});
+          res.status(200).send({
+            data: JSON.parse(data),
+            length: results[0].duration / 60,
+            comments: comments.map(d => d.comment)
+          });
         })
       }
     });
