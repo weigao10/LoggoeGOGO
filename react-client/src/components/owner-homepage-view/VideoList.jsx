@@ -24,7 +24,7 @@ class VideoList extends React.Component {
     console.log('Selected series:', selectedSeries);
     
     // conditionally toggle between removeFromSeries and deleteVideo depending on the videos being shown
-    if (!selectedSeries) {
+    if (selectedSeries === null || selectedSeries === 'All Videos') {
       var conditionalFunction = deleteVideo;
       var conditionalPurpose = 'Remove from Videos';
     } else {

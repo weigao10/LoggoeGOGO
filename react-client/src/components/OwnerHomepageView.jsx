@@ -79,7 +79,8 @@ class OwnerHomepage extends React.Component {
     axios.get('/owner/searchYouTube', {params: {query: query}})
     .then(({data}) => {
       this.setState({
-        searchedVideos: data
+        searchedVideos: data,
+        selectedSeries: 'All Videos',
       })
     })
   }
