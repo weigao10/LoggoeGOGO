@@ -23,6 +23,7 @@ const {
   postChats,
   getUploads,
   setUploads,
+  deleteUpload,
   setTeacherComment,
   getOwnerComments,
   deleteOwnerComment,
@@ -265,7 +266,12 @@ app.get('/teacherUpload', (req, res) => {
 })
 
 app.delete('/teacherUpload', (req, res) => {
-  console.log('req', req)
+
+  deleteUpload(req.body.url, (err, results) => {
+    (err) ?
+    console.error('ERROR IN SERVER DELETE UPLOAD: ', err) :
+    res.send('Successfully removed upload from DB', results);
+  });
 })
 
 
