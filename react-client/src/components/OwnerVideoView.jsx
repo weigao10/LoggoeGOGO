@@ -17,11 +17,13 @@ class OwnerVideo extends React.Component {
     this.state = {
       timeStamps: [],
       comments: [],
-      startingTimestamp: 0
+      startingTimestamp: 0,
+      showCommentForm: false
     }
     this.saveComment = this.saveComment.bind(this);
     this.getComments = this.getComments.bind(this);
     this.changeVideo = this.changeVideo.bind(this);
+    this.toggleCommentForm = this.toggleCommentForm.bind(this);
   }
 
   componentDidMount() {
@@ -76,6 +78,13 @@ class OwnerVideo extends React.Component {
     this.setState({ startingTimestamp: timestamp });
   }
 
+  toggleCommentForm() {
+    this.setState({
+      showCommentForm: !this.state.showCommentForm
+    })
+  }
+
+
   render() {
     return (
       <Paper style={style} zDepth={1}>
@@ -83,12 +92,12 @@ class OwnerVideo extends React.Component {
             <div style={style2}>
               <Paper style={{padding: '20px'}}>
                 <div>
-                  {!!this.props.location.video && <OwnerVideoPlayer startingTimestamp={this.state.startingTimestamp} saveComment={this.saveComment} getComments={this.getComments} video={this.props.location.video} videoId={this.props.location.video.videoId} comments={this.state.comments}/>}
+                  {!!this.props.location.video && <OwnerVideoPlayer showCommentForm={this.state.showCommentForm} toggleCommentForm={this.toggleCommentForm} startingTimestamp={this.state.startingTimestamp} saveComment={this.saveComment} getComments={this.getComments} video={this.props.location.video} videoId={this.props.location.video.videoId} comments={this.state.comments}/>}
                 </div>
               </Paper>
               <br/>
               <Paper>
-                <CommentSlider changeVideo={this.changeVideo} video={this.props.location.video} save={this.saveComment}/>
+                {this.state.showCommentForm ? <CommentSlider changeVideo={this.changeVideo} video={this.props.location.video} save={this.saveComment}/> : null}
               </Paper>
               <br/>
               <Paper>
