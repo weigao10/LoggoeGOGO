@@ -41,12 +41,12 @@ class TimestampListEntry extends React.Component {
           {this.props.timestamp.userId}
           {/* the above is the same as this.props.userId */}
         </div>
-        <div>
+        <div style={{marginBottom: '10px'}}>
           <h4 style={{display: 'inline'}}>Comment: </h4> 
           {this.props.timestamp.comment}
         </div>
         <div>
-          <button onClick={this.onChangeVideo}>Watch This Clip</button>
+          <RaisedButton onClick={this.onChangeVideo} style={{padding: '5px'}}>Watch This Clip</RaisedButton>
           {Auth.userId === this.props.timestamp.userId ? 
             <IconButton onClick={this.onDeleteTimestamp} aria-label="Delete">
               <DeleteIcon />
