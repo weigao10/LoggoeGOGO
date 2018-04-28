@@ -23,7 +23,7 @@ function collect(connect, monitor) {
 class VideoListEntry extends React.Component {
 
   render() {
-    const { video, redirect, deleteVideo, connectDragSource } = this.props;
+    const { video, redirect, btnClickFunc, btnClickAction, connectDragSource } = this.props;
     return connectDragSource(
       <div>
         <Paper style={style} key={video.id}>
@@ -36,8 +36,8 @@ class VideoListEntry extends React.Component {
             <div style={{width: '50%', float: 'right'}}>
               <div className="videoTitle" style={{fontWeight: 'bold'}} onClick={()=>{redirect(video)}}> {video.title} </div>
               <br/>
-              <div style={{color: 'grey'}}>{video.description}</div>
-              <button onClick={() => {deleteVideo(video)}}>Remove from Videos</button>
+              <div style={{color: 'grey', marginBottom: '10px'}}>{video.description}</div>
+              <button onClick={() => { btnClickFunc(video) }}>{btnClickAction}</button>
               <br/>
             </div>
           </div>
@@ -46,7 +46,6 @@ class VideoListEntry extends React.Component {
     )
   }
 }
-
 
 const style = {
   height: 'auto',
