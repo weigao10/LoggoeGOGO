@@ -5,6 +5,7 @@ import $ from 'jquery';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import axios from 'axios';
+import Visualization from './components/owner-video-view/Visualization.jsx';
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import PrivateRoute from './components/router/PrivateRoute.jsx';
@@ -52,6 +53,7 @@ class App extends React.Component {
     }
     return (
       <MuiThemeProvider>
+        <Visualization/>
         <Router>
           <div>
 

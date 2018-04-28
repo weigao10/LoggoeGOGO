@@ -53,6 +53,14 @@ const setTeacherComment = (comment, videoId, userId, start, end, callback) => {
       callback(results);
   })
 }
+const getTimestamps = (videoId, callback) => {
+  const query = `SELECT * FROM timeStamps WHERE videoId='${videoId}'`;
+  connection.query(query, (err, results) => {
+    (err) ? 
+      console.log('Could not retrieve teacher comments', err) :
+      callback(results);
+  })
+}
 const getOwnerComments = (videoId, callback) => {
   const query = `SELECT * FROM teacherComments WHERE videoId='${videoId}'`;
   connection.query(query, (err, results) => {
@@ -297,4 +305,5 @@ exports.setTeacherComment = setTeacherComment;
 exports.getOwnerComments = getOwnerComments;
 exports.deleteOwnerComment = deleteOwnerComment;
 exports.saveSeries = saveSeries;
+exports.getTimestamps = getTimestamps;
 exports.removeFromSeries = removeFromSeries;

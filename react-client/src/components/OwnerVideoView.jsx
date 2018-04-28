@@ -1,4 +1,4 @@
-import {withRouter} from 'react-router-dom';
+import {withRouter, Redirect} from 'react-router-dom';
 import React from 'react';
 import axios from 'axios';
 
@@ -8,6 +8,7 @@ import TeacherUploads from './owner-video-view/TeacherUploads.jsx';
 import CommentSlider from './owner-video-view/CommentSlider.jsx';
 import Analytics from './owner-video-view/Analytics.jsx';
 import Paper from 'material-ui/Paper';
+import Visualization from './owner-video-view/Visualization.jsx';
 import Auth from '../utils/auth.js';
 
 
@@ -86,8 +87,12 @@ class OwnerVideo extends React.Component {
 
 
   render() {
+    if (!this.props.location.video) {
+      return <Redirect to={{pathname: '/owner', state: { from: this.props.location }}}/>
+    }
     return (
       <Paper style={style} zDepth={1}>
+        <Visualization/>
         <div style={{display: 'inline-block'}}>
             <div style={style2}>
               <Paper style={{padding: '20px'}}>
