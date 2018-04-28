@@ -92,7 +92,7 @@ class OwnerVideo extends React.Component {
     }
     return (
       <Paper style={style} zDepth={1}>
-        <Visualization/>
+        <Visualization videoId={this.props.location.video.videoId}/>
         <div style={{display: 'inline-block'}}>
             <div style={style2}>
               <Paper style={{padding: '20px'}}>

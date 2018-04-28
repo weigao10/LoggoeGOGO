@@ -53,7 +53,6 @@ class App extends React.Component {
     }
     return (
       <MuiThemeProvider>
-        <Visualization/>
         <Router>
           <div>
 
