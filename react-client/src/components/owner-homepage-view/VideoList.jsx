@@ -56,7 +56,7 @@ const style = {
 }
 
 const container = {
-  height: '70vh',
+  height: '80vh',
   float: 'right',
   width: '40%',
 }
