@@ -57,7 +57,7 @@ app.get('/vis-data', (req, res) => {
   getTimestamps(VIDEO_ID, (comments) => {
     console.log('VIDEO COMMENTS', comments.map(d => d.timeStamp).join(','));
     var child = childProcess.spawn('C:/users/ianpr/Anaconda3/python.exe',
-      ['server/dpgmm/dpgmm_script.py', comments.map(d => d.timeStamp).join(',')]);
+      ['server/dpgmm/dpgmm_script.py', comments.map(d => d.timeStamp / 60).join(',')]);
     child.stdout.on('data', (data) => {
       data = data.toString();
       console.log('TERMINATED', data);
@@ -65,7 +65,11 @@ app.get('/vis-data', (req, res) => {
         res.status(400).send('NOT ENOUGH DATA');
       } else {
         getCurrentVideo(VIDEO_ID, (results) => {
-          res.status(200).send({data: JSON.parse(data), length: results[0].duration});
+          res.status(200).send({
+            data: JSON.parse(data),
+            length: results[0].duration / 60,
+            comments: comments.map(d => d.comment)
+          });
         })
       }
     });
