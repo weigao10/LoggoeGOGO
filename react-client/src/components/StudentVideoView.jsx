@@ -136,6 +136,7 @@ class StudentVideo extends React.Component {
                 timestamps={this.state.timestamps}
                 deleteTimestamp={this.deleteTimestamp}
                 changeVideo={this.changeVideo}
+                userId={this.props.location.userId}
               />
             </Paper>
           </div>

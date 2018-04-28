@@ -21,7 +21,7 @@ class OwnerHomepage extends React.Component {
       userId: '',
       searchedVideos: [],
       seriesList: [],
-      selectedSeries: null,
+      selectedSeries: 'All Videos',
     }
     this.getUserId = this.getUserId.bind(this);
     this.showVideoList = this.showVideoList.bind(this);
@@ -170,14 +170,17 @@ class OwnerHomepage extends React.Component {
         <div className="main">
           Search YouTube and add videos to your classroom: <Search getVideos={this.getYouTubeVideos}/>
           <Paper style={searchStyle} zDepth={1}>
-            Filter by series:  <DropDownMenu name="selectedSeries" value={this.state.selectedSeries} onChange={this.handleChange} style={{width: '200px'}}>
-            <MenuItem value={100000} primaryText={"Select Series"}/>
+            <DropDownMenu name="selectedSeries" value={this.state.selectedSeries} onChange={this.handleChange} style={{width: '200px'}}>
             {this.state.seriesList.length === 0 ? null : this.state.seriesList.map((series, idx) => {
               // null is being coerced to 'null' at some point --> hence 'null' check
               if (series === 'null') { series = 'All Videos'; }
               
-              return(
-                <MenuItem key={idx} value={series} primaryText={series}/>
+              // convert 'All Videos' to 'Select Series' for use within dropdown
+              let altMenuItemText = undefined;
+              if (series === 'All Videos') { altMenuItemText = 'Select Series'; }
+              
+              return (
+                <MenuItem key={idx} value={series} primaryText={altMenuItemText || series}/>
               )
             })}
             </DropDownMenu>
