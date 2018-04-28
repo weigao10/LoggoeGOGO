@@ -4,6 +4,7 @@ const moment = require('moment');
 const axios = require('axios');
 const session = require('express-session');
 const path = require('path')
+const childProcess = require('child_process');
 const {
   getOwnerTimestamp,
   getCurrentVideo,
@@ -315,4 +316,16 @@ app.post('/chatInfo', (req, res) => { //change to get request
     console.error('ERROR IN SERVER GETCHATS: ', err) :
     res.status(201).send(results);
   });
+})
+
+app.get('/vis-data', (req, res) => {
+  console.log('got vis data request', req);
+  var process = childProcess.spawn('C:/users/ianpr/Anaconda3/python.exe', ['./dpgmm_script.py',
+        'data/X.csv'
+    ]);
+    process.stdout.on('data', (data) => {
+        console.log(JSON.parse(data.toString()));
+        data = JSON.parse(data.toString());
+        plot_gmm_data(data[0], data[1], data[2], data[3], data[4])
+    });
 })

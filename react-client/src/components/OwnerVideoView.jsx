@@ -7,7 +7,7 @@ import OwnerTimeStamps from './owner-video-view/OwnerTimeStamps.jsx';
 import TeacherUploads from './owner-video-view/TeacherUploads.jsx';
 import Analytics from './owner-video-view/Analytics.jsx';
 import Paper from 'material-ui/Paper';
-
+import Visualization from './owner-video-view/Visualization.jsx';
 
 class OwnerVideo extends React.Component {
   constructor(props) {
@@ -35,6 +35,7 @@ class OwnerVideo extends React.Component {
     }
     return (
       <Paper style={style} zDepth={1}>
+        <Visualization/>
         <div style={{display: 'inline-block'}}>
             <div style={style2}>
               <Paper style={{padding: '20px'}}>
