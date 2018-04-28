@@ -16,22 +16,13 @@ class OwnerVideoPlayer extends React.Component {
     this.state = { 
       videoId: this.props.videoId,
       video: this.props.video,
-      player: null,
-      comments: [],
-      showCommentForm: false
+      player: null
     };
 
     this.onReady = this.onReady.bind(this);
     this.onPlayVideo = this.onPlayVideo.bind(this);
     this.onPauseVideo = this.onPauseVideo.bind(this);
-    this.saveComment = this.saveComment.bind(this);
-    this.getComments = this.getComments.bind(this);
     this.deleteComment = this.deleteComment.bind(this);
-  }
-
-  componentDidMount() {
-    this.getComments();
-    console.log(this.props.video)
   }
 
   onReady(event) {
@@ -48,47 +39,12 @@ class OwnerVideoPlayer extends React.Component {
     this.state.player.pauseVideo();
   }
 
-  saveComment(start, end, comment, callback) {
-    axios.post('/owner/comment',
-      {
-        userId: Auth.userId,
-        videoId: this.state.videoId,
-        start: start,
-        end: end,
-        comment: comment
-      }
-    )
-    .then(({data}) => {
-      console.log(data)
-      callback();
-      this.getComments();
-    })
-    .catch((err) => {
-      console.log(err);
-    })
-  }
-
-  getComments() {
-    axios.get('/owner/comment', {
-      params: {
-        videoId: this.state.videoId
-      }
-    })
-    .then(({data}) => {
-      this.setState({
-        comments: data
-      })
-    })
-    .catch((err) => {
-      console.log(err);
-    })
-  }
 
   deleteComment(comment) {
     axios.delete('/owner/comment', {params: {comment: comment}})
     .then(() => {
       console.log('Successfully deleted comment');
-      this.getComments();
+      this.props.getComments();
     })
     .catch((err) => {
       console.log(err);
@@ -100,7 +56,7 @@ class OwnerVideoPlayer extends React.Component {
       height: '390',
       width: '500',
       playerVars: {
-        autoplay: 0,
+        autoplay: 1,
         start: this.props.startingTimestamp,
       }
     };
@@ -125,17 +81,13 @@ class OwnerVideoPlayer extends React.Component {
             label="Pause"/>
           <RaisedButton 
             style={{margin: '5px'}} 
-            label={this.state.showCommentForm ? 'Hide Form' : 'Add Comment'}
-            onClick={() => {this.setState({showCommentForm: !this.state.showCommentForm})}}
+            label={this.props.showCommentForm ? 'Hide Form' : 'Add Comment'}
+            onClick={this.props.toggleCommentForm}
             />
         </div>
         <br/>
         <Paper>
-          {this.state.showCommentForm ? <CommentSlider video={this.state.video} save={this.saveComment}/> : null}
-        </Paper>
-        <br/>
-        <Paper>
-          <TeacherComments comments={this.state.comments} deleteComment={this.deleteComment}/>
+          <TeacherComments comments={this.props.comments} deleteComment={this.deleteComment}/>
         </Paper>
       </div>
     );

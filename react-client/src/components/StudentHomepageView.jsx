@@ -55,7 +55,7 @@ class StudentHomepage extends React.Component {
       .then(({data}) => {
         this.setState({
           teachers: data
-        })
+        });
       })
       .catch((err) => {
         console.log(err);

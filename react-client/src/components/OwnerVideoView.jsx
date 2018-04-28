@@ -5,20 +5,30 @@ import axios from 'axios';
 import OwnerVideoPlayer from './owner-video-view/OwnerVideoPlayer.jsx';
 import OwnerTimeStamps from './owner-video-view/OwnerTimeStamps.jsx';
 import TeacherUploads from './owner-video-view/TeacherUploads.jsx';
+import CommentSlider from './owner-video-view/CommentSlider.jsx';
 import Analytics from './owner-video-view/Analytics.jsx';
 import Paper from 'material-ui/Paper';
+import Auth from '../utils/auth.js';
 
 
 class OwnerVideo extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      timeStamps: []
+      timeStamps: [],
+      comments: [],
+      startingTimestamp: 0,
+      showCommentForm: false
     }
+    this.saveComment = this.saveComment.bind(this);
+    this.getComments = this.getComments.bind(this);
+    this.changeVideo = this.changeVideo.bind(this);
+    this.toggleCommentForm = this.toggleCommentForm.bind(this);
   }
 
   componentDidMount() {
     this.showTimestamps();
+    this.getComments();
   }
 
   showTimestamps() {
@@ -29,6 +39,52 @@ class OwnerVideo extends React.Component {
       })
   }
 
+  saveComment(start, end, comment, callback) {
+    axios.post('/owner/comment',
+      {
+        userId: Auth.userId,
+        videoId: this.props.location.video.videoId,
+        start: start,
+        end: end,
+        comment: comment
+      }
+    )
+    .then(({data}) => {
+      callback();
+      this.getComments();
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+  }
+
+  getComments() {
+    axios.get('/owner/comment', {
+      params: {
+        videoId: this.props.location.video.videoId
+      }
+    })
+    .then(({data}) => {
+      this.setState({
+        comments: data
+      })
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+  }
+
+  changeVideo(timestamp) {
+    this.setState({ startingTimestamp: timestamp });
+  }
+
+  toggleCommentForm() {
+    this.setState({
+      showCommentForm: !this.state.showCommentForm
+    })
+  }
+
+
   render() {
     return (
       <Paper style={style} zDepth={1}>
@@ -36,8 +92,12 @@ class OwnerVideo extends React.Component {
             <div style={style2}>
               <Paper style={{padding: '20px'}}>
                 <div>
-                  {!!this.props.location.video && <OwnerVideoPlayer video={this.props.location.video} videoId={this.props.location.video.videoId}/>}
+                  {!!this.props.location.video && <OwnerVideoPlayer showCommentForm={this.state.showCommentForm} toggleCommentForm={this.toggleCommentForm} startingTimestamp={this.state.startingTimestamp} saveComment={this.saveComment} getComments={this.getComments} video={this.props.location.video} videoId={this.props.location.video.videoId} comments={this.state.comments}/>}
                 </div>
+              </Paper>
+              <br/>
+              <Paper>
+                {this.state.showCommentForm ? <CommentSlider changeVideo={this.changeVideo} video={this.props.location.video} save={this.saveComment}/> : null}
               </Paper>
               <br/>
               <Paper>

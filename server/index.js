@@ -23,10 +23,12 @@ const {
   postChats,
   getUploads,
   setUploads,
+  deleteUpload,
   setTeacherComment,
   getOwnerComments,
   deleteOwnerComment,
   saveSeries,
+  removeFromSeries,
 } = require('../database-mysql');
 
 const searchYouTube = require ('youtube-search-api-with-axios');
@@ -265,7 +267,12 @@ app.get('/teacherUpload', (req, res) => {
 })
 
 app.delete('/teacherUpload', (req, res) => {
-  console.log('req', req)
+
+  deleteUpload(req.body.url, (err, results) => {
+    (err) ?
+    console.error('ERROR IN SERVER DELETE UPLOAD: ', err) :
+    res.send('Successfully removed upload from DB', results);
+  });
 })
 
 
@@ -323,10 +330,22 @@ app.post('/chatInfo', (req, res) => { //change to get request
 
 //---------------------------------------------------------OWNER BUILD SERIES
 
+// BUILD SERIES
 app.post('/owner/build', (req, res) => {
-  saveSeries(req.body, (err, success) => {
+  console.log('req.body in saveSeries', req.body);
+  saveSeries(req.body).then(result => {
+    res.status(200).send(result);
+  }).catch(err => {
+    res.status(500).send(err);
+  })
+});
+
+// REMOVE VIDEO FROM SERIES
+app.delete('/owner/build', (req, res) => {
+  let video = JSON.parse(req.query.video);
+  removeFromSeries(video, (err, result) => {
     err ?
       res.status(500).send('error') :
-      res.status(200).send(success);
+        res.status(200).send(result);
   });
 });

@@ -2,7 +2,6 @@ import React from 'react';
 import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
 import AutoComplete from 'material-ui/AutoComplete';
-import moment from 'moment';
 
 class TeacherForm extends React.Component {
   constructor(props) {
@@ -21,9 +20,7 @@ class TeacherForm extends React.Component {
   }
 
   handleClick() {
-    let start = this.props.start >= 3600 ? moment.utc(this.props.start*1000).format('HH:mm:ss') : moment.utc(this.props.start*1000).format('mm:ss');
-    let end = this.props.end >= 3600 ? moment.utc(this.props.end*1000).format('HH:mm:ss') : moment.utc(this.props.end*1000).format('mm:ss');
-    this.props.save(start, end, this.state.comment, () => {
+    this.props.save(this.props.start, this.props.end, this.state.comment, () => {
       this.setState({
         comment: ''
       })

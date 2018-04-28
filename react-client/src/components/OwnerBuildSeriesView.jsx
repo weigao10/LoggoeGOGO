@@ -117,6 +117,7 @@ class OwnerHomepage extends React.Component {
     axios.post('/owner/build', { videoList, userId, username, series })
       .then((result) => {
         console.log(result);
+        window.alert('Series saved! Navigate to home page to view the series.');
       })
       .catch(err => {
         console.log(err);
