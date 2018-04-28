@@ -24,11 +24,13 @@ const {
   postChats,
   getUploads,
   setUploads,
+  deleteUpload,
   setTeacherComment,
   getOwnerComments,
   deleteOwnerComment,
   saveSeries,
   getTimestamps,
+  removeFromSeries,
 } = require('../database-mysql');
 
 const searchYouTube = require ('youtube-search-api-with-axios');
@@ -90,10 +92,14 @@ app.post('/login', (req, res) => {
         if (err) {
           console.log(err);
         }
-        req.session.user = response[0].name;
-        req.session.isOwner = response[0].owner;
-        req.session.userId = response[0].id;
-        res.status(201).send(response);
+        if (response.length === 0) {
+          res.status(404).send('Username not found');
+        } else {
+          req.session.user = response[0].name;
+          req.session.isOwner = response[0].owner;
+          req.session.userId = response[0].id;
+          res.status(201).send(response);
+        }
       })
     }
   });
@@ -129,6 +135,13 @@ app.post('/register', (req, res) => {
     }
 
   })
+})
+
+//---------------------------------------------------------USER REGISTRATION
+
+app.post('/logout', (req, res) => {
+  req.session.destroy();
+  res.status(200).send('yay');
 })
 
 //---------------------------------------------------------USER ID
@@ -275,7 +288,6 @@ app.post('/timestamps', (req, res) => {
 })
 
 app.delete('/timestamps', (req, res) => {
-  console.log(params)
   let params = req.query;
   deleteTimestamp(params, (success) => {res.send()})
 })
@@ -300,7 +312,11 @@ app.get('/teacherUpload', (req, res) => {
 })
 
 app.delete('/teacherUpload', (req, res) => {
-  console.log('req', req)
+  deleteUpload(req.body.url, (err, results) => {
+    (err) ?
+    console.error('ERROR IN SERVER DELETE UPLOAD: ', err) :
+    res.send('Successfully removed upload from DB', results);
+  });
 })
 
 
@@ -358,10 +374,22 @@ app.post('/chatInfo', (req, res) => { //change to get request
 
 //---------------------------------------------------------OWNER BUILD SERIES
 
+// BUILD SERIES
 app.post('/owner/build', (req, res) => {
-  saveSeries(req.body, (err, success) => {
+  console.log('req.body in saveSeries', req.body);
+  saveSeries(req.body).then(result => {
+    res.status(200).send(result);
+  }).catch(err => {
+    res.status(500).send(err);
+  })
+});
+
+// REMOVE VIDEO FROM SERIES
+app.delete('/owner/build', (req, res) => {
+  let video = JSON.parse(req.query.video);
+  removeFromSeries(video, (err, result) => {
     err ?
       res.status(500).send('error') :
-      res.status(200).send(success);
+        res.status(200).send(result);
   });
 });

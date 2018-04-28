@@ -15,7 +15,8 @@ import StudentHomepage from './components/StudentHomepageView.jsx';
 import StudentVideo from './components/StudentVideoView.jsx';
 import OwnerHomepage from './components/OwnerHomepageView.jsx';
 import OwnerVideo from './components/OwnerVideoView.jsx';
-import OwnerBuildSeriesView from './components/OwnerBuildSeriesView.jsx';
+import OwnerBuildSeries from './components/OwnerBuildSeriesView.jsx';
+import NavBar from './components/NavBar.jsx';
 
 import Auth from './utils/auth.js';
 
@@ -25,6 +26,7 @@ class App extends React.Component {
     this.state = {
       userInfoLoaded: false
     }
+    this.handleLogout = this.handleLogout.bind(this);
   }
 
   componentDidMount() {
@@ -36,6 +38,15 @@ class App extends React.Component {
       });
   }
 
+  handleLogout() {
+      axios.post('/logout')
+      .then(res => {
+        this.setState({isLoggedIn: false}, () => {
+          window.location.reload()
+        });
+      })
+  }
+
   render () {
     if (!this.state.userInfoLoaded) {
       return <div>Loading...</div>;
@@ -44,29 +55,61 @@ class App extends React.Component {
       <MuiThemeProvider>
         <Visualization/>
         <Router>
-          <Switch>
-            <Route
-              exact path="/"
-              component={LandingPage}/>
-            <Route
-              exact path="/registration"
-              component={RegistrationPage}/>
-            <PrivateRoute
-              exact path="/student"
-              component={StudentHomepage}/>
-            <PrivateRoute
-              exact path="/student/video"
-              component={StudentVideo}/>
-            <PrivateRoute
-              exact path="/owner"
-              component={OwnerHomepage}/>
-            <PrivateRoute
-              exact path="/owner/video"
-              component={OwnerVideo}/>
-            <PrivateRoute
-              exact path="/owner/build"
-              component={OwnerBuildSeriesView}/>
-          </Switch>
+          <div>
+
+            <Route exact={true} path='/' component={() => {
+              return <NavBar exact={true} path={'/'} 
+                                          isLoggedIn={Auth.isLoggedIn}/>
+            }}/>
+
+            <Route path='/registration' component={({...rest}) => {
+              return <NavBar {...rest} path={'/registration'} 
+                                        isLoggedIn={Auth.isLoggedIn}/>          
+            }}/>
+
+            <PrivateRoute exact={true} path='/student' component={({...rest}) => {
+              return <NavBar {...rest} path={'/student'}
+                                        handleLogout={this.handleLogout} 
+                                        isLoggedIn={Auth.isLoggedIn}/>          
+            }}/>
+
+            <PrivateRoute path='/student/video' component={({...rest}) => {
+              return <NavBar {...rest} path={'/student/video'}
+                                        handleLogout={this.handleLogout} 
+                                        studentRedirect={true}
+                                        isLoggedIn={Auth.isLoggedIn}/>          
+            }}/>
+
+            <PrivateRoute exact={true} path='/owner' component={({...rest}) => {
+              return <NavBar {...rest} path={'/owner'}
+                                        buildRedirect={true} 
+                                        handleLogout={this.handleLogout}
+                                        isLoggedIn={Auth.isLoggedIn}/>          
+            }}/>
+
+            <PrivateRoute path='/owner/video' component={({...rest}) => {
+              return <NavBar {...rest} path={'/owner/video'}
+                                        ownerRedirect={true}
+                                        handleLogout={this.handleLogout}
+                                        isLoggedIn={Auth.isLoggedIn}/>          
+            }}/>
+
+            <PrivateRoute path='/owner/build' component={({...rest}) => {
+              return <NavBar {...rest} path={'/owner/build'}
+                                        ownerRedirect={true}
+                                        handleLogout={this.handleLogout}
+                                        isLoggedIn={Auth.isLoggedIn}/>          
+            }}/>
+          
+            <Route exact={true} path='/' component={(props) => <LandingPage/> }/>
+            <Route path='/registration' component={(props) => <RegistrationPage /> }/>
+            <Route exact={true} path='/student' component={({...rest}) => <StudentHomepage {...rest}/> }/>
+            <Route path='/student/video' component={({...rest}) => <StudentVideo {...rest}/> }/>
+            <Route exact={true} path='/owner' component={({...rest}) => <OwnerHomepage {...rest}/> }/>
+            <Route path='/owner/video' component={({...rest}) => <OwnerVideo {...rest}/> }/>
+            <Route path='/owner/build' component={({...rest}) => <OwnerBuildSeries {...rest}/> }/>
+
+          </div>
         </Router>
       </MuiThemeProvider>
     )

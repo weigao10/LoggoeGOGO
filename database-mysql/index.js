@@ -229,23 +229,57 @@ const setUploads = (data, callback) => {
   });
 };
 
+const deleteUpload = (url, callback) => {
+  const query = `DELETE FROM uploads WHERE url = '${url}'`
+  
+  connection.query(query, (err, results) => {
+    (err) ?
+    console.error(err) : 
+    callback(results);
+  })
+}
+
 //-------------------------------------------- SAVE SERIES TO DB
 
 const saveSeries = ({ videoList, userId, username, series }, callback) => {
-  console.log('videoList, userID, username, series in DB: ', videoList, userId, username, series);
-  videoList.forEach((video, idx) => {
 
-    // Maybe add: WHERE... AND series = null;
-    let query = `UPDATE videos SET series = '${series}', idxInSeries = ${idx + 1} WHERE id = ${video.id} AND userId = ${userId};`;
-    console.log(query);
-    connection.query(query, (err, results) => {
-      err ? callback(err, null) : null;
+  const updateSeries = query => {
+    return new Promise((resolve, reject) => {
+      try {
+        connection.query(query, (err, result) => {
+          if (err) {
+            return reject(err)
+          } else {
+            return resolve(result);
+          }
+        })
+      } catch (err) {
+        return reject(err);
+      }
     });
-  })
+  };
 
-  // if no error thrown during forEach iteration:
-  callback(null, 'huzzah!!');
-}
+  let queries = [];
+
+  videoList.forEach((video, idx) => {
+    let query = `UPDATE videos SET series = '${series}', idxInSeries = ${idx + 1} WHERE id = ${video.id} AND userId = ${userId};`;
+    queries.push(updateSeries(query));
+  });
+
+  return Promise.all(queries);
+};
+
+//-------------------------------------------- REMOVE VIDEO FROM SERIES
+
+const removeFromSeries = (video, callback) => {
+  
+  let query = `UPDATE videos SET series = null WHERE id = ${video.id};`;
+  console.log('query');
+
+  connection.query(query, (err, result) => {
+    err ? callback(err, null) : callback(null, result);
+  });
+};
 
 
 exports.getBuckets = getBuckets;
@@ -266,8 +300,13 @@ exports.postChats = postChats;
 exports.getTeachers = getTeachers;
 exports.getUploads = getUploads;
 exports.setUploads = setUploads;
+exports.deleteUpload = deleteUpload;
 exports.setTeacherComment = setTeacherComment;
 exports.getOwnerComments = getOwnerComments;
 exports.deleteOwnerComment = deleteOwnerComment;
 exports.saveSeries = saveSeries;
+<<<<<<< HEAD
 exports.getTimestamps = getTimestamps;
+=======
+exports.removeFromSeries = removeFromSeries;
+>>>>>>> 2cbb1845c9cdcb86bf3f17bf8bdb0cd10570354b
