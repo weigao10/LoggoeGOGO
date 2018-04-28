@@ -2,6 +2,8 @@ import React from 'react';
 import Paper from 'material-ui/Paper';
 import { DragSource } from 'react-dnd';
 import { ItemTypes } from '../../constants.js';
+import DeleteIcon from 'material-ui/svg-icons/action/delete';
+import RaisedButton from 'material-ui/RaisedButton';
 
 
 const videoSource = {
@@ -37,7 +39,11 @@ class VideoListEntry extends React.Component {
               <div className="videoTitle" style={{fontWeight: 'bold'}} onClick={()=>{redirect(video)}}> {video.title} </div>
               <br/>
               <div style={{color: 'grey', marginBottom: '10px'}}>{video.description}</div>
-              <button onClick={() => { btnClickFunc(video) }}>{btnClickAction}</button>
+              <RaisedButton style={{padding: '5px', height: 'auto'}} onClick={() => {btnClickFunc(video)}}>
+              {btnClickAction}
+              <br/>
+                <DeleteIcon></DeleteIcon>
+              </RaisedButton>
               <br/>
             </div>
           </div>

@@ -82,7 +82,7 @@ const style = {
 }
 
 const container = {
-  height: '70vh',
+  height: '75vh',
   float: 'right',
   width: '40%',
 }
