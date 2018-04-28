@@ -28,6 +28,7 @@ const {
   getOwnerComments,
   deleteOwnerComment,
   saveSeries,
+  getTimestamps,
 } = require('../database-mysql');
 
 const searchYouTube = require ('youtube-search-api-with-axios');
@@ -46,6 +47,34 @@ app.use(express.static(__dirname + '/../react-client/dist'));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
+//---------------------------------------------------------VISUALIZATION DATA
+
+app.get('/vis-data', (req, res) => {
+  const VIDEO_ID = 'ZK3O402wf1c';
+  console.log('got vis data request');
+  getTimestamps(VIDEO_ID, (comments) => {
+    console.log('VIDEO COMMENTS', comments.map(d => d.timeStamp).join(','));
+    var child = childProcess.spawn('C:/users/ianpr/Anaconda3/python.exe',
+      ['server/dpgmm/dpgmm_script.py', comments.map(d => d.timeStamp).join(',')]);
+    child.stdout.on('data', (data) => {
+      data = data.toString();
+      console.log('TERMINATED', data);
+      if (data[0] !== '[') {
+        res.status(400).send('NOT ENOUGH DATA');
+      } else {
+        getCurrentVideo(VIDEO_ID, (results) => {
+          res.status(200).send({data: JSON.parse(data), length: results[0].duration});
+        })
+      }
+    });
+    child.on('error', (err) => {
+      console.log('ERROR', err);
+    })
+    child.on('exit', (code, signal) => {
+      console.log(`child process exited with code ${code} and signal ${signal}`);
+    });
+  });
+})
 //---------------------------------------------------------USER LOGIN
 
 app.post('/login', (req, res) => {
@@ -327,17 +356,6 @@ app.post('/chatInfo', (req, res) => { //change to get request
   });
 })
 
-app.get('/vis-data', (req, res) => {
-  console.log('got vis data request', req);
-  var process = childProcess.spawn('C:/users/ianpr/Anaconda3/python.exe', ['./dpgmm_script.py',
-        'data/X.csv'
-    ]);
-    process.stdout.on('data', (data) => {
-        console.log(JSON.parse(data.toString()));
-        data = JSON.parse(data.toString());
-        plot_gmm_data(data[0], data[1], data[2], data[3], data[4])
-    });
-})
 //---------------------------------------------------------OWNER BUILD SERIES
 
 app.post('/owner/build', (req, res) => {

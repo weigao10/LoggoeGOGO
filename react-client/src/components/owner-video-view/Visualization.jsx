@@ -6,7 +6,7 @@ const d3 = require('d3');
 
 function Random_normal_Dist(mean, sd, min_x, max_x, weight) {
     let data = [];
-    for (var i = (min_x === undefined? (mean - 4 * sd) : 0); i < (max_x === undefined? (mean + 4 * sd): max_x); i += 0.01) {
+    for (var i = (min_x === undefined? (mean - 4 * sd) : 0); i < (max_x === undefined? (mean + 4 * sd): max_x); i += (max_x - min_x) / 1000) {
         let q = i
         let p = weight * jStat.normal.pdf(i, mean, sd);
         let arr = {
@@ -18,28 +18,29 @@ function Random_normal_Dist(mean, sd, min_x, max_x, weight) {
     return data;
 }
 
-function plot_gmm_data(means, sds, weights, X, hardClusters) {
+function plot_gmm_data(means, sds, weights, X, hardClusters, duration) {
+    console.log('DURATION', duration);
     let normals = means
-        .map((m, i) => (Random_normal_Dist(m, sds[i], 0, 10, weights[i])));
+        .map((m, i) => (Random_normal_Dist(m, sds[i], 0, duration, weights[i])));
     let data = X.map((x_i, i) => ({
         time: x_i,
         color: hardClusters[i]
     }))
-    plotNormals(normals, data)
+    plotNormals(normals, data, duration)
 }
 
-function plotNormals(normals, data) {
+function plotNormals(normals, data, duration) {
     console.log('PLOTTING', normals, data);
     var margin = {top: 20, right: 30, bottom: 30, left: 40},
-    width = 960 - margin.left - margin.right,
-    height = 500 - margin.top - margin.bottom;
+        width = 960 - margin.left - margin.right,
+        height = 500 - margin.top - margin.bottom;
 
-    min_d = d3.min(normals.map(arr => d3.min(arr, d => d.q)));
-    max_d = d3.max(normals.map(arr => d3.max(arr, d => d.q)));
-    max_p = d3.max(normals.map(arr => d3.max(arr, d => d.p)));
+    let min_d = d3.min(normals.map(arr => d3.min(arr, d => d.q)));
+    let max_d = d3.max(normals.map(arr => d3.max(arr, d => d.q)));
+    let max_p = d3.max(normals.map(arr => d3.max(arr, d => d.p)));
 
-    var stack = d3.stack().keys(d3.range(normals.length)).value((d, key) => d[key].p)
-    layers0 = stack(d3.transpose(normals));
+    let stack = d3.stack().keys(d3.range(normals.length)).value((d, key) => d[key].p)
+    let layers0 = stack(d3.transpose(normals));
 
     var x = d3.scaleLinear()
         .domain([min_d, max_d]).nice()
@@ -58,7 +59,7 @@ function plotNormals(normals, data) {
     var z = d3.interpolateCool;
 
     var stack_area = d3.area()
-        .x((d, i) => x(i / 100))
+        .x((d, i) => x(duration * i / 1000))
         .y0(d => y(d[1]))
         .y1(d => y(d[0]));
 
@@ -110,11 +111,12 @@ function plotNormals(normals, data) {
         .data(data)
         .enter().append('line')
         .attr('x1', d => x(d.time))
-        .attr('y1', y(1))
+        .attr('y1', y(y.domain()[1]))
         .attr('x2', d => x(d.time))
-        .attr('y2', y(1.1))
+        .attr('y2', y(0.05 * y.domain()[0] + 0.95 * y.domain()[1]))
         .style('stroke', d => colorScale(d.color))
-        .style('stroke-width', 2);
+        .style('stroke-width', 2)
+        .style('opacity', 0.5);
 }
 
 class Visualization extends React.Component {
@@ -125,11 +127,12 @@ class Visualization extends React.Component {
   }
 
   componentDidMount() {
-    axios.get('http:/localhost:3000/vis-data')
+    axios.get('/vis-data')
     .then(res => {
         console.log('got data', res);
-        let data = JSON.parse(res.data.toString());
-        plot_gmm_data(data[0], data[1], data[2], data[3], data[4]);
+        console.log('Video length:', res.data.length);
+        let data = res.data.data;
+        plot_gmm_data(data[0], data[1], data[2], data[3], data[4], res.data.length);
     })
     .catch(err => {
         console.log('error getting data', err);
