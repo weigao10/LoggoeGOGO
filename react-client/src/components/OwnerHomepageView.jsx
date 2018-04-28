@@ -143,9 +143,19 @@ class OwnerHomepage extends React.Component {
     console.log(video);
     axios.delete('/owner/build', { params: { video }})
       .then(result => {
+        let allVideos = this.state.allVideos;
+
+        for (var item of allVideos) {
+          if (video.id === item.id) {
+            // reset series client-side
+            item.series = null;
+          }
+        }
+
         this.setState((prevState) => ({
-          videos: prevState.videos.filter((item, i) => item.id !== video.id)
-        }));
+          videos: prevState.videos.filter((item, i) => item.id !== video.id),
+          allVideos: allVideos,
+        }), console.log(this.state));
       })
       .catch(err => {
         console.log(err);
@@ -158,9 +168,9 @@ class OwnerHomepage extends React.Component {
       <div id="owner-homepage-app">
         <header className="navbar"><h1>Hello {this.props.location.username}</h1></header>
         <div className="main">
-          <Search getVideos={this.getYouTubeVideos}/>
+          Search YouTube and add videos to your classroom: <Search getVideos={this.getYouTubeVideos}/>
           <Paper style={searchStyle} zDepth={1}>
-            <DropDownMenu name="selectedSeries" value={this.state.selectedSeries} onChange={this.handleChange} style={{width: '200px'}}>
+            Filter by series:  <DropDownMenu name="selectedSeries" value={this.state.selectedSeries} onChange={this.handleChange} style={{width: '200px'}}>
             <MenuItem value={100000} primaryText={"Select Series"}/>
             {this.state.seriesList.length === 0 ? null : this.state.seriesList.map((series, idx) => {
               // null is being coerced to 'null' at some point --> hence 'null' check
@@ -173,7 +183,7 @@ class OwnerHomepage extends React.Component {
             </DropDownMenu>
           </Paper>
           <div>
-            {this.state.searchedVideos.length === 0 ? <div style={hidden}></div> : <SearchList videos={this.state.searchedVideos} save={this.saveVideo} redirect={this.sendToSelectedVideo}/>}
+            {this.state.searchedVideos.length === 0 ? <div style={hidden}></div> : <SearchList videosInSeries={this.state.videos} selectedSeries={this.state.selectedSeries} videos={this.state.searchedVideos} save={this.saveVideo} redirect={this.sendToSelectedVideo}/>}
             <Hidden deleteVideo={this.deleteVideo}/>
             <VideoList 
               userId={this.state.userId}
