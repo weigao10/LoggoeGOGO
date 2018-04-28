@@ -27,7 +27,7 @@ const NavBar = ({path, handleLogout, isLoggedIn, studentRedirect, ownerRedirect,
             && <Link to='/owner'><FlatButton label="All Videos" style={{"color":"white"}}/></Link>}
 
           {(isLoggedIn) 
-            && <Link to='/'><FlatButton onClick={handleLogout} label="Log Out" style={{"color":"white"}}/></Link>}
+            && <FlatButton onClick={handleLogout} label="Log Out" style={{"color":"white"}}/>}
         </div>
       }
     />
