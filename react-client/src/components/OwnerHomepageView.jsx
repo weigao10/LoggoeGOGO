@@ -185,7 +185,7 @@ class OwnerHomepage extends React.Component {
             })}
             </DropDownMenu>
           </Paper>
-          <div>
+          <div >
             {this.state.searchedVideos.length === 0 ? <div style={hidden}></div> : <SearchList videosInSeries={this.state.videos} selectedSeries={this.state.selectedSeries} videos={this.state.searchedVideos} save={this.saveVideo} redirect={this.sendToSelectedVideo}/>}
             <Hidden deleteVideo={this.deleteVideo}/>
             <VideoList 

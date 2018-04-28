@@ -164,7 +164,7 @@ class OwnerHomepage extends React.Component {
 
 const style = {
   height: 'auto',
-  width: 'auto',
+  width: '95%',
   margin: '30px',
   textAlign: 'center',
   display: 'inline-block',
