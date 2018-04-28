@@ -5,6 +5,7 @@ import filestack from 'filestack-js';
 import config from '../../../../config';
 import axios from 'axios';
 import FileUpload from 'material-ui/svg-icons/file/file-upload';
+import Auth from '../../utils/auth.js';
 
 class TeacherUploads extends React.Component {
   constructor(props) {
@@ -80,7 +81,7 @@ class TeacherUploads extends React.Component {
 
   getUploads() {
     axios
-      .get("/teacherUpload", { params: { videoId: this.props.videoId, username: this.props.username } })
+      .get("/teacherUpload", { params: { videoId: this.props.videoId, username: Auth.username } })
       .then((data) => {
         this.setState({uploads: [...data.data]})
       })
