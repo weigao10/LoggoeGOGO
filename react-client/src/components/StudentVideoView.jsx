@@ -155,8 +155,8 @@ class StudentVideo extends React.Component {
 
 
 const style = {
-  height: '100%',
-  width: '100%',
+  height: 'auto',
+  width: '95%',
   margin: '30px',
   textAlign: 'center',
   display: 'inline-block',

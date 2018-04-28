@@ -60,7 +60,8 @@ const style = {
   textAlign: 'center',
   display: 'block',
   padding: '30px 5px',
-  cursor: 'move'
+  cursor: 'move',
+  wordWrap: 'break-word'
 }
 
 export default DragSource(ItemTypes.SAVED, videoSource, collect)(VideoListEntry);

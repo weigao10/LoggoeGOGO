@@ -213,8 +213,8 @@ class StudentHomepage extends React.Component {
 }
 
 const style = {
-    height: '100%',
-    width: '100%',
+    height: 'auto',
+    width: 'auto',
     margin: '30px',
     textAlign: 'center',
     display: 'block',
