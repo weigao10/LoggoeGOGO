@@ -242,7 +242,6 @@ app.post('/timestamps', (req, res) => {
 })
 
 app.delete('/timestamps', (req, res) => {
-  console.log(params)
   let params = req.query;
   deleteTimestamp(params, (success) => {res.send()})
 })
