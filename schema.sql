@@ -93,7 +93,6 @@ CREATE TABLE chats (
 CREATE TABLE uploads (
   id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   videoId varchar(255) NOT NULL,
-  username varchar(255),
   url varchar(255) NOT NULL,
   filename varchar(255),
   fileType varchar(50),
@@ -113,4 +112,3 @@ INSERT INTO timeStamps (videoId, userId, timeStamp, comment, addressedByTeacher,
 
 -- insert a teacher comment on the video
 INSERT INTO teacherComments (video, userId, begRange, endRange, comment) VALUES (1, 2, 110, 132, "I'm sorry you're confused!");
-

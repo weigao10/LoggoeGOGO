@@ -56,7 +56,7 @@ app.get('/vis-data', (req, res) => {
   console.log('got vis data request', VIDEO_ID);
   getTimestamps(VIDEO_ID, (comments) => {
     console.log('VIDEO COMMENTS', comments.map(d => d.timeStamp).join(','));
-    var child = childProcess.spawn('C:/users/ianpr/Anaconda3/python.exe',
+    var child = childProcess.spawn('python',
       ['server/dpgmm/dpgmm_script.py', comments.map(d => d.timeStamp).join(',')]);
     child.stdout.on('data', (data) => {
       data = data.toString();
