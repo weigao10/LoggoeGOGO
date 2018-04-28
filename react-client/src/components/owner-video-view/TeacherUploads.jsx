@@ -4,6 +4,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import filestack from 'filestack-js';
 import config from '../../../../config';
 import axios from 'axios';
+import FileUpload from 'material-ui/svg-icons/file/file-upload';
 
 class TeacherUploads extends React.Component {
   constructor(props) {
@@ -28,7 +29,10 @@ class TeacherUploads extends React.Component {
       <Paper>
         <div>
           <div id="uploadButton">
-            <RaisedButton label="Upload File" onClick={this.openPicker} />
+            <RaisedButton onClick={this.openPicker} style={{padding: '5px'}}>
+              Upload File
+              <FileUpload/>
+            </RaisedButton>
           </div>
           <ul>
             {this.state.uploads.map((upload) => {

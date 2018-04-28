@@ -95,7 +95,7 @@ class OwnerVideo extends React.Component {
         <Visualization/>
         <div style={{display: 'inline-block'}}>
             <div style={style2}>
-              <Paper style={{padding: '20px'}}>
+              <Paper style={{padding: '20px', width: 'auto'}}>
                 <div>
                   {!!this.props.location.video && <OwnerVideoPlayer showCommentForm={this.state.showCommentForm} toggleCommentForm={this.toggleCommentForm} startingTimestamp={this.state.startingTimestamp} saveComment={this.saveComment} getComments={this.getComments} video={this.props.location.video} videoId={this.props.location.video.videoId} comments={this.state.comments}/>}
                 </div>
@@ -132,7 +132,7 @@ const style = {
   width: '100%',
   margin: '30px',
   textAlign: 'center',
-  display: 'block',
+  display: 'inline-block',
   padding: '30px',
   background: '#D8E4EA'
 }

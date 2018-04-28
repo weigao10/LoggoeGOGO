@@ -185,7 +185,7 @@ class OwnerHomepage extends React.Component {
             })}
             </DropDownMenu>
           </Paper>
-          <div>
+          <div >
             {this.state.searchedVideos.length === 0 ? <div style={hidden}></div> : <SearchList videosInSeries={this.state.videos} selectedSeries={this.state.selectedSeries} videos={this.state.searchedVideos} save={this.saveVideo} redirect={this.sendToSelectedVideo}/>}
             <Hidden deleteVideo={this.deleteVideo}/>
             <VideoList 
@@ -206,11 +206,11 @@ class OwnerHomepage extends React.Component {
 }
 
 const style = {
-  height: '100vh',
+  height: 'auto',
   width: 'auto',
   margin: '30px',
   textAlign: 'center',
-  display: 'block',
+  display: 'inline-block',
   padding: '30px',
   background: '#D8E4EA'
 };
@@ -222,7 +222,7 @@ const hidden = {
 };
 
 const searchStyle = {
-  height: '100%',
+  height: 'auto',
   width: 'auto',
   margin: '20px',
   textAlign: 'center',

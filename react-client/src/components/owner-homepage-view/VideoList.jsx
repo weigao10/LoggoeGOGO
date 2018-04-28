@@ -34,8 +34,8 @@ class VideoList extends React.Component {
 
     return connectDropTarget(
       <div style={container}>
-        {selectedSeries ? <div>{`Series: ${selectedSeries}`}</div> : null}
         <Paper style={style}>
+        {selectedSeries ? <h4>{`Series: ${selectedSeries}`}</h4> : null}
           <div>
             {videos.length === 0 ? 'Search for a video and drag it here to save it' : videos.map((video, i) => <VideoListEntry key={i} video={video} redirect={redirect} btnClickFunc={conditionalFunction} btnClickAction={conditionalPurpose}/>)}
           </div>
@@ -56,7 +56,7 @@ const style = {
 }
 
 const container = {
-  height: '70vh',
+  height: '75vh',
   float: 'right',
   width: '40%',
 }
