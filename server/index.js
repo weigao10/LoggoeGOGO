@@ -52,8 +52,8 @@ app.use(bodyParser.json());
 //---------------------------------------------------------VISUALIZATION DATA
 
 app.get('/vis-data', (req, res) => {
-  const VIDEO_ID = 'ZK3O402wf1c';
-  console.log('got vis data request');
+  const VIDEO_ID = req.query.videoId;
+  console.log('got vis data request', VIDEO_ID);
   getTimestamps(VIDEO_ID, (comments) => {
     console.log('VIDEO COMMENTS', comments.map(d => d.timeStamp).join(','));
     var child = childProcess.spawn('C:/users/ianpr/Anaconda3/python.exe',
