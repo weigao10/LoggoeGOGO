@@ -8,7 +8,7 @@
   - __Scrum Master__: Ian Pradham
   - __Development Team Members__: Wei Gao, Amy San Felipe
 
-## Table of Contents TESTSETSETSETS
+## Table of Contents
 
 1. [Usage](#Usage)
 1. [Requirements](#requirements)
