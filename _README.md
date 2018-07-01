@@ -4,9 +4,9 @@
 
 ## Team
 
-  - __Product Owner__: Jun Yoo
-  - __Scrum Master__: Vanessa Wu
-  - __Development Team Members__: Brian Fang, Wayne Hong
+  - __Product Owner__: Tom Wagner
+  - __Scrum Master__: Ian Pradham
+  - __Development Team Members__: Wei Gao, Amy San Felipe
 
 ## Table of Contents TESTSETSETSETS
 
@@ -47,11 +47,6 @@ sudo npm install -g bower
 npm install
 bower install
 ```
-
-### Roadmap
-
-View the project roadmap [here](LINK_TO_PROJECT_ISSUES)
-
 
 ## Contributing
 
