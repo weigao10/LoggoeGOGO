@@ -1,53 +1,52 @@
-# Loggoe GOGO
+# iVEP
 
-> Loggoe GoGo allows students to view videos posted by owners and record specific timestamps with comments to mark down areas of "confusion." The owners will be able to watch snippets of the video marked by students and see the comments associated with those snippets. A histogram with buckets grouping the number of student confusions will indicate which period in the video confusion generally occurs. 
+iVEP (Interactive Video Education Platform) allows students to view videos posted by their teachers and comment on the videos if they are confused. Each student comment has a specific timestamps, which are aggregated and graphically displayed for the teachers in the form of a D3 graph. The teachers are then able to determine which aspects of the video are unclear and clarify what the point they were trying to get across or recommend additional resources related to the given topic. 
+
+Other features include a live chat room specific to each video, file upload specific to each video so the teacher can share additional resources, drag and drop allowing teachers to save videos by dragging them from one component to another and a playlist/series-builder allowing teachers to organize a series of videos to be watched in a sequence.
 
 ## Team
 
-  - __Product Owner__: Tom Wagner
-  - __Scrum Master__: Ian Pradham
-  - __Development Team Members__: Wei Gao, Amy San Felipe
+- [Amy San Felipe](https://github.com/amylsf)
 
-## Table of Contents
+- [Wei Gao](https://github.com/weigao10)
 
-1. [Usage](#Usage)
-1. [Requirements](#requirements)
-1. [Development](#development)
-    1. [Installing Dependencies](#installing-dependencies)
-    1. [Tasks](#tasks)
-1. [Team](#team)
-1. [Contributing](#contributing)
+- [Ian Pradham](https://github.com/ipradhan14)
 
-## Usage
+- [Tom Wagner](https://github.com/tom-wagner)
 
-> Some usage instructions
 
-## Requirements
+## Core Tech Stack
 
-- React 15.4.2
-- jquery 3.1.1
-- MySQL 2.13.0
-- express 4.15.0
-- React-DOM 15.4.2
-- C3 0.5.3
-- React-Youtube 7.5.0
-- Youtube-Search-API-With-Axios 2.0.0
-- React-Moment 0.7.0
-- React-C3JS 0.1.20
-- Material-UI 0.20.0
+- React
+- Node
+- Express
+- MySQL
+
+#### Other techologies
+
+- Socket.io
+- React Router
+- Express session
+- D3
+- React Drag-and-Drop
+
 
 ## Development
 
-### Installing Dependencies
-
-From within the root directory:
+##### Installing Dependencies
 
 ```sh
-sudo npm install -g bower
 npm install
-bower install
 ```
 
-## Contributing
+##### Starting the development server
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines.
+```sh
+npm run server-dev
+```
+
+##### Compiling/bundling the files
+
+```sh
+npm run react-dev
+```
